@@ -92,8 +92,57 @@ def git_commit_and_push(commit_msg: str):
 
 
 class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
-    """Provides a lightweight HTTP health-check for Render / Koyeb web services."""
+    """Provides a lightweight HTTP health-check and test endpoints for Render / Koyeb."""
     def do_GET(self):
+        # 1. Manual Alert Test endpoint
+        if self.path == "/test-alert":
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            success = discord_notifier.post_to_discord(
+                [{
+                    "title": "🧪 CLOUD BOT TEST ALERT",
+                    "description": "✅ **Communication Verified!** Render cloud worker is successfully sending payloads to Discord.",
+                    "color": 0x2ECC71,
+                    "fields": [
+                        {"name": "Host", "value": "Render.com Free Web Service", "inline": True},
+                        {"name": "Status", "value": "Healthy & Online", "inline": True},
+                    ],
+                    "footer": {"text": "PrizePicks Cloud Engine • Manual Test Trigger"},
+                    "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                }],
+                content="🔔 **Cloud Bot Test Notification**"
+            )
+            resp = {"status": "success" if success else "failed", "message": "Check Discord now!"}
+            self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
+            return
+
+        # 2. Manual +EV Scan Test endpoint
+        if self.path == "/test-scan":
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            def background_test_scan():
+                try:
+                    logger.info("🧪 [TEST SCAN TRIGGERED VIA URL] Running live board scan...")
+                    res = auto_bot.run_pipeline(min_threshold=55.0, force=True)
+                    if res.get("status") == "PLACED":
+                        logger.info(f"🎯 Test slip #{res.get('slip_id')} placed and sent to Discord!")
+                        pt_now = get_current_pt_time()
+                        git_commit_and_push(f"Lock in test slip #{res.get('slip_id')} for {pt_now.strftime('%Y-%m-%d')}")
+                except Exception as e:
+                    logger.error(f"Test scan error: {e}")
+                    alert_engine_error("Manual Test Scan Error", str(e), traceback.format_exc())
+
+            threading.Thread(target=background_test_scan, daemon=True).start()
+            resp = {
+                "status": "scan_started",
+                "message": "Manual +EV scan triggered in background! Check Discord in 20-30 seconds for the card.",
+            }
+            self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
+            return
+
+        # 3. Default Health Check and Performance Dashboard
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()
@@ -107,6 +156,11 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                 "status": "ONLINE",
                 "time_pt": pt_now.strftime("%Y-%m-%d %I:%M:%S %p PT"),
                 "ram_usage_mb": get_memory_mb(),
+                "endpoints": {
+                    "health_check": "/",
+                    "test_discord_alert": "/test-alert",
+                    "trigger_live_scan": "/test-scan",
+                },
                 "performance": {
                     "total_staked": f"${report.get('total_staked', 0.0):.2f}",
                     "total_returned": f"${report.get('total_returned', 0.0):.2f}",
