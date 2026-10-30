@@ -112,6 +112,11 @@ def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
                 data = r.json()
                 with open("prizepicks_fresh.json", "w") as f:
                     json.dump(data, f)
+                try:
+                    import player_image_registry
+                    player_image_registry.harvest_images_from_data(data)
+                except Exception:
+                    pass
                 logger.info(f"PrizePicks: Ingested {len(data.get('data', []))} raw lines.")
                 return data
         elif r.status_code in [403, 429]:

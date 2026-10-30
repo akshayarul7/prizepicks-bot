@@ -171,6 +171,93 @@
       "return_payout": 30.0,
       "net_profit": 20.0,
       "payout_multiplier": 3.0
+    },
+    {
+      "id": "c42a9520",
+      "date_placed": "2026-10-30 12:25:57",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "discord_message_id": "1565820636667060336",
+      "notes": "Auto-placed on Oct 30, 2026. Avg win rate: 59.48%. Threshold: 57.0%.",
+      "legs": [
+        {
+          "leg_id": "leg_1",
+          "player_name": "Kyrie Irving",
+          "sport": "NBA",
+          "game": "Houston Rockets @ Dallas Mavericks",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "status": "PENDING",
+          "edge_percent": 61.1,
+          "actual_result": null
+        },
+        {
+          "leg_id": "leg_2",
+          "player_name": "Daniss Jenkins",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ Brooklyn Nets",
+          "stat_type": "Pts+Rebs",
+          "line": 13.5,
+          "choice": "UNDER",
+          "status": "PENDING",
+          "edge_percent": 59.9,
+          "actual_result": null
+        },
+        {
+          "leg_id": "leg_3",
+          "player_name": "Miles Bridges",
+          "sport": "NBA",
+          "game": "Denver Nuggets @ Phoenix Suns",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "status": "PENDING",
+          "edge_percent": 59.1,
+          "actual_result": null
+        },
+        {
+          "leg_id": "leg_4",
+          "player_name": "DeMar DeRozan",
+          "sport": "NBA",
+          "game": "Denver Nuggets @ Phoenix Suns",
+          "stat_type": "Points",
+          "line": 14.5,
+          "choice": "UNDER",
+          "status": "PENDING",
+          "edge_percent": 59.0,
+          "actual_result": null
+        },
+        {
+          "leg_id": "leg_5",
+          "player_name": "Jay Huff",
+          "sport": "NBA",
+          "game": "Indiana Pacers @ Miami Heat",
+          "stat_type": "Points",
+          "line": 7.5,
+          "choice": "OVER",
+          "status": "PENDING",
+          "edge_percent": 58.9,
+          "actual_result": null
+        },
+        {
+          "leg_id": "leg_6",
+          "player_name": "Anthony Black",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Toronto Raptors",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "status": "PENDING",
+          "edge_percent": 58.9,
+          "actual_result": null
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0
     }
   ],
   "version": "1.0"

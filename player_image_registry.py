@@ -11,6 +11,33 @@ from typing import Dict
 IMAGE_REGISTRY_FILE = "player_images.json"
 
 
+def harvest_images_from_data(prizepicks_json: Dict) -> Dict[str, str]:
+    """Harvests new player headshots directly from in-memory API response."""
+    registry = {}
+    if os.path.exists(IMAGE_REGISTRY_FILE):
+        try:
+            with open(IMAGE_REGISTRY_FILE, "r") as f:
+                registry = json.load(f)
+        except Exception:
+            pass
+
+    updated = False
+    for item in prizepicks_json.get("included", []):
+        if item.get("type") == "new_player":
+            attrs = item.get("attributes", {})
+            name = attrs.get("name") or attrs.get("display_name")
+            url = attrs.get("image_url")
+            if name and url and registry.get(name) != url:
+                registry[name] = url
+                updated = True
+
+    if updated:
+        with open(IMAGE_REGISTRY_FILE, "w") as f:
+            json.dump(registry, f, indent=2)
+
+    return registry
+
+
 def build_or_update_image_registry() -> Dict[str, str]:
     registry = {}
     if os.path.exists(IMAGE_REGISTRY_FILE):
