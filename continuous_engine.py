@@ -230,9 +230,9 @@ def run_continuous_loop():
             logger.info(f"⏱️ Tick: {pt_now.strftime('%I:%M %p PT')} | RAM: {mem_mb} MB | Pending: {has_pending}")
 
             # -------------------------------------------------------------
-            # MODE A: LIVE GAME IN-PLACE UPDATER (4:30 PM - 9:30 PM PT)
+            # MODE A: LIVE GAME IN-PLACE UPDATER (4:00 PM - 9:30 PM PT)
             # -------------------------------------------------------------
-            if has_pending and 16.5 <= time_decimal < 21.5:
+            if has_pending and 16.0 <= time_decimal < 21.5:
                 logger.info("🏀 [LIVE GAMES ACTIVE] Polling ESPN live box scores...")
                 try:
                     live_game_updater.update_active_slips_live()
