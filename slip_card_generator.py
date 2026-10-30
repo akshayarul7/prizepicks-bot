@@ -341,8 +341,9 @@ def send_slip_card_to_discord(
     slip: Dict[str, Any],
     player_images: Optional[Dict[str, str]] = None,
     webhook_url: Optional[str] = None,
-) -> bool:
-    url = webhook_url or (
+    message_id: Optional[str] = None,
+) -> Optional[str]:
+    base_url = webhook_url or (
         "https://discord.com/api/webhooks/1565586149504712724/"
         "Uja5Yqm8hALt6l2hs1H-3VIc_4Q-XDY90iycgPzefKCkOIQQJfo4PaSpuS7FaOWui2fd"
     )
@@ -352,10 +353,25 @@ def send_slip_card_to_discord(
         files = {"file": ("prizepicks_slip.png", f, "image/png")}
         payload = {
             "username": "PrizePicks +EV Engine",
-            "content": f"**PrizePicks Slip Update — #{slip.get('id')} ({slip.get('status')}) [High-Impact Display]**",
+            "content": f"**PrizePicks Slip Update — #{slip.get('id')} ({slip.get('status')})**",
         }
-        r = requests.post(url, data=payload, files=files, timeout=15)
-        return r.status_code in [200, 204]
+
+        # If message_id provided, edit existing message in-place
+        if message_id:
+            edit_url = f"{base_url}/messages/{message_id}"
+            r = requests.patch(edit_url, data=payload, files=files, timeout=15)
+            if r.status_code == 200:
+                return message_id
+
+        # Otherwise post new message and return its Discord message ID
+        post_url = f"{base_url}?wait=true"
+        r = requests.post(post_url, data=payload, files=files, timeout=15)
+        if r.status_code in [200, 204]:
+            try:
+                return str(r.json().get("id"))
+            except Exception:
+                return "OK"
+        return None
 
 
 if __name__ == "__main__":

@@ -82,19 +82,21 @@ def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
     post_to_discord([embed])
 
     # Also render and upload visual locked-in slip card
+    msg_id = None
     try:
         import slip_card_generator
-        p_imgs = {}
-        import os, json
-        if os.path.exists("prizepicks_fresh.json"):
-            with open("prizepicks_fresh.json") as pf:
-                pdata = json.load(pf)
-                for p in pdata.get("included", []):
-                    if p.get("type") == "new_player":
-                        name = p.get("attributes", {}).get("name")
-                        if name:
-                            p_imgs[name] = p.get("attributes", {}).get("image_url")
-        slip_card_generator.send_slip_card_to_discord(slip, p_imgs, DISCORD_WEBHOOK_URL)
+        import player_image_registry
+        reg = player_image_registry.build_or_update_image_registry()
+        p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
+        msg_id = slip_card_generator.send_slip_card_to_discord(slip, p_imgs, DISCORD_WEBHOOK_URL)
+        if msg_id and msg_id != "OK":
+            slip["discord_message_id"] = msg_id
+            import paper_tracker
+            db = paper_tracker.load_database()
+            for s in db.get("slips", []):
+                if s.get("id") == slip.get("id"):
+                    s["discord_message_id"] = msg_id
+            paper_tracker.save_database(db)
     except Exception as e:
         print(f"Failed to send locked-in slip card image: {e}")
 
@@ -187,18 +189,11 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
     # Also render and upload visual PrizePicks app card
     try:
         import slip_card_generator
-        # Load player headshot links if available
-        p_imgs = {}
-        import os, json
-        if os.path.exists("prizepicks_fresh.json"):
-            with open("prizepicks_fresh.json") as pf:
-                pdata = json.load(pf)
-                for p in pdata.get("included", []):
-                    if p.get("type") == "new_player":
-                        name = p.get("attributes", {}).get("name")
-                        if name:
-                            p_imgs[name] = p.get("attributes", {}).get("image_url")
-        slip_card_generator.send_slip_card_to_discord(slip, p_imgs, DISCORD_WEBHOOK_URL)
+        import player_image_registry
+        reg = player_image_registry.build_or_update_image_registry()
+        p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
+        message_id = slip.get("discord_message_id")
+        slip_card_generator.send_slip_card_to_discord(slip, p_imgs, DISCORD_WEBHOOK_URL, message_id=message_id)
     except Exception as e:
         print(f"Failed to send visual card image: {e}")
 
