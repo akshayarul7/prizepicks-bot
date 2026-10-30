@@ -100,23 +100,25 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
         try:
             pt_now = get_current_pt_time()
             db = paper_tracker.load_database()
-            total_staked = db.get("total_staked", 0.0)
-            net_profit = db.get("net_profit", 0.0)
-            roi = db.get("roi_percent", 0.0)
+            slips = db.get("slips", [])
+            report = paper_tracker.generate_performance_report(slips)
             payload = {
                 "service": "PrizePicks +EV Real-Time Cloud Engine",
                 "status": "ONLINE",
                 "time_pt": pt_now.strftime("%Y-%m-%d %I:%M:%S %p PT"),
                 "ram_usage_mb": get_memory_mb(),
                 "performance": {
-                    "total_staked": f"${total_staked:.2f}",
-                    "net_profit": f"+${net_profit:.2f}",
-                    "roi": f"{roi:+.1f}%",
-                    "slips_count": len(db.get("slips", [])),
+                    "total_staked": f"${report.get('total_staked', 0.0):.2f}",
+                    "total_returned": f"${report.get('total_returned', 0.0):.2f}",
+                    "net_profit": f"+${report.get('net_profit', 0.0):.2f}" if report.get('net_profit', 0.0) >= 0 else f"-${abs(report.get('net_profit', 0.0)):.2f}",
+                    "roi": f"{report.get('roi_percent', 0.0):+.1f}%",
+                    "slips_record": f"{report.get('slips_won', 0)}W - {report.get('slips_lost', 0)}L - {report.get('slips_pushed', 0)}P",
+                    "leg_win_rate": f"{report.get('leg_win_rate', 0.0):.1f}% ({report.get('total_legs_hit', 0)}/{report.get('total_legs_hit', 0) + report.get('total_legs_missed', 0)})",
+                    "total_slips": len(slips),
                 },
             }
-        except Exception:
-            payload = {"status": "ONLINE", "time": str(datetime.datetime.now())}
+        except Exception as e:
+            payload = {"service": "PrizePicks +EV Real-Time Cloud Engine", "status": "ONLINE", "error": str(e)}
         self.wfile.write(json.dumps(payload, indent=2).encode("utf-8"))
 
     def log_message(self, format, *args):
