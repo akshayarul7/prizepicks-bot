@@ -210,9 +210,9 @@ def render_prizepicks_slip(
         pnl_large_text = "$0.00"
         pnl_sub_text = f"${payout:.2f} Refunded • Stake: ${stake:.2f}"
     else:
-        pnl_color = (59, 130, 246)
-        pnl_large_text = "PENDING"
-        pnl_sub_text = f"Stake: ${stake:.2f} • Max Payout: 25.0X"
+        pnl_color = (142, 68, 240) # PrizePicks Purple
+        pnl_large_text = f"${stake * 25.0:.2f}"
+        pnl_sub_text = f"To Win: ${stake * 25.0:.2f} (25.0X) • Stake: ${stake:.2f}"
 
     # Draw Giant Bold P&L Text (34pt)
     font_pnl_large = get_font(34, bold=True)
@@ -298,9 +298,9 @@ def render_prizepicks_slip(
                 score_text = f"Actual: {actual:g} / {line:g}"
         else:  # PENDING
             badge_color = (60, 65, 80)
-            badge_text = "PENDING"
+            badge_text = choice  # Displays "MORE" or "LESS" in clean gray pill just like unstarted PrizePicks slips
             badge_text_color = COLOR_TEXT_WHITE
-            score_text = f"Target: {line:g}"
+            score_text = f"{choice} {line:g}"
 
         # Score text above progress bar
         font_score = get_font(13, bold=True)
