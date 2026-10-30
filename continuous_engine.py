@@ -21,11 +21,14 @@ Runs continuously inside a persistent cloud worker (Railway / Render / Koyeb):
 
 import datetime
 import gc
+import http.server
+import json
 import logging
 import os
 import resource
 import subprocess
 import sys
+import threading
 import time
 import traceback
 
@@ -88,11 +91,60 @@ def git_commit_and_push(commit_msg: str):
         logger.warning(f"Git push skipped/failed: {e}")
 
 
+class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
+    """Provides a lightweight HTTP health-check for Render / Koyeb web services."""
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        try:
+            pt_now = get_current_pt_time()
+            db = paper_tracker.load_database()
+            total_staked = db.get("total_staked", 0.0)
+            net_profit = db.get("net_profit", 0.0)
+            roi = db.get("roi_percent", 0.0)
+            payload = {
+                "service": "PrizePicks +EV Real-Time Cloud Engine",
+                "status": "ONLINE",
+                "time_pt": pt_now.strftime("%Y-%m-%d %I:%M:%S %p PT"),
+                "ram_usage_mb": get_memory_mb(),
+                "performance": {
+                    "total_staked": f"${total_staked:.2f}",
+                    "net_profit": f"+${net_profit:.2f}",
+                    "roi": f"{roi:+.1f}%",
+                    "slips_count": len(db.get("slips", [])),
+                },
+            }
+        except Exception:
+            payload = {"status": "ONLINE", "time": str(datetime.datetime.now())}
+        self.wfile.write(json.dumps(payload, indent=2).encode("utf-8"))
+
+    def log_message(self, format, *args):
+        # Mute standard HTTP access logging to keep application logs clean
+        pass
+
+
+def start_health_server():
+    """Starts background HTTP server on the cloud platform's assigned port."""
+    port = int(os.environ.get("PORT", 8080))
+    try:
+        server = http.server.HTTPServer(("0.0.0.0", port), CloudHealthHandler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        logger.info(f"🌐 Cloud Health Check Web Server listening on port {port}")
+    except Exception as e:
+        logger.warning(f"Health server failed to bind on port {port}: {e}")
+
+
 def run_continuous_loop():
     logger.info("=================================================================")
     logger.info("🚀 PRIZEPICKS +EV REAL-TIME CLOUD ENGINE STARTED")
     logger.info("🛡️ Guardrails: 403 WAF Monitoring + Railway $5 Budget Saver Active")
     logger.info("=================================================================")
+
+    # Start health check server for Render / Koyeb
+    start_health_server()
+
 
     # Initial image registry update
     try:
