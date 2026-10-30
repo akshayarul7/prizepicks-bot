@@ -23,6 +23,19 @@ if os.path.exists(lib_path) and lib_path not in sys.path:
 
 from thefuzz import fuzz
 import paper_tracker
+import discord_notifier
+
+_last_cf_alert_ts = 0.0
+
+def alert_cf_rate_limit(platform: str, status_code: int, snippet: str = ""):
+    global _last_cf_alert_ts
+    now = time.time() if "time" in globals() else datetime.datetime.now().timestamp()
+    # Throttle alert to at most once per 20 minutes to avoid Discord spam
+    if now - _last_cf_alert_ts > 1200:
+        _last_cf_alert_ts = now
+        logger.warning(f"🚨 TRIGGERING DISCORD ALERT FOR {platform} {status_code} WAF / RATE LIMIT!")
+        discord_notifier.notify_cloudflare_blocked(platform, status_code, snippet)
+
 
 logging.basicConfig(
     level=logging.INFO,
@@ -91,11 +104,18 @@ def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
     try:
         r = requests.get(url, headers=DEFAULT_HEADERS, timeout=15)
         if r.status_code == 200:
-            data = r.json()
-            with open("prizepicks_fresh.json", "w") as f:
-                json.dump(data, f)
-            logger.info(f"PrizePicks: Ingested {len(data.get('data', []))} raw lines.")
-            return data
+            # Check if Cloudflare returned an HTML challenge rather than JSON
+            content_type = r.headers.get("Content-Type", "")
+            if "application/json" not in content_type and "cf-mitigated" in r.text.lower():
+                alert_cf_rate_limit("PrizePicks", 403, "Cloudflare Turnstile/Challenge intercepted HTML")
+            else:
+                data = r.json()
+                with open("prizepicks_fresh.json", "w") as f:
+                    json.dump(data, f)
+                logger.info(f"PrizePicks: Ingested {len(data.get('data', []))} raw lines.")
+                return data
+        elif r.status_code in [403, 429]:
+            alert_cf_rate_limit("PrizePicks", r.status_code, r.text[:300])
     except Exception as e:
         logger.warning(f"Live PrizePicks fetch error: {e}")
 
@@ -149,6 +169,8 @@ def fetch_live_fanduel() -> List[Dict[str, Any]]:
                                                 "Over Odds": int(o),
                                                 "Under Odds": int(u),
                                             })
+                            elif tr.status_code in [403, 429]:
+                                alert_cf_rate_limit("FanDuel Market API", tr.status_code, tr.text[:300])
                         except Exception:
                             pass
             if live_fd_props:
@@ -156,6 +178,8 @@ def fetch_live_fanduel() -> List[Dict[str, Any]]:
                     json.dump(live_fd_props, f, indent=2)
                 logger.info(f"FanDuel: Scraped {len(live_fd_props)} live props.")
                 return live_fd_props
+        elif r.status_code in [403, 429]:
+            alert_cf_rate_limit("FanDuel Root API", r.status_code, r.text[:300])
     except Exception as e:
         logger.warning(f"Live FanDuel fetch error: {e}")
 

@@ -47,6 +47,57 @@ def post_to_discord(embeds: List[Dict[str, Any]], content: Optional[str] = None)
         return False
 
 
+def notify_cloudflare_blocked(platform: str, status_code: int, details: Optional[str] = None) -> bool:
+    """
+    Sends an urgent high-visibility Discord alert when Cloudflare, DataDome,
+    or a 403 Forbidden / 429 Rate Limit occurs on scrapers.
+    """
+    embed = {
+        "title": f"🚨 BOT/RATE LIMIT DETECTED — {platform} ({status_code})",
+        "description": (
+            f"**Platform:** `{platform}`\n"
+            f"**HTTP Status:** `{status_code}`\n"
+            f"**Impact:** Scraper IP was flagged or rate-limited by Cloudflare / DataDome.\n\n"
+            f"**Action Required:**\n"
+            f"• Cooldown requests or route via residential proxy.\n"
+            f"• Bot will temporarily fall back to cached boards to prevent repeated bans."
+        ),
+        "color": COLOR_LOSS,
+        "fields": [
+            {
+                "name": "Error Details",
+                "value": f"```{details[:900]}```" if details else "Cloudflare challenge or 403 Forbidden.",
+                "inline": False,
+            }
+        ],
+        "footer": {"text": "PrizePicks Engine Alert • IP & WAF Monitor"},
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    return post_to_discord([embed], content="@everyone ⚠️ **PrizePicks / FanDuel Scraper Blocked**")
+
+
+def notify_error_alert(title: str, message: str, error_details: Optional[str] = None) -> bool:
+    """
+    Dispatches a Discord notification whenever an unhandled exception or workflow issue arises.
+    """
+    embed = {
+        "title": f"⚠️ WORKFLOW ISSUE: {title}",
+        "description": message,
+        "color": COLOR_LOSS,
+        "fields": [
+            {
+                "name": "Exception Details",
+                "value": f"```{error_details[:900]}```" if error_details else "No additional traceback.",
+                "inline": False,
+            }
+        ] if error_details else [],
+        "footer": {"text": "PrizePicks +EV Engine • Live Exception Tracker"},
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    return post_to_discord([embed])
+
+
+
 def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
     legs = slip.get("legs", [])
     leg_lines = []
