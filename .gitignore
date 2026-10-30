@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environments
+.env
+.venv
+venv/
+ENV/
+
+# Temporary / Cache files
+prizepicks_live_cache.json
+prizepicks_fresh.json
+fanduel_fresh.json
+fanduel_live_cache.json
+fanduel_live_scraped_now.json
+fanduel_today_props.json
+headshot_cache/
+slip_card.png
+
+# macOS
+.DS_Store

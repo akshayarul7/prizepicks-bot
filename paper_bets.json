@@ -1,0 +1,177 @@
+{
+  "slips": [
+    {
+      "id": "16434d41",
+      "date_placed": "2026-10-27 12:54:30",
+      "strategy": "live_devig_ev_v2",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Refreshed live Oct 27, 2026 12:54 PM. Pure +EV line discrepancies across 4 NBA games.",
+      "legs": [
+        {
+          "leg_id": "398f5c",
+          "player_name": "Payton Pritchard",
+          "sport": "NBA",
+          "game": "Brooklyn Nets @ Boston Celtics",
+          "stat_type": "Points",
+          "line": 16.5,
+          "choice": "UNDER",
+          "actual_result": 4.0,
+          "status": "HIT",
+          "edge_percent": 58.7
+        },
+        {
+          "leg_id": "6fdb5e",
+          "player_name": "Landry Shamet",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ New York Knicks",
+          "stat_type": "Points",
+          "line": 6.5,
+          "choice": "OVER",
+          "actual_result": 13.0,
+          "status": "HIT",
+          "edge_percent": 58.11
+        },
+        {
+          "leg_id": "9f5ab2",
+          "player_name": "Paul Reed",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ New York Knicks",
+          "stat_type": "Pts+Asts",
+          "line": 15.5,
+          "choice": "UNDER",
+          "actual_result": 25.0,
+          "status": "MISS",
+          "edge_percent": 58.0
+        },
+        {
+          "leg_id": "3c42d2",
+          "player_name": "Jrue Holiday",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Los Angeles Lakers",
+          "stat_type": "Pts+Asts",
+          "line": 13.5,
+          "choice": "OVER",
+          "actual_result": 25.0,
+          "status": "HIT",
+          "edge_percent": 57.52
+        },
+        {
+          "leg_id": "ef5047",
+          "player_name": "Derrick White",
+          "sport": "NBA",
+          "game": "Brooklyn Nets @ Boston Celtics",
+          "stat_type": "Points",
+          "line": 15.5,
+          "choice": "UNDER",
+          "actual_result": 16.0,
+          "status": "MISS",
+          "edge_percent": 56.9
+        },
+        {
+          "leg_id": "7a2e90",
+          "player_name": "Dylan Harper",
+          "sport": "NBA",
+          "game": "Sacramento Kings @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": 6.0,
+          "status": "MISS",
+          "edge_percent": 60.05
+        }
+      ],
+      "status": "LOST",
+      "return_payout": 0.0,
+      "net_profit": -10.0,
+      "payout_multiplier": 0.0
+    },
+    {
+      "id": "5842aae6",
+      "date_placed": "2026-10-29 11:07:40",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 11:07:35. Avg win rate: 58.18%. Threshold: 57.0%.",
+      "legs": [
+        {
+          "leg_id": "04e107",
+          "player_name": "De'Andre Hunter",
+          "sport": "NBA",
+          "game": "Sacramento Kings @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": 5.0,
+          "status": "PUSH",
+          "edge_percent": 59.56
+        },
+        {
+          "leg_id": "30c684",
+          "player_name": "Ty Jerome",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Portland Trail Blazers",
+          "stat_type": "Assists",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 3.0,
+          "status": "HIT",
+          "edge_percent": 59.08
+        },
+        {
+          "leg_id": "70d2e8",
+          "player_name": "Donovan Clingan",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Portland Trail Blazers",
+          "stat_type": "Pts+Asts",
+          "line": 12.5,
+          "choice": "UNDER",
+          "actual_result": 12.0,
+          "status": "HIT",
+          "edge_percent": 58.0
+        },
+        {
+          "leg_id": "1d83d0",
+          "player_name": "Cedric Coward",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Portland Trail Blazers",
+          "stat_type": "Points",
+          "line": 12.5,
+          "choice": "OVER",
+          "actual_result": 17.0,
+          "status": "HIT",
+          "edge_percent": 57.68
+        },
+        {
+          "leg_id": "e7f013",
+          "player_name": "Dyson Daniels",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ Atlanta Hawks",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 6.0,
+          "status": "PUSH",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "957456",
+          "player_name": "Jrue Holiday",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Portland Trail Blazers",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 4.0,
+          "status": "PUSH",
+          "edge_percent": 57.29
+        }
+      ],
+      "status": "WON",
+      "return_payout": 30.0,
+      "net_profit": 20.0,
+      "payout_multiplier": 3.0
+    }
+  ],
+  "version": "1.0"
+}

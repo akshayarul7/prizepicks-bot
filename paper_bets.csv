@@ -1,0 +1,13 @@
+Slip ID,Date Placed,Strategy,Slip Type,Stake ($),Slip Status,Payout ($),Net Profit ($),Leg #,Player,Stat Type,Line,Choice,Actual Result,Leg Status,Edge %,Game
+16434d41,2026-10-27 12:54:30,live_devig_ev_v2,flex_6,10.0,LOST,0.0,-10.0,1,Payton Pritchard,Points,16.5,UNDER,4.0,HIT,58.7,Brooklyn Nets @ Boston Celtics
+16434d41,2026-10-27 12:54:30,live_devig_ev_v2,flex_6,10.0,LOST,0.0,-10.0,2,Landry Shamet,Points,6.5,OVER,13.0,HIT,58.11,Detroit Pistons @ New York Knicks
+16434d41,2026-10-27 12:54:30,live_devig_ev_v2,flex_6,10.0,LOST,0.0,-10.0,3,Paul Reed,Pts+Asts,15.5,UNDER,25.0,MISS,58.0,Detroit Pistons @ New York Knicks
+16434d41,2026-10-27 12:54:30,live_devig_ev_v2,flex_6,10.0,LOST,0.0,-10.0,4,Jrue Holiday,Pts+Asts,13.5,OVER,25.0,HIT,57.52,Portland Trail Blazers @ Los Angeles Lakers
+16434d41,2026-10-27 12:54:30,live_devig_ev_v2,flex_6,10.0,LOST,0.0,-10.0,5,Derrick White,Points,15.5,UNDER,16.0,MISS,56.9,Brooklyn Nets @ Boston Celtics
+16434d41,2026-10-27 12:54:30,live_devig_ev_v2,flex_6,10.0,LOST,0.0,-10.0,6,Dylan Harper,Rebounds,5.0,UNDER,6.0,MISS,60.05,Sacramento Kings @ San Antonio Spurs
+5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,1,De'Andre Hunter,Rebounds,5.0,UNDER,5.0,PUSH,59.56,Sacramento Kings @ New Orleans Pelicans
+5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,2,Ty Jerome,Assists,6.0,UNDER,3.0,HIT,59.08,Memphis Grizzlies @ Portland Trail Blazers
+5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,3,Donovan Clingan,Pts+Asts,12.5,UNDER,12.0,HIT,58.0,Memphis Grizzlies @ Portland Trail Blazers
+5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,4,Cedric Coward,Points,12.5,OVER,17.0,HIT,57.68,Memphis Grizzlies @ Portland Trail Blazers
+5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,5,Dyson Daniels,Rebounds,6.0,UNDER,6.0,PUSH,57.45,Cleveland Cavaliers @ Atlanta Hawks
+5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,6,Jrue Holiday,Assists,4.0,UNDER,4.0,PUSH,57.29,Memphis Grizzlies @ Portland Trail Blazers
