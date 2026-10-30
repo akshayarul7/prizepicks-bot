@@ -312,9 +312,12 @@ def render_prizepicks_slip(
         draw.text((bar_x, bar_y - 22), score_text, fill=COLOR_TEXT_WHITE, font=font_score)
 
         # Model Edge text below progress bar
-        edge_pct = leg.get("edge_percent", 0.0)
+        edge_pct = float(leg.get("edge_percent") or leg.get("win_pct") or leg.get("implied_prob") or 0.0)
         font_edge = get_font(12)
-        draw.text((bar_x, bar_y + 24), f"Model Edge: {edge_pct:.1f}% True Win Rate", fill=COLOR_TEXT_MUTED, font=font_edge)
+        if edge_pct > 0.0:
+            draw.text((bar_x, bar_y + 24), f"Model Edge: {edge_pct:.1f}% True Win Rate", fill=COLOR_TEXT_MUTED, font=font_edge)
+        else:
+            draw.text((bar_x, bar_y + 24), f"Line Target: {choice} {line:g} {stat}", fill=COLOR_TEXT_MUTED, font=font_edge)
 
         # Right Status Badge
         badge_w, badge_h = 78, 38
