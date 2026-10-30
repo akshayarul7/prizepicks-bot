@@ -77,15 +77,21 @@ def get_memory_mb() -> float:
 
 
 def git_commit_and_push(commit_msg: str):
-    """Commits updated paper_bets.json to GitHub repository."""
+    """Commits updated paper_bets.json to GitHub repository using GITHUB_TOKEN if available."""
     try:
+        token = os.environ.get("GITHUB_TOKEN")
+        repo = os.environ.get("GITHUB_REPOSITORY", "akshayarul7/prizepicks-bot")
+        if token:
+            remote_url = f"https://x-access-token:{token}@github.com/{repo}.git"
+            subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
+
         subprocess.run(["git", "config", "user.name", "prizepicks-cloud-bot"], check=True)
         subprocess.run(["git", "config", "user.email", "cloud-bot@users.noreply.github.com"], check=True)
         subprocess.run(["git", "add", "paper_bets.json", "paper_bets.csv"], check=True)
         diff = subprocess.run(["git", "diff", "--staged", "--quiet"])
         if diff.returncode != 0:
             subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-            subprocess.run(["git", "push"], check=True)
+            subprocess.run(["git", "push", "origin", "main"], check=True)
             logger.info("Successfully pushed updated database to GitHub.")
     except Exception as e:
         logger.warning(f"Git push skipped/failed: {e}")
