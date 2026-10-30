@@ -8,6 +8,7 @@ PrizePicks Slip Graphic Generator (High-Impact P&L Version)
 - Completely cleaned up headers and footers with zero clutter.
 """
 
+import datetime
 import io
 import json
 import os
@@ -191,9 +192,33 @@ def render_prizepicks_slip(
     slip_type = slip.get("slip_type", "flex_6").replace("_", " ").upper()
     draw.text((44, 40), f"{slip_type} PLAY • #{slip.get('id', 'N/A')}", fill=COLOR_TEXT_WHITE, font=font_title)
 
-    font_sub = get_font(14)
-    date_str = slip.get("date_placed", "")
-    draw.text((44, 76), f"Placed: {date_str} • Verified +EV Line Discrepancies", fill=COLOR_TEXT_MUTED, font=font_sub)
+    font_sub = get_font(13)
+    raw_date = slip.get("date_placed", "")
+    formatted_date = ""
+    if raw_date:
+        try:
+            clean_date = raw_date.replace(" PT", "").replace(" PST", "").replace(" PDT", "").strip()
+            dt = None
+            for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %I:%M:%S %p", "%Y-%m-%d"):
+                try:
+                    dt = datetime.datetime.strptime(clean_date, fmt)
+                    break
+                except ValueError:
+                    pass
+            if dt:
+                # If dt was UTC (e.g. 19:25:57 from cloud worker), convert to PT (-7 hrs)
+                if dt.hour >= 18 and "PT" not in raw_date:
+                    dt = dt - datetime.timedelta(hours=7)
+                formatted_date = dt.strftime("%b %d, %Y at %I:%M %p PT")
+            else:
+                formatted_date = f"{raw_date} PT"
+        except Exception:
+            formatted_date = f"{raw_date} PT"
+    else:
+        pt_now = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+        formatted_date = pt_now.strftime("%b %d, %Y at %I:%M %p PT")
+
+    draw.text((44, 76), f"Placed: {formatted_date} • +EV Discrepancies", fill=COLOR_TEXT_MUTED, font=font_sub)
 
     # Right: Prominent P&L Display
     status = slip.get("status", "PENDING").upper()

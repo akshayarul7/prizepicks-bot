@@ -123,7 +123,9 @@ def create_slip(
     Creates a new paper betting slip.
     """
     slip_id = str(uuid.uuid4())[:8]
-    now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    # Always timestamp in Pacific Time (PST/PDT)
+    now_pt = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+    now_str = now_pt.strftime("%Y-%m-%d %I:%M:%S %p PT")
 
     clean_legs = []
     for leg in legs:
