@@ -233,8 +233,12 @@ def render_prizepicks_slip(
         pnl_sub_text = f"${payout:.2f} Payout ({multiplier:.1f}X) • Stake: ${stake:.2f}"
     elif status == "LOST":
         pnl_color = COLOR_MISS
-        pnl_large_text = f"-${stake:.2f}"
-        pnl_sub_text = f"$0.00 Payout • Stake: ${stake:.2f}"
+        if payout > 0:
+            pnl_large_text = f"-${abs(net):.2f}"
+            pnl_sub_text = f"${payout:.2f} Payout ({multiplier:.1f}X) • Stake: ${stake:.2f}"
+        else:
+            pnl_large_text = f"-${stake:.2f}"
+            pnl_sub_text = f"$0.00 Payout • Stake: ${stake:.2f}"
     elif status == "PUSH":
         pnl_color = COLOR_PUSH_FILL
         pnl_large_text = "$0.00"

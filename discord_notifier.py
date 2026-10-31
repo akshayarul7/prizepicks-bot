@@ -159,13 +159,17 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
     payout = slip.get("return_payout", 0.0)
     net = slip.get("net_profit", 0.0)
     stake = slip.get("stake", 10.0)
+    net_str = f"+${net:.2f}" if net > 0 else (f"-${abs(net):.2f}" if net < 0 else "$0.00")
 
     if status == "WON":
         color = COLOR_WIN
-        status_text = f"🏆 **SLIP WON (+${net:.2f})**"
+        status_text = f"🏆 **SLIP WON ({net_str})**"
     elif status == "LOST":
         color = COLOR_LOSS
-        status_text = f"❌ **SLIP LOST (-${stake:.2f})**"
+        if payout > 0:
+            status_text = f"❌ **PARTIAL CASH / LOST ({net_str})**"
+        else:
+            status_text = f"❌ **SLIP LOST (-${stake:.2f})**"
     else:
         color = COLOR_PUSH
         status_text = f"🛡️ **SLIP PUSHED ($0.00)**"
@@ -199,13 +203,15 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
         "title": f"📋 SLIP SETTLED — #{slip.get('id')} ({slip.get('slip_type')})",
         "description": (
             f"{status_text}\n"
-            f"**Stake:** `${stake:.2f}` | **Payout:** `${payout:.2f}` | **Net Profit:** `+${net:.2f}`"
+            f"**Stake:** `${stake:.2f}` | **Payout:** `${payout:.2f}` | **Net Profit:** `{net_str}`"
         ),
         "color": color,
         "fields": fields,
         "footer": {"text": "Official ESPN Box Scores Verified"},
     }
 
+    dash_net = dashboard_summary.get("net_profit", 0.0)
+    dash_net_str = f"+${dash_net:.2f}" if dash_net > 0 else (f"-${abs(dash_net):.2f}" if dash_net < 0 else "$0.00")
     dash_embed = {
         "title": "📊 OVERALL PERFORMANCE DASHBOARD",
         "color": COLOR_SUMMARY,
@@ -215,7 +221,7 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
                 "value": (
                     f"**Total Staked:** `${dashboard_summary.get('total_staked', 0.0):.2f}`\n"
                     f"**Total Returned:** `${dashboard_summary.get('total_returned', 0.0):.2f}`\n"
-                    f"**Net Profit:** `+${dashboard_summary.get('net_profit', 0.0):.2f}`\n"
+                    f"**Net Profit:** `{dash_net_str}`\n"
                     f"**Strategy ROI:** `{dashboard_summary.get('roi_percent', 0.0):+.1f}%`"
                 ),
                 "inline": True,
