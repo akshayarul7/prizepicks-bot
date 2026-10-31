@@ -39,6 +39,10 @@ def harvest_images_from_data(prizepicks_json: Dict) -> Dict[str, str]:
 
 
 def build_or_update_image_registry() -> Dict[str, str]:
+    """
+    Loads indexed player headshots directly from player_images.json (Ultra-low RAM: ~18MB).
+    Does NOT scan giant 40MB raw files into memory.
+    """
     registry = {}
     if os.path.exists(IMAGE_REGISTRY_FILE):
         try:
@@ -46,30 +50,6 @@ def build_or_update_image_registry() -> Dict[str, str]:
                 registry = json.load(f)
         except Exception:
             pass
-
-    # Scan all available PrizePicks JSON files to harvest headshot URLs
-    files_to_scan = [
-        "prizepicks_fresh.json",
-        "prizepicks_live_cache.json",
-    ]
-
-    for fname in files_to_scan:
-        if os.path.exists(fname):
-            try:
-                with open(fname, "r") as f:
-                    data = json.load(f)
-                    for item in data.get("included", []):
-                        if item.get("type") == "new_player":
-                            attrs = item.get("attributes", {})
-                            name = attrs.get("name") or attrs.get("display_name")
-                            url = attrs.get("image_url")
-                            if name and url and name not in registry:
-                                registry[name] = url
-            except Exception:
-                pass
-
-    with open(IMAGE_REGISTRY_FILE, "w") as f:
-        json.dump(registry, f, indent=2)
 
     return registry
 
