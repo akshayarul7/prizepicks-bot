@@ -130,17 +130,20 @@ def update_active_slips_live():
                     logger.info(f"Live Stat Update: {pname} {stat_type} = {cur_val} (Target: {leg.get('line')})")
 
         if updated_any:
-            paper_tracker.save_database(db)
-            # Edit existing Discord card in-place!
             msg_id = slip.get("discord_message_id")
             p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
-            slip_card_generator.send_slip_card_to_discord(
+            result_id = slip_card_generator.send_slip_card_to_discord(
                 slip,
                 p_imgs,
                 discord_notifier.DISCORD_WEBHOOK_URL,
                 message_id=msg_id,
             )
-            logger.info(f"Updated live progress card on Discord for slip #{slip['id']}.")
+            if result_id and result_id != "OK" and result_id != msg_id:
+                slip["discord_message_id"] = result_id
+                logger.info(f"Saved Discord message ID #{result_id} for slip #{slip['id']}.")
+
+            paper_tracker.save_database(db)
+            logger.info(f"Updated live progress card on Discord for slip #{slip['id']} (in-place message ID: {slip.get('discord_message_id')}).")
 
 
 if __name__ == "__main__":

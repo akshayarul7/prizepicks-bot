@@ -383,29 +383,40 @@ def send_slip_card_to_discord(
     img_path = render_prizepicks_slip(slip, player_images, output_path="slip_card.png")
 
     with open(img_path, "rb") as f:
-        files = {"files[0]": ("prizepicks_slip.png", f, "image/png")}
-        payload = {
-            "username": "PrizePicks +EV Engine",
-            "content": f"**PrizePicks Slip Update — #{slip.get('id')} ({slip.get('status')})**",
-        }
-        data = {"payload_json": json.dumps(payload)}
+        file_bytes = f.read()
 
-        # If message_id provided, edit existing message in-place
-        if message_id:
-            edit_url = f"{base_url}/messages/{message_id}"
+    files = {"files[0]": ("prizepicks_slip.png", file_bytes, "image/png")}
+    payload = {
+        "username": "PrizePicks +EV Engine",
+        "content": f"**PrizePicks Slip Update — #{slip.get('id')} ({slip.get('status')})**",
+        "attachments": [{"id": 0, "filename": "prizepicks_slip.png"}],
+    }
+    data = {"payload_json": json.dumps(payload)}
+
+    # If message_id provided, strictly edit existing message in-place
+    if message_id:
+        edit_url = f"{base_url}/messages/{message_id}"
+        try:
             r = requests.patch(edit_url, data=data, files=files, timeout=15)
             if r.status_code == 200:
                 return message_id
+            print(f"PATCH /messages/{message_id} returned {r.status_code}: {r.text[:200]}")
+        except Exception as e:
+            print(f"Error patching message {message_id}: {e}")
 
-        # Otherwise post new message and return its Discord message ID
-        post_url = f"{base_url}?wait=true"
+    # Otherwise post new message and return its Discord message ID
+    post_url = f"{base_url}?wait=true"
+    try:
         r = requests.post(post_url, data=data, files=files, timeout=15)
         if r.status_code in [200, 204]:
             try:
                 return str(r.json().get("id"))
             except Exception:
                 return "OK"
-        return None
+        print(f"POST {post_url} returned {r.status_code}: {r.text[:200]}")
+    except Exception as e:
+        print(f"Error posting new message: {e}")
+    return None
 
 
 if __name__ == "__main__":

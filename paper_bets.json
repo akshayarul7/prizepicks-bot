@@ -189,9 +189,9 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "status": "PENDING",
+          "status": "PUSH",
           "edge_percent": 61.1,
-          "actual_result": null
+          "actual_result": 4.0
         },
         {
           "leg_id": "leg_2",
@@ -201,9 +201,9 @@
           "stat_type": "Pts+Rebs",
           "line": 13.5,
           "choice": "UNDER",
-          "status": "PENDING",
+          "status": "HIT",
           "edge_percent": 59.9,
-          "actual_result": null
+          "actual_result": 9.0
         },
         {
           "leg_id": "leg_3",
@@ -213,9 +213,9 @@
           "stat_type": "Rebounds",
           "line": 6.0,
           "choice": "UNDER",
-          "status": "PENDING",
+          "status": "MISS",
           "edge_percent": 59.1,
-          "actual_result": null
+          "actual_result": 10.0
         },
         {
           "leg_id": "leg_4",
@@ -225,9 +225,9 @@
           "stat_type": "Points",
           "line": 14.5,
           "choice": "UNDER",
-          "status": "PENDING",
+          "status": "HIT",
           "edge_percent": 59.0,
-          "actual_result": null
+          "actual_result": 3.0
         },
         {
           "leg_id": "leg_5",
@@ -237,9 +237,9 @@
           "stat_type": "Points",
           "line": 7.5,
           "choice": "OVER",
-          "status": "PENDING",
+          "status": "HIT",
           "edge_percent": 58.9,
-          "actual_result": null
+          "actual_result": 13.0
         },
         {
           "leg_id": "leg_6",
@@ -249,15 +249,15 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "UNDER",
-          "status": "PENDING",
+          "status": "MISS",
           "edge_percent": 58.9,
-          "actual_result": null
+          "actual_result": 10.0
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0
+      "status": "LOST",
+      "return_payout": 4.0,
+      "net_profit": -6.0,
+      "payout_multiplier": 0.4
     }
   ],
   "version": "1.0"

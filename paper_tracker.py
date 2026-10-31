@@ -230,29 +230,41 @@ def fetch_espn_boxscore_data(sport: str = "basketball", league: str = "nba", dat
     Defaults to today or yesterday.
     """
     import requests
-    if not date_str:
-        date_str = datetime.datetime.now().strftime("%Y%m%d")
+    # Always compute dates in Pacific Time (PT) so UTC cloud servers don't query the wrong day
+    pt_now = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+    dates_to_check = []
+    if date_str:
+        dates_to_check.append(date_str)
+    else:
+        # Check today and yesterday in Pacific Time to guarantee coverage across midnight
+        dates_to_check.append(pt_now.strftime("%Y%m%d"))
+        dates_to_check.append((pt_now - datetime.timedelta(days=1)).strftime("%Y%m%d"))
 
-    scoreboard_url = f"https://site.api.espn.com/apis/site/v2/sports/{sport}/{league}/scoreboard?dates={date_str}"
     all_game_summaries = []
+    seen_event_ids = set()
 
-    try:
-        r = requests.get(scoreboard_url, timeout=10)
-        if r.status_code != 200:
-            return []
-        data = r.json()
-        events = data.get("events", [])
-        for ev in events:
-            # Check if game is completed
-            status = ev.get("status", {}).get("type", {})
-            if status.get("completed", False):
+    for d in dates_to_check:
+        scoreboard_url = f"https://site.api.espn.com/apis/site/v2/sports/{sport}/{league}/scoreboard?dates={d}"
+        try:
+            r = requests.get(scoreboard_url, timeout=10)
+            if r.status_code != 200:
+                continue
+            data = r.json()
+            events = data.get("events", [])
+            for ev in events:
                 ev_id = ev.get("id")
-                sum_url = f"https://site.api.espn.com/apis/site/v2/sports/{sport}/{league}/summary?event={ev_id}"
-                s_resp = requests.get(sum_url, timeout=10)
-                if s_resp.status_code == 200:
-                    all_game_summaries.append(s_resp.json())
-    except Exception as e:
-        logger.warning(f"Could not reach ESPN API (check internet connection): {e}")
+                if ev_id in seen_event_ids:
+                    continue
+                seen_event_ids.add(ev_id)
+                # Check if game is completed
+                status = ev.get("status", {}).get("type", {})
+                if status.get("completed", False):
+                    sum_url = f"https://site.api.espn.com/apis/site/v2/sports/{sport}/{league}/summary?event={ev_id}"
+                    s_resp = requests.get(sum_url, timeout=10)
+                    if s_resp.status_code == 200:
+                        all_game_summaries.append(s_resp.json())
+        except Exception as e:
+            logger.warning(f"Could not reach ESPN API: {e}")
 
     return all_game_summaries
 

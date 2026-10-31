@@ -11,3 +11,9 @@ Slip ID,Date Placed,Strategy,Slip Type,Stake ($),Slip Status,Payout ($),Net Prof
 5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,4,Cedric Coward,Points,12.5,OVER,17.0,HIT,57.68,Memphis Grizzlies @ Portland Trail Blazers
 5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,5,Dyson Daniels,Rebounds,6.0,UNDER,6.0,PUSH,57.45,Cleveland Cavaliers @ Atlanta Hawks
 5842aae6,2026-10-29 11:07:40,automated_ev_bot,flex_6,10.0,WON,30.0,20.0,6,Jrue Holiday,Assists,4.0,UNDER,4.0,PUSH,57.29,Memphis Grizzlies @ Portland Trail Blazers
+c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,1,Kyrie Irving,Rebounds,4.0,UNDER,4.0,PUSH,61.1,Houston Rockets @ Dallas Mavericks
+c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,2,Daniss Jenkins,Pts+Rebs,13.5,UNDER,9.0,HIT,59.9,Detroit Pistons @ Brooklyn Nets
+c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,3,Miles Bridges,Rebounds,6.0,UNDER,10.0,MISS,59.1,Denver Nuggets @ Phoenix Suns
+c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,4,DeMar DeRozan,Points,14.5,UNDER,3.0,HIT,59.0,Denver Nuggets @ Phoenix Suns
+c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,5,Jay Huff,Points,7.5,OVER,13.0,HIT,58.9,Indiana Pacers @ Miami Heat
+c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,6,Anthony Black,Assists,4.0,UNDER,10.0,MISS,58.9,Orlando Magic @ Toronto Raptors
