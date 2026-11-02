@@ -31,6 +31,7 @@ import sys
 import threading
 import time
 import traceback
+from typing import Any, Dict, List, Optional, Tuple
 from zoneinfo import ZoneInfo
 
 import auto_bot
@@ -64,6 +65,25 @@ def get_current_pt_time() -> datetime.datetime:
     Returns exact current Pacific Time (automatically accounts for PST vs PDT Daylight Saving Time).
     """
     return datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
+
+
+def get_scanning_phase(time_decimal: float) -> Tuple[bool, float, str]:
+    """
+    Dynamic 3-Stage Decaying Threshold Architecture (Pacific Time):
+    - Phase 1 (9:00 AM - 1:00 PM PT): Threshold 58.5%
+      Only fires on high-conviction morning pricing blunders (>= -150 juice).
+    - Phase 2 (1:30 PM - 3:30 PM PT): Threshold 57.8%
+      Captures emerging injury replacements and confirmed starting lineup news.
+    - Phase 3 (3:30 PM - 4:15 PM PT): Threshold 57.0%
+      Pre-lock final window (45 mins before earliest tip-off). Locks in the #1 highest-EV lineup on the board.
+    """
+    if 9.0 <= time_decimal < 13.0:
+        return True, 58.5, "Phase 1: Morning Blunder Hunter (58.5% Hurdle)"
+    elif 13.5 <= time_decimal < 15.5:
+        return True, 57.8, "Phase 2: Afternoon Lineup Builder (57.8% Hurdle)"
+    elif 15.5 <= time_decimal <= 16.25:
+        return True, 57.0, "Phase 3: Pre-Lock Peak Consensus (57.0% Hurdle)"
+    return False, 57.0, "Standby"
 
 
 def get_memory_mb() -> float:
@@ -168,6 +188,8 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
         try:
             pt_now = get_current_pt_time()
+            time_dec = pt_now.hour + (pt_now.minute / 60.0)
+            is_active, cur_thresh, phase_title = get_scanning_phase(time_dec)
             db = paper_tracker.load_database()
             slips = db.get("slips", [])
             report = paper_tracker.generate_performance_report(slips)
@@ -176,10 +198,16 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                 "status": "ONLINE",
                 "time_pt": pt_now.strftime("%Y-%m-%d %I:%M:%S %p PT"),
                 "ram_usage_mb": get_memory_mb(),
+                "scanning_schedule": {
+                    "current_phase": phase_title,
+                    "target_threshold": f"{cur_thresh:.1f}%",
+                    "window_active": is_active,
+                },
                 "endpoints": {
                     "health_check": "/",
                     "test_discord_alert": "/test-alert",
                     "trigger_live_scan": "/test-scan",
+                    "view_database": "/db",
                 },
                 "performance": {
                     "total_staked": f"${report.get('total_staked', 0.0):.2f}",
@@ -274,19 +302,22 @@ def run_continuous_loop():
                 continue
 
             # -------------------------------------------------------------
-            # MODE C: PRE-GAME +EV SCANNING WINDOWS (EVERY 2 MINUTES)
-            # Window 1: 9:00 AM - 11:30 AM PT (9.0 <= time <= 11.5)
-            # Window 2: 1:30 PM - 4:30 PM PT (13.5 <= time <= 16.5)
+            # MODE C: PRE-GAME +EV SCANNING (DYNAMIC 3-STAGE DECAYING THRESHOLD)
+            # Phase 1: 9:00 AM - 1:00 PM PT (58.5% threshold - morning pricing blunders)
+            # Phase 2: 1:30 PM - 3:30 PM PT (57.8% threshold - afternoon lineup news)
+            # Phase 3: 3:30 PM - 4:15 PM PT (57.0% threshold - pre-lock peak EV consensus)
             # -------------------------------------------------------------
-            in_window_1 = (9.0 <= time_decimal <= 11.5)
-            in_window_2 = (13.5 <= time_decimal <= 16.5)
+            is_scan_active, dynamic_thresh, phase_name = get_scanning_phase(time_decimal)
 
-            if (in_window_1 or in_window_2) and not has_today_slip and not has_pending:
-                logger.info(f"🔍 [SCAN WINDOW ACTIVE - {pt_now.strftime('%H:%M:%S')} PT] Scanning boards (Every 2 mins)...")
+            if is_scan_active and not has_today_slip and not has_pending:
+                logger.info(
+                    f"🔍 [{phase_name} - {pt_now.strftime('%I:%M %p PT')}] "
+                    f"Scanning boards every 2 mins (Target Hurdle: {dynamic_thresh}%)..."
+                )
                 try:
-                    res = auto_bot.run_pipeline(min_threshold=57.0, force=False)
+                    res = auto_bot.run_pipeline(min_threshold=dynamic_thresh, force=False)
                     if res.get("status") == "PLACED":
-                        logger.info("🎯 SLIP LOCKED IN & POSTED TO DISCORD!")
+                        logger.info(f"🎯 SLIP LOCKED IN & POSTED TO DISCORD ({phase_name})!")
                         git_commit_and_push(f"Lock in slip #{res.get('slip_id')} for {today_str}")
                 except Exception as e:
                     logger.error(f"Auto bot scan error: {e}")
@@ -298,17 +329,19 @@ def run_continuous_loop():
             # -------------------------------------------------------------
             # MODE D: OVERNIGHT HIBERNATE (10:00 PM - 8:30 AM PT)
             # -------------------------------------------------------------
-            # Crucial for Railway $5 budget: sleep in 30-min chunks, zero CPU
             if time_decimal >= 22.0 or time_decimal < 8.5:
-                logger.info("💤 [OVERNIGHT DEEP SLEEP] Sports slates idle. Hibernating 30 mins to preserve $5 credit...")
+                logger.info("💤 [OVERNIGHT DEEP SLEEP] Sports slates idle. Hibernating 30 mins to preserve credit...")
                 gc.collect()
                 time.sleep(1800)
                 continue
 
             # -------------------------------------------------------------
-            # MODE E: DAYTIME INTER-WINDOW IDLE (11:30 AM - 1:30 PM PT)
+            # MODE E: DAYTIME / EVENING STANDBY (Between scan windows or post-lock)
             # -------------------------------------------------------------
-            logger.info("☕ [INTER-WINDOW STANDBY] Waiting for afternoon sharp consensus window...")
+            if has_today_slip or has_pending:
+                logger.info(f"✅ [SLIP ACTIVE] Today's slip placed. Waiting for live updates (4:00 PM PT) or final settle...")
+            else:
+                logger.info(f"☕ [STANDBY - {pt_now.strftime('%I:%M %p PT')}] Waiting for next scanning window...")
             gc.collect()
             time.sleep(300)
 
