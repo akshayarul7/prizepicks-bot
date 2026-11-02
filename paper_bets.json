@@ -258,6 +258,93 @@
       "return_payout": 4.0,
       "net_profit": -6.0,
       "payout_multiplier": 0.4
+    },
+    {
+      "id": "327022c0",
+      "date_placed": "2026-11-02 10:38:58 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 18:38:08. Avg win rate: 60.14%. Threshold: 57.0%.",
+      "legs": [
+        {
+          "leg_id": "8d8911",
+          "player_name": "Max Christie",
+          "sport": "NBA",
+          "game": "Sacramento Kings @ Dallas Mavericks",
+          "stat_type": "Points",
+          "line": 7.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.66
+        },
+        {
+          "leg_id": "f82796",
+          "player_name": "Donovan Mitchell",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Cleveland Cavaliers",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.53
+        },
+        {
+          "leg_id": "59f8e9",
+          "player_name": "Jaime Jaquez Jr.",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Minnesota Timberwolves",
+          "stat_type": "Points",
+          "line": 14.5,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.43
+        },
+        {
+          "leg_id": "097dbe",
+          "player_name": "Jake LaRavia",
+          "sport": "NBA",
+          "game": "Miami Heat @ Los Angeles Lakers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "15c387",
+          "player_name": "Zach Edey",
+          "sport": "NBA",
+          "game": "New Orleans Pelicans @ Memphis Grizzlies",
+          "stat_type": "Pts+Rebs",
+          "line": 16.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.63
+        },
+        {
+          "leg_id": "33bb73",
+          "player_name": "Dennis Schr\u00f6der",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ Charlotte Hornets",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.56
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1566884365873455281"
     }
   ],
   "version": "1.0"

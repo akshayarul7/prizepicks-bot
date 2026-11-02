@@ -295,7 +295,7 @@ def render_prizepicks_slip(
         draw.text((140, row_y + 72), f"{choice} {line:g} {stat}", fill=COLOR_TEXT_WHITE, font=font_choice)
 
         # -----------------------------------------------------
-        # PROGRESS BAR (Dynamic Proportional Logic)
+        # PROGRESS BAR (Authentic PrizePicks In-Game Logic)
         # -----------------------------------------------------
         bar_x = 440
         bar_y = row_y + 48
@@ -305,8 +305,12 @@ def render_prizepicks_slip(
         # Draw Base Track (Darker Charcoal)
         draw.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=8, fill=COLOR_BAR_TRACK)
 
-        if leg_status == "PUSH":
-            # Push: FULLY FILLED light gray, gray badge
+        is_over = choice in ["OVER", "MORE"]
+        is_under = choice in ["UNDER", "LESS"]
+        is_final = (leg_status in ["HIT", "MISS", "PUSH"]) or (slip.get("status") in ["WON", "LOST", "PUSH"])
+
+        if leg_status == "PUSH" or (is_final and actual is not None and float(actual) == line):
+            # Push: FULLY FILLED light gray, slate gray badge
             draw.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=8, fill=COLOR_PUSH_FILL)
             badge_color = COLOR_PUSH_BADGE
             badge_text = "PUSH"
@@ -315,25 +319,88 @@ def render_prizepicks_slip(
 
         elif actual is not None:
             act_val = float(actual)
-            # Fill fraction relative to the line (e.g. Under 6 with 3 actual = 50% fill)
             fill_fraction = min(1.0, max(0.06, act_val / line)) if line > 0 else 0.0
             fill_width = int(bar_w * fill_fraction)
 
-            if leg_status == "HIT":
-                draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_HIT)
-                badge_color = COLOR_HIT
-                badge_text = "HIT"
-                badge_text_color = COLOR_TEXT_WHITE
-                score_text = f"Actual: {actual:g} / {line:g}"
-            else:  # MISS
-                draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_MISS)
-                badge_color = COLOR_MISS
-                badge_text = "MISS"
-                badge_text_color = COLOR_TEXT_WHITE
-                score_text = f"Actual: {actual:g} / {line:g}"
-        else:  # PENDING
+            if is_final:
+                # ---------------------------------------------------------
+                # 1. FINAL SETTLED GAME
+                # ---------------------------------------------------------
+                if leg_status == "HIT" or (is_over and act_val > line) or (is_under and act_val < line):
+                    draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_HIT)
+                    badge_color = COLOR_HIT
+                    badge_text = "HIT"
+                    badge_text_color = COLOR_TEXT_WHITE
+                    score_text = f"Final: {act_val:g} / {line:g}"
+                elif act_val == line:
+                    draw.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=8, fill=COLOR_PUSH_FILL)
+                    badge_color = COLOR_PUSH_BADGE
+                    badge_text = "PUSH"
+                    badge_text_color = COLOR_PUSH_TEXT
+                    score_text = f"Final: {act_val:g} (Tied at {line:g})"
+                else:
+                    draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_MISS)
+                    badge_color = COLOR_MISS
+                    badge_text = "MISS"
+                    badge_text_color = COLOR_TEXT_WHITE
+                    score_text = f"Final: {act_val:g} / {line:g}"
+            else:
+                # ---------------------------------------------------------
+                # 2. GAME IN PROGRESS (LIVE)
+                # ---------------------------------------------------------
+                if is_over:
+                    if act_val > line:
+                        # Player already crossed the line! Early HIT!
+                        draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_HIT)
+                        badge_color = COLOR_HIT
+                        badge_text = "HIT"
+                        badge_text_color = COLOR_TEXT_WHITE
+                        score_text = f"Live: {act_val:g} / {line:g}"
+                    else:
+                        # Over in progress (NOT a miss - game is still live!)
+                        COLOR_LIVE_PROGRESS = (37, 99, 235)  # Electric Blue progress bar
+                        draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_LIVE_PROGRESS)
+                        badge_color = (45, 52, 70)           # Dark slate pill
+                        badge_text = "OVER"
+                        badge_text_color = COLOR_TEXT_WHITE
+                        score_text = f"Live: {act_val:g} / {line:g}"
+
+                elif is_under:
+                    if act_val > line:
+                        # The ONLY time an in-game leg can say MISS before ending:
+                        # Player scored MORE than the Under line! Cannot win now!
+                        draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_MISS)
+                        badge_color = COLOR_MISS
+                        badge_text = "MISS"
+                        badge_text_color = COLOR_TEXT_WHITE
+                        score_text = f"Live: {act_val:g} / {line:g}"
+                    elif act_val == line:
+                        # Currently tied at push line
+                        draw.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=8, fill=COLOR_PUSH_FILL)
+                        badge_color = COLOR_PUSH_BADGE
+                        badge_text = "PUSH"
+                        badge_text_color = COLOR_PUSH_TEXT
+                        score_text = f"Live: {act_val:g} (Tied at {line:g})"
+                    else:
+                        # act_val < line: Actual stat is on our winning side!
+                        # Green bar and emerald badge just like PrizePicks live!
+                        draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_HIT)
+                        badge_color = (13, 148, 96)          # PrizePicks Emerald Pill
+                        badge_text = "UNDER"
+                        badge_text_color = COLOR_TEXT_WHITE
+                        score_text = f"Live: {act_val:g} / {line:g}"
+                else:
+                    draw.rounded_rectangle((bar_x, bar_y, bar_x + fill_width, bar_y + bar_h), radius=8, fill=COLOR_HIT)
+                    badge_color = (45, 52, 70)
+                    badge_text = choice
+                    badge_text_color = COLOR_TEXT_WHITE
+                    score_text = f"Live: {act_val:g} / {line:g}"
+        else:
+            # ---------------------------------------------------------
+            # 3. GAME NOT STARTED (PRE-GAME PENDING)
+            # ---------------------------------------------------------
             badge_color = (60, 65, 80)
-            badge_text = choice  # Displays "MORE" or "LESS" in clean gray pill just like unstarted PrizePicks slips
+            badge_text = choice
             badge_text_color = COLOR_TEXT_WHITE
             score_text = f"{choice} {line:g}"
 
