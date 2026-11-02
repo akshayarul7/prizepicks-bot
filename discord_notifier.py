@@ -123,7 +123,12 @@ def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
                 "name": "📋 Lineup Selections (6 Legs)",
                 "value": "\n".join(leg_lines),
                 "inline": False,
-            }
+            },
+            {
+                "name": "⚡ Quick Telemetry Link",
+                "value": "📊 [**Tap here to view Model Accuracy & Calibration**](https://prizepicks-bot.onrender.com/stats)",
+                "inline": False,
+            },
         ],
         "footer": {
             "text": f"Status: PENDING • Placed on {slip.get('date_placed', datetime.datetime.now().strftime('%Y-%m-%d'))}"
@@ -326,6 +331,12 @@ def notify_model_calibration(cal: Dict[str, Any], report: Dict[str, Any]) -> boo
             "inline": True,
         })
 
+    fields.append({
+        "name": "⚡ On-Demand Access",
+        "value": "🔄 [**Tap here to re-run / refresh this report anytime**](https://prizepicks-bot.onrender.com/stats)",
+        "inline": False,
+    })
+
     embed = {
         "title": "🎯 MODEL PROBABILITY CALIBRATION & ACCURACY REPORT",
         "description": (
@@ -339,3 +350,44 @@ def notify_model_calibration(cal: Dict[str, Any], report: Dict[str, Any]) -> boo
     }
 
     return post_to_discord([embed], content="🔔 **Live Model Calibration Report Requested**")
+
+
+def send_telemetry_hub_message() -> bool:
+    """
+    Sends a permanent Quick-Access Telemetry Hub embed to Discord with clickable markdown links
+    that the user can tap from mobile or desktop anytime.
+    """
+    embed = {
+        "title": "🎛️ PRIZEPICKS +EV ENGINE — TELEMETRY & CONTROL HUB",
+        "description": (
+            "Tap any link below directly inside Discord to access real-time cloud data, "
+            "trigger on-demand reports, or view your algorithm's accuracy.\n\n"
+            "📌 *Tip: Pin this message to the top of this channel for 1-tap access anytime!*"
+        ),
+        "color": 0x3498DB,
+        "fields": [
+            {
+                "name": "🎯 Model Calibration & Accuracy",
+                "value": "📊 [**Tap to push Live Model Calibration to Discord**](https://prizepicks-bot.onrender.com/stats)",
+                "inline": False,
+            },
+            {
+                "name": "🌐 Cloud Server Health & Schedule",
+                "value": "🟢 [**Tap to view Live Server Health & RAM Telemetry**](https://prizepicks-bot.onrender.com/)",
+                "inline": False,
+            },
+            {
+                "name": "📁 Paper Database Export",
+                "value": "💾 [**Tap to download / view raw `paper_bets.json`**](https://prizepicks-bot.onrender.com/db)",
+                "inline": False,
+            },
+            {
+                "name": "🧪 Trigger Manual Board Scan",
+                "value": "🔍 [**Tap to run an instant +EV board scan**](https://prizepicks-bot.onrender.com/test-scan)",
+                "inline": False,
+            },
+        ],
+        "footer": {"text": "PrizePicks +EV Engine • Quick Links"},
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    return post_to_discord([embed], content="📌 **PrizePicks Engine Control & Telemetry Hub**")
