@@ -236,6 +236,11 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
                 ),
                 "inline": True,
             },
+            {
+                "name": "⚡ On-Demand Calibration Telemetry",
+                "value": "🔗 [**Tap here anytime to push Live Model Calibration to Discord**](https://prizepicks-bot.onrender.com/stats)",
+                "inline": False,
+            },
         ],
         "footer": {"text": "PrizePicks +EV Engine • Nightly Settle"},
     }
@@ -255,3 +260,82 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
         print(f"Failed to send visual card image: {e}")
 
     return True
+
+
+def notify_model_calibration(cal: Dict[str, Any], report: Dict[str, Any]) -> bool:
+    """
+    Sends a rich, aesthetic Discord embed breaking down model probability calibration,
+    actual vs predicted win rates, Brier score, and confidence tiers.
+    """
+    if not cal or cal.get("total_legs", 0) == 0:
+        return False
+
+    delta_sign = "+" if cal.get("calibration_delta", 0.0) >= 0 else ""
+    delta_val = cal.get("calibration_delta", 0.0)
+    delta_comment = "Conservative (Outperforming Model)" if delta_val >= 0 else "Overestimating"
+
+    fields = [
+        {
+            "name": "📊 Core Accuracy Metrics",
+            "value": (
+                f"**Empirical Hit Rate:** `{cal.get('actual_hit_rate', 0.0):.1f}%` ({report.get('total_legs_hit', 0)}/{cal.get('total_legs', 0)} legs)\n"
+                f"**Model Predicted Win %:** `{cal.get('avg_predicted_win_rate', 0.0):.1f}%`\n"
+                f"**Calibration Delta:** `{delta_sign}{delta_val:.1f}%` ({delta_comment})\n"
+                f"**Brier Score:** `{cal.get('brier_score', 0.0):.4f}` *(<0.2400 is sharp edge)*"
+            ),
+            "inline": False,
+        }
+    ]
+
+    # Add Confidence Tiers
+    tiers = cal.get("reliability_tiers", {})
+    if tiers:
+        tier_lines = []
+        for tier, t_data in tiers.items():
+            t_sign = "+" if t_data.get("delta", 0.0) >= 0 else ""
+            tier_lines.append(
+                f"• **{tier}**: {t_data.get('count')} legs | Pred: `{t_data.get('predicted_win_rate'):.1f}%` | Actual: `{t_data.get('actual_hit_rate'):.1f}%` ({t_sign}{t_data.get('delta'):.1f}%)"
+            )
+        fields.append({
+            "name": "🎯 Confidence Tiers (Reliability Curve)",
+            "value": "\n".join(tier_lines),
+            "inline": False,
+        })
+
+    # Add Prop Type Breakdown
+    stat_types = cal.get("stat_types", {})
+    if stat_types:
+        st_lines = []
+        for st, s_data in stat_types.items():
+            st_lines.append(f"• **{st}** ({s_data.get('count')} legs): `{s_data.get('actual_hit_rate'):.1f}%` hit rate (Pred: `{s_data.get('predicted_win_rate'):.1f}%`)")
+        fields.append({
+            "name": "🏀 Stat Type Accuracy",
+            "value": "\n".join(st_lines),
+            "inline": True,
+        })
+
+    # Add Choice Breakdown (OVER vs UNDER)
+    choices = cal.get("choices", {})
+    if choices:
+        ch_lines = []
+        for ch, c_data in choices.items():
+            ch_lines.append(f"• **{ch}** ({c_data.get('count')} legs): `{c_data.get('actual_hit_rate'):.1f}%` hit rate (Pred: `{c_data.get('predicted_win_rate'):.1f}%`)")
+        fields.append({
+            "name": "⚖️ Pick Direction",
+            "value": "\n".join(ch_lines),
+            "inline": True,
+        })
+
+    embed = {
+        "title": "🎯 MODEL PROBABILITY CALIBRATION & ACCURACY REPORT",
+        "description": (
+            "Empirical verification comparing the mathematical model's pre-game win probabilities "
+            "against actual ground-truth box score outcomes."
+        ),
+        "color": COLOR_SUMMARY,
+        "fields": fields,
+        "footer": {"text": f"PrizePicks +EV Model Calibration • Evaluated {cal.get('total_legs', 0)} Settled Legs"},
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+
+    return post_to_discord([embed], content="🔔 **Live Model Calibration Report Requested**")

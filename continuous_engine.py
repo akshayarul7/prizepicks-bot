@@ -182,6 +182,30 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                 self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
             return
 
+        # 4. Push Model Calibration Report to Discord anytime
+        if self.path in ["/post-calibration", "/stats", "/calibration"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            try:
+                db = paper_tracker.load_database()
+                slips = db.get("slips", [])
+                report = paper_tracker.generate_performance_report(slips)
+                cal = report.get("model_calibration", {})
+                success = discord_notifier.notify_model_calibration(cal, report)
+                resp = {
+                    "status": "success" if success else "failed",
+                    "message": "Sent live Model Calibration & Accuracy Report to Discord! Check your channel.",
+                    "total_legs_evaluated": cal.get("total_legs", 0),
+                    "empirical_hit_rate": f"{cal.get('actual_hit_rate', 0.0)}%",
+                    "predicted_win_rate": f"{cal.get('avg_predicted_win_rate', 0.0)}%",
+                    "calibration_delta": f"{cal.get('calibration_delta', 0.0):+}%",
+                }
+            except Exception as e:
+                resp = {"status": "error", "error": str(e)}
+            self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
+            return
+
         # 4. Default Health Check and Performance Dashboard
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
@@ -208,6 +232,7 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                     "test_discord_alert": "/test-alert",
                     "trigger_live_scan": "/test-scan",
                     "view_database": "/db",
+                    "push_calibration_to_discord": "/stats",
                 },
                 "performance": {
                     "total_staked": f"${report.get('total_staked', 0.0):.2f}",
