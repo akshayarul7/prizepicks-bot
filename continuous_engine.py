@@ -218,6 +218,7 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                     "leg_win_rate": f"{report.get('leg_win_rate', 0.0):.1f}% ({report.get('total_legs_hit', 0)}/{report.get('total_legs_hit', 0) + report.get('total_legs_missed', 0)})",
                     "total_slips": len(slips),
                 },
+                "model_calibration": report.get("model_calibration", {}),
             }
         except Exception as e:
             payload = {"service": "PrizePicks +EV Real-Time Cloud Engine", "status": "ONLINE", "error": str(e)}

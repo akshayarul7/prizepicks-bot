@@ -38,6 +38,7 @@ A structured, 5-phase execution plan for taking the automated PrizePicks +EV bet
   2. Overall individual leg win rate $\ge \mathbf{55.0\%}$ (break-even is 54.2%).
   3. Cumulative net paper ROI is positive ($\ge \mathbf{+15.0\%}$).
   4. Zero cloud downtime, data-drift, or settlement drops over the evaluation window.
+  5. **Model Probability Calibration**: Verify that empirical leg hit rates match the algorithm's predicted win probabilities (target calibration delta within $\pm 3.5\%$, Brier Score $< 0.2400$) to mathematically prove pricing accuracy before wagering real money.
 
 ---
 

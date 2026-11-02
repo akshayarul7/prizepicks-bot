@@ -456,6 +456,8 @@ def generate_performance_report(slips: List[Dict[str, Any]]) -> Dict[str, Any]:
             "roi_percent": strat_roi,
         }
 
+    calibration = generate_model_calibration_report(slips)
+
     return {
         "total_slips": total_slips,
         "settled_slips": len(settled_slips),
@@ -472,6 +474,125 @@ def generate_performance_report(slips: List[Dict[str, Any]]) -> Dict[str, Any]:
         "net_profit": net_profit,
         "roi_percent": roi_percent,
         "strategies": strat_summary,
+        "model_calibration": calibration,
+    }
+
+
+def generate_model_calibration_report(slips: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """
+    Evaluates probabilistic model accuracy (Calibration Analysis):
+    Compares the algorithm's predicted win rate (edge_percent) against the
+    empirical ground-truth hit rate across settled legs.
+    """
+    settled_legs = []
+    for s in slips:
+        if s.get("status") in ["WON", "LOST", "PUSH"]:
+            for l in s.get("legs", []):
+                if l.get("status") in ["HIT", "MISS"]:
+                    settled_legs.append(l)
+
+    total_legs = len(settled_legs)
+    if total_legs == 0:
+        return {
+            "total_legs": 0,
+            "actual_hit_rate": 0.0,
+            "avg_predicted_win_rate": 0.0,
+            "calibration_delta": 0.0,
+            "brier_score": 0.0,
+            "reliability_tiers": {},
+            "stat_types": {},
+            "choices": {},
+        }
+
+    hits = sum(1 for l in settled_legs if l["status"] == "HIT")
+    actual_wr = round(hits / total_legs * 100, 2)
+    preds = [l.get("edge_percent", 50.0) for l in settled_legs]
+    avg_pred = round(sum(preds) / total_legs, 2)
+    delta = round(actual_wr - avg_pred, 2)
+
+    # Brier Score: Mean Squared Error of probability forecasts vs binary outcome (1=HIT, 0=MISS)
+    # Benchmark: 0.2500 is random coin-flip guessing; <0.2400 indicates genuine probabilistic edge
+    brier_score = round(sum(((p / 100.0) - (1.0 if l["status"] == "HIT" else 0.0)) ** 2 for p, l in zip(preds, settled_legs)) / total_legs, 4)
+
+    # Confidence Buckets / Reliability Tiers
+    buckets = {
+        "55.0% - 57.4%": {"count": 0, "hits": 0, "pred_sum": 0.0},
+        "57.5% - 59.9%": {"count": 0, "hits": 0, "pred_sum": 0.0},
+        "60.0%+": {"count": 0, "hits": 0, "pred_sum": 0.0},
+    }
+    for l in settled_legs:
+        p = l.get("edge_percent", 50.0)
+        h = 1 if l["status"] == "HIT" else 0
+        if p < 57.5:
+            key = "55.0% - 57.4%"
+        elif p < 60.0:
+            key = "57.5% - 59.9%"
+        else:
+            key = "60.0%+"
+        buckets[key]["count"] += 1
+        buckets[key]["hits"] += h
+        buckets[key]["pred_sum"] += p
+
+    tiers_summary = {}
+    for k, v in buckets.items():
+        cnt = v["count"]
+        if cnt > 0:
+            tier_pred = round(v["pred_sum"] / cnt, 2)
+            tier_act = round(v["hits"] / cnt * 100, 2)
+            tiers_summary[k] = {
+                "count": cnt,
+                "predicted_win_rate": tier_pred,
+                "actual_hit_rate": tier_act,
+                "delta": round(tier_act - tier_pred, 2),
+            }
+
+    # Stat Type Calibration
+    stat_types = {}
+    for l in settled_legs:
+        st = l.get("stat_type", "Other")
+        if st not in stat_types:
+            stat_types[st] = {"count": 0, "hits": 0, "pred_sum": 0.0}
+        stat_types[st]["count"] += 1
+        stat_types[st]["hits"] += (1 if l["status"] == "HIT" else 0)
+        stat_types[st]["pred_sum"] += l.get("edge_percent", 50.0)
+
+    stat_summary = {}
+    for st, v in stat_types.items():
+        cnt = v["count"]
+        stat_summary[st] = {
+            "count": cnt,
+            "predicted_win_rate": round(v["pred_sum"] / cnt, 2),
+            "actual_hit_rate": round(v["hits"] / cnt * 100, 2),
+        }
+
+    # Choice Calibration (OVER vs UNDER)
+    choices = {"OVER": {"count": 0, "hits": 0, "pred_sum": 0.0}, "UNDER": {"count": 0, "hits": 0, "pred_sum": 0.0}}
+    for l in settled_legs:
+        ch = l.get("choice", "OVER").upper()
+        if ch in choices:
+            choices[ch]["count"] += 1
+            choices[ch]["hits"] += (1 if l["status"] == "HIT" else 0)
+            choices[ch]["pred_sum"] += l.get("edge_percent", 50.0)
+
+    choice_summary = {}
+    for ch, v in choices.items():
+        cnt = v["count"]
+        if cnt > 0:
+            choice_summary[ch] = {
+                "count": cnt,
+                "predicted_win_rate": round(v["pred_sum"] / cnt, 2),
+                "actual_hit_rate": round(v["hits"] / cnt * 100, 2),
+            }
+
+    return {
+        "total_legs": total_legs,
+        "actual_hit_rate": actual_wr,
+        "avg_predicted_win_rate": avg_pred,
+        "calibration_delta": delta,
+        "brier_score": brier_score,
+        "reliability_tiers": tiers_summary,
+        "stat_types": stat_summary,
+        "choices": choice_summary,
     }
 
 
@@ -507,6 +628,23 @@ def print_dashboard():
         for strat, data in report["strategies"].items():
             sign = "+" if data['profit'] >= 0 else ""
             print(f" {strat:<25} | {data['slips']:<6} | {data['win_rate']:>6.1f}%   | ${data['staked']:<8.2f} | {sign}${data['profit']:<8.2f} | {sign}{data['roi_percent']}%")
+        print("=" * 80)
+
+    cal = report.get("model_calibration", {})
+    if cal and cal.get("total_legs", 0) > 0:
+        print(" 🎯 MODEL PROBABILITY CALIBRATION & ACCURACY ANALYSIS:")
+        print(f" Settled Legs Evaluated : {cal['total_legs']}")
+        print(f" Empirical Hit Rate     : {cal['actual_hit_rate']}%")
+        print(f" Model Predicted Win %  : {cal['avg_predicted_win_rate']}%")
+        delta_sign = "+" if cal['calibration_delta'] >= 0 else ""
+        cal_status = "Conservative (Under-promising, outperforming)" if cal['calibration_delta'] >= 0 else "Overestimating"
+        print(f" Calibration Delta      : {delta_sign}{cal['calibration_delta']}% ({cal_status})")
+        print(f" Brier Score            : {cal['brier_score']} (Benchmark: 0.2500 is coin-flip, <0.2400 is sharp edge)")
+        if cal.get("reliability_tiers"):
+            print(" Confidence Tiers:")
+            for tier, t_data in cal["reliability_tiers"].items():
+                t_sign = "+" if t_data['delta'] >= 0 else ""
+                print(f"   • {tier:<15}: {t_data['count']} legs | Pred: {t_data['predicted_win_rate']}% | Actual: {t_data['actual_hit_rate']}% ({t_sign}{t_data['delta']}%)")
         print("=" * 80)
 
     print(" RECENT SLIPS:")
