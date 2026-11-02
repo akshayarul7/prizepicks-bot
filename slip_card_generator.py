@@ -14,6 +14,7 @@ import json
 import os
 import sys
 from typing import Any, Dict, List, Optional
+from zoneinfo import ZoneInfo
 import requests
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -215,7 +216,7 @@ def render_prizepicks_slip(
         except Exception:
             formatted_date = f"{raw_date} PT"
     else:
-        pt_now = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+        pt_now = datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
         formatted_date = pt_now.strftime("%b %d, %Y at %I:%M %p PT")
 
     draw.text((44, 76), f"Placed: {formatted_date} • +EV Discrepancies", fill=COLOR_TEXT_MUTED, font=font_sub)

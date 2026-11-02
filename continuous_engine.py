@@ -31,6 +31,7 @@ import sys
 import threading
 import time
 import traceback
+from zoneinfo import ZoneInfo
 
 import auto_bot
 import discord_notifier
@@ -59,9 +60,10 @@ def alert_engine_error(title: str, msg: str, tb: str = ""):
 
 
 def get_current_pt_time() -> datetime.datetime:
-    """Returns current Pacific Time."""
-    # UTC minus 7 hours (PDT) / 8 hours (PST)
-    return datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+    """
+    Returns exact current Pacific Time (automatically accounts for PST vs PDT Daylight Saving Time).
+    """
+    return datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
 
 
 def get_memory_mb() -> float:
@@ -148,7 +150,19 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
             return
 
-        # 3. Default Health Check and Performance Dashboard
+        # 3. Database export endpoint
+        if self.path == "/db":
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            try:
+                db = paper_tracker.load_database()
+                self.wfile.write(json.dumps(db, indent=2).encode("utf-8"))
+            except Exception as e:
+                self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
+            return
+
+        # 4. Default Health Check and Performance Dashboard
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()

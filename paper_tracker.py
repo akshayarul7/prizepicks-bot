@@ -14,6 +14,7 @@ import os
 import sys
 import uuid
 from typing import Any, Dict, List, Optional, Tuple
+from zoneinfo import ZoneInfo
 import pandas as pd
 
 # Configure logging
@@ -123,8 +124,8 @@ def create_slip(
     Creates a new paper betting slip.
     """
     slip_id = str(uuid.uuid4())[:8]
-    # Always timestamp in Pacific Time (PST/PDT)
-    now_pt = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+    # Always timestamp in Pacific Time (accounts automatically for PST vs PDT)
+    now_pt = datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
     now_str = now_pt.strftime("%Y-%m-%d %I:%M:%S %p PT")
 
     clean_legs = []
@@ -231,7 +232,7 @@ def fetch_espn_boxscore_data(sport: str = "basketball", league: str = "nba", dat
     """
     import requests
     # Always compute dates in Pacific Time (PT) so UTC cloud servers don't query the wrong day
-    pt_now = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=7)
+    pt_now = datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
     dates_to_check = []
     if date_str:
         dates_to_check.append(date_str)
