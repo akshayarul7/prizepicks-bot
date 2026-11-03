@@ -275,8 +275,8 @@
           "stat_type": "Points",
           "line": 7.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 0.0,
+          "status": "MISS",
           "edge_percent": 60.66
         },
         {
@@ -287,8 +287,8 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 11.0,
+          "status": "MISS",
           "edge_percent": 60.53
         },
         {
@@ -299,8 +299,8 @@
           "stat_type": "Points",
           "line": 14.5,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 19.0,
+          "status": "MISS",
           "edge_percent": 60.43
         },
         {
@@ -311,8 +311,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 2.0,
+          "status": "HIT",
           "edge_percent": 60.05
         },
         {
@@ -323,8 +323,8 @@
           "stat_type": "Pts+Rebs",
           "line": 16.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 15.0,
+          "status": "MISS",
           "edge_percent": 59.63
         },
         {
@@ -335,14 +335,14 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 1.0,
+          "status": "HIT",
           "edge_percent": 59.56
         }
       ],
-      "status": "PENDING",
+      "status": "LOST",
       "return_payout": 0.0,
-      "net_profit": 0.0,
+      "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1566884365873455281"
     }

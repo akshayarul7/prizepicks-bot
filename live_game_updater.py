@@ -117,8 +117,10 @@ def update_active_slips_live():
 
             # Check if player in live stats
             matched_name = None
+            norm_p = paper_tracker.normalize_player_name(pname)
             for es_name in live_stats:
-                if pname.lower() in es_name.lower() or es_name.lower() in pname.lower():
+                norm_es = paper_tracker.normalize_player_name(es_name)
+                if norm_p == norm_es or norm_p in norm_es or norm_es in norm_p:
                     matched_name = es_name
                     break
 

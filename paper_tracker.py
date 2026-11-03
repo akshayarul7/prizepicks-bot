@@ -11,7 +11,9 @@ import datetime
 import json
 import logging
 import os
+import re
 import sys
+import unicodedata
 import uuid
 from typing import Any, Dict, List, Optional, Tuple
 from zoneinfo import ZoneInfo
@@ -333,6 +335,22 @@ def parse_player_stats_from_summaries(summaries: List[Dict[str, Any]]) -> Dict[s
     return all_players
 
 
+def normalize_player_name(name: str) -> str:
+    """
+    Normalizes unicode characters, accents, and punctuation:
+    e.g. 'Dennis Schröder' -> 'dennis schroder'
+         'Luka Dončić' -> 'luka doncic'
+         'Jaime Jaquez Jr.' -> 'jaime jaquez'
+    """
+    if not name:
+        return ""
+    nfkd = unicodedata.normalize("NFKD", name)
+    no_accents = "".join([c for c in nfkd if not unicodedata.combining(c)]).lower()
+    cleaned = re.sub(r"[^a-z0-9\s]", "", no_accents)
+    tokens = [t for t in cleaned.split() if t not in ["jr", "sr", "ii", "iii", "iv"]]
+    return " ".join(tokens)
+
+
 def auto_settle_pending_slips(date_str: Optional[str] = None):
     """
     Queries ESPN for box scores and automatically resolves all pending legs and slips.
@@ -355,13 +373,15 @@ def auto_settle_pending_slips(date_str: Optional[str] = None):
     for slip in pending_slips:
         for leg in slip.get("legs", []):
             if leg.get("status") == "PENDING":
-                p_name = leg["player_name"].lower()
+                p_name = leg["player_name"]
+                norm_p = normalize_player_name(p_name)
                 stat_key = leg["stat_type"].lower().strip()
 
                 # Find player in box scores
                 matched_name = None
                 for name in player_stats:
-                    if p_name in name or name in p_name:
+                    norm_espn = normalize_player_name(name)
+                    if norm_p == norm_espn or norm_p in norm_espn or norm_espn in norm_p:
                         matched_name = name
                         break
 
