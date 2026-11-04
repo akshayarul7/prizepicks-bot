@@ -92,60 +92,69 @@ def fetch_live_espn_stats() -> Dict[str, Dict[str, float]]:
 
 def update_active_slips_live():
     """
-    Finds pending slips, updates their current live stats,
-    and edits the Discord card in-place.
+    Finds pending slips across both baseline and volume databases,
+    updates their current live stats, and edits their respective Discord cards in-place.
     """
-    db = paper_tracker.load_database()
-    pending_slips = [s for s in db.get("slips", []) if s.get("status") == "PENDING"]
+    tracks = [
+        ("paper_bets.json", discord_notifier.DISCORD_WEBHOOK_URL),
+        ("paper_bets_volume.json", discord_notifier.DISCORD_VOLUME_WEBHOOK_URL),
+    ]
 
-    if not pending_slips:
-        logger.info("No pending slips to track live.")
-        return
+    live_stats = None
+    reg = None
 
-    live_stats = fetch_live_espn_stats()
-    if not live_stats:
-        logger.info("No live games in progress right now.")
-        return
+    for db_file, webhook_url in tracks:
+        if not os.path.exists(db_file):
+            continue
+        db = paper_tracker.load_database(db_file)
+        pending_slips = [s for s in db.get("slips", []) if s.get("status") == "PENDING"]
+        if not pending_slips:
+            continue
 
-    reg = player_image_registry.build_or_update_image_registry()
+        if live_stats is None:
+            live_stats = fetch_live_espn_stats()
+            if not live_stats:
+                logger.info("No live games in progress right now.")
+                return
 
-    for slip in pending_slips:
-        updated_any = False
-        for leg in slip.get("legs", []):
-            pname = leg.get("player_name")
-            stat_type = leg.get("stat_type")
+        if reg is None:
+            reg = player_image_registry.build_or_update_image_registry()
 
-            # Check if player in live stats
-            matched_name = None
-            norm_p = paper_tracker.normalize_player_name(pname)
-            for es_name in live_stats:
-                norm_es = paper_tracker.normalize_player_name(es_name)
-                if norm_p == norm_es or norm_p in norm_es or norm_es in norm_p:
-                    matched_name = es_name
-                    break
+        for slip in pending_slips:
+            updated_any = False
+            for leg in slip.get("legs", []):
+                pname = leg.get("player_name")
+                stat_type = leg.get("stat_type")
 
-            if matched_name and stat_type in live_stats[matched_name]:
-                cur_val = live_stats[matched_name][stat_type]
-                if leg.get("actual_result") != cur_val:
-                    leg["actual_result"] = cur_val
-                    updated_any = True
-                    logger.info(f"Live Stat Update: {pname} {stat_type} = {cur_val} (Target: {leg.get('line')})")
+                matched_name = None
+                norm_p = paper_tracker.normalize_player_name(pname)
+                for es_name in live_stats:
+                    norm_es = paper_tracker.normalize_player_name(es_name)
+                    if norm_p == norm_es or norm_p in norm_es or norm_es in norm_p:
+                        matched_name = es_name
+                        break
 
-        if updated_any:
-            msg_id = slip.get("discord_message_id")
-            p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
-            result_id = slip_card_generator.send_slip_card_to_discord(
-                slip,
-                p_imgs,
-                discord_notifier.DISCORD_WEBHOOK_URL,
-                message_id=msg_id,
-            )
-            if result_id and result_id != "OK" and result_id != msg_id:
-                slip["discord_message_id"] = result_id
-                logger.info(f"Saved Discord message ID #{result_id} for slip #{slip['id']}.")
+                if matched_name and stat_type in live_stats[matched_name]:
+                    cur_val = live_stats[matched_name][stat_type]
+                    if leg.get("actual_result") != cur_val:
+                        leg["actual_result"] = cur_val
+                        updated_any = True
+                        logger.info(f"Live Stat Update ({db_file}): {pname} {stat_type} = {cur_val} (Target: {leg.get('line')})")
 
-            paper_tracker.save_database(db)
-            logger.info(f"Updated live progress card on Discord for slip #{slip['id']} (in-place message ID: {slip.get('discord_message_id')}).")
+            if updated_any:
+                msg_id = slip.get("discord_message_id")
+                p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
+                result_id = slip_card_generator.send_slip_card_to_discord(
+                    slip,
+                    p_imgs,
+                    webhook_url,
+                    message_id=msg_id,
+                )
+                if result_id and result_id != "OK" and result_id != msg_id:
+                    slip["discord_message_id"] = result_id
+
+                paper_tracker.save_database(db, filepath=db_file)
+                logger.info(f"Updated live progress card for slip #{slip['id']} in {db_file} (msg: {slip.get('discord_message_id')}).")
 
 
 if __name__ == "__main__":

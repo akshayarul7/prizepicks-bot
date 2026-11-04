@@ -109,7 +109,10 @@ def git_commit_and_push(commit_msg: str):
 
         subprocess.run(["git", "config", "user.name", "prizepicks-cloud-bot"], check=True)
         subprocess.run(["git", "config", "user.email", "cloud-bot@users.noreply.github.com"], check=True)
-        subprocess.run(["git", "add", "paper_bets.json", "paper_bets.csv"], check=True)
+        subprocess.run(
+            ["git", "add", "paper_bets.json", "paper_bets.csv", "paper_bets_volume.json", "paper_bets_volume.csv"],
+            check=True,
+        )
         diff = subprocess.run(["git", "diff", "--staged", "--quiet"])
         if diff.returncode != 0:
             subprocess.run(["git", "commit", "-m", commit_msg], check=True)
@@ -171,30 +174,32 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
             return
 
         # 3. Database export endpoint
-        if self.path == "/db":
+        if self.path.startswith("/db"):
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             try:
-                db = paper_tracker.load_database()
+                db_target = "paper_bets_volume.json" if ("volume" in self.path or "file=paper_bets_volume.json" in self.path) else "paper_bets.json"
+                db = paper_tracker.load_database(db_target)
                 self.wfile.write(json.dumps(db, indent=2).encode("utf-8"))
             except Exception as e:
                 self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
             return
 
-        # 4. Push Model Calibration Report to Discord anytime
+        # 4. Push Baseline Model Calibration Report to Discord anytime
         if self.path in ["/post-calibration", "/stats", "/calibration"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             try:
-                db = paper_tracker.load_database()
+                db = paper_tracker.load_database("paper_bets.json")
                 slips = db.get("slips", [])
                 report = paper_tracker.generate_performance_report(slips)
                 cal = report.get("model_calibration", {})
-                success = discord_notifier.notify_model_calibration(cal, report)
+                success = discord_notifier.notify_model_calibration(cal, report, webhook_url=discord_notifier.DISCORD_WEBHOOK_URL)
                 resp = {
                     "status": "success" if success else "failed",
+                    "track": "Baseline (1-Slip/Day)",
                     "message": "Sent live Model Calibration & Accuracy Report to Discord! Check your channel.",
                     "total_legs_evaluated": cal.get("total_legs", 0),
                     "empirical_hit_rate": f"{cal.get('actual_hit_rate', 0.0)}%",
@@ -206,7 +211,32 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
             return
 
-        # 4. Default Health Check and Performance Dashboard
+        # 5. Push Volume Model Calibration Report to Dedicated Volume Discord channel
+        if self.path in ["/post-calibration-volume", "/stats-volume", "/calibration-volume"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            try:
+                db = paper_tracker.load_database("paper_bets_volume.json")
+                slips = db.get("slips", [])
+                report = paper_tracker.generate_performance_report(slips)
+                cal = report.get("model_calibration", {})
+                success = discord_notifier.notify_model_calibration(cal, report, webhook_url=discord_notifier.DISCORD_VOLUME_WEBHOOK_URL)
+                resp = {
+                    "status": "success" if success else "failed",
+                    "track": "Accelerated (3-Slips/Day)",
+                    "message": "Sent live 3-Slip Accelerated Calibration Report to Discord! Check your volume channel.",
+                    "total_legs_evaluated": cal.get("total_legs", 0),
+                    "empirical_hit_rate": f"{cal.get('actual_hit_rate', 0.0)}%",
+                    "predicted_win_rate": f"{cal.get('avg_predicted_win_rate', 0.0)}%",
+                    "calibration_delta": f"{cal.get('calibration_delta', 0.0):+}%",
+                }
+            except Exception as e:
+                resp = {"status": "error", "error": str(e)}
+            self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
+            return
+
+        # 6. Default Health Check and Performance Dashboard (Dual Track)
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.end_headers()
@@ -214,11 +244,15 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
             pt_now = get_current_pt_time()
             time_dec = pt_now.hour + (pt_now.minute / 60.0)
             is_active, cur_thresh, phase_title = get_scanning_phase(time_dec)
-            db = paper_tracker.load_database()
-            slips = db.get("slips", [])
-            report = paper_tracker.generate_performance_report(slips)
+
+            db_base = paper_tracker.load_database("paper_bets.json")
+            rep_base = paper_tracker.generate_performance_report(db_base.get("slips", []))
+
+            db_vol = paper_tracker.load_database("paper_bets_volume.json")
+            rep_vol = paper_tracker.generate_performance_report(db_vol.get("slips", []))
+
             payload = {
-                "service": "PrizePicks +EV Real-Time Cloud Engine",
+                "service": "PrizePicks +EV Real-Time Cloud Engine (Dual-Track)",
                 "status": "ONLINE",
                 "time_pt": pt_now.strftime("%Y-%m-%d %I:%M:%S %p PT"),
                 "ram_usage_mb": get_memory_mb(),
@@ -231,19 +265,29 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                     "health_check": "/",
                     "test_discord_alert": "/test-alert",
                     "trigger_live_scan": "/test-scan",
-                    "view_database": "/db",
-                    "push_calibration_to_discord": "/stats",
+                    "view_database_baseline": "/db",
+                    "view_database_volume": "/db?file=paper_bets_volume.json",
+                    "push_calibration_baseline": "/stats",
+                    "push_calibration_volume": "/stats-volume",
                 },
-                "performance": {
-                    "total_staked": f"${report.get('total_staked', 0.0):.2f}",
-                    "total_returned": f"${report.get('total_returned', 0.0):.2f}",
-                    "net_profit": f"+${report.get('net_profit', 0.0):.2f}" if report.get('net_profit', 0.0) >= 0 else f"-${abs(report.get('net_profit', 0.0)):.2f}",
-                    "roi": f"{report.get('roi_percent', 0.0):+.1f}%",
-                    "slips_record": f"{report.get('slips_won', 0)}W - {report.get('slips_lost', 0)}L - {report.get('slips_pushed', 0)}P",
-                    "leg_win_rate": f"{report.get('leg_win_rate', 0.0):.1f}% ({report.get('total_legs_hit', 0)}/{report.get('total_legs_hit', 0) + report.get('total_legs_missed', 0)})",
-                    "total_slips": len(slips),
+                "track_baseline_1_slip_day": {
+                    "total_staked": f"${rep_base.get('total_staked', 0.0):.2f}",
+                    "total_returned": f"${rep_base.get('total_returned', 0.0):.2f}",
+                    "net_profit": f"+${rep_base.get('net_profit', 0.0):.2f}" if rep_base.get('net_profit', 0.0) >= 0 else f"-${abs(rep_base.get('net_profit', 0.0)):.2f}",
+                    "roi": f"{rep_base.get('roi_percent', 0.0):+.1f}%",
+                    "slips_record": f"{rep_base.get('slips_won', 0)}W - {rep_base.get('slips_lost', 0)}L - {rep_base.get('slips_pushed', 0)}P",
+                    "leg_win_rate": f"{rep_base.get('leg_win_rate', 0.0):.1f}% ({rep_base.get('total_legs_hit', 0)}/{rep_base.get('total_legs_hit', 0) + rep_base.get('total_legs_missed', 0)})",
+                    "total_slips": len(db_base.get("slips", [])),
                 },
-                "model_calibration": report.get("model_calibration", {}),
+                "track_accelerated_3_slips_day": {
+                    "total_staked": f"${rep_vol.get('total_staked', 0.0):.2f}",
+                    "total_returned": f"${rep_vol.get('total_returned', 0.0):.2f}",
+                    "net_profit": f"+${rep_vol.get('net_profit', 0.0):.2f}" if rep_vol.get('net_profit', 0.0) >= 0 else f"-${abs(rep_vol.get('net_profit', 0.0)):.2f}",
+                    "roi": f"{rep_vol.get('roi_percent', 0.0):+.1f}%",
+                    "slips_record": f"{rep_vol.get('slips_won', 0)}W - {rep_vol.get('slips_lost', 0)}L - {rep_vol.get('slips_pushed', 0)}P",
+                    "leg_win_rate": f"{rep_vol.get('leg_win_rate', 0.0):.1f}% ({rep_vol.get('total_legs_hit', 0)}/{rep_vol.get('total_legs_hit', 0) + rep_vol.get('total_legs_missed', 0)})",
+                    "total_slips": len(db_vol.get("slips", [])),
+                },
             }
         except Exception as e:
             payload = {"service": "PrizePicks +EV Real-Time Cloud Engine", "status": "ONLINE", "error": str(e)}
@@ -289,19 +333,28 @@ def run_continuous_loop():
             minute = pt_now.minute
             time_decimal = hour + (minute / 60.0)
 
-            db = paper_tracker.load_database()
-            has_pending = any(s.get("status") == "PENDING" for s in db.get("slips", []))
+            db_base = paper_tracker.load_database("paper_bets.json")
+            db_vol = paper_tracker.load_database("paper_bets_volume.json")
+
+            has_pending_base = any(s.get("status") == "PENDING" for s in db_base.get("slips", []))
+            has_pending_vol = any(s.get("status") == "PENDING" for s in db_vol.get("slips", []))
+            has_pending = has_pending_base or has_pending_vol
+
             today_str = pt_now.strftime("%Y-%m-%d")
-            has_today_slip = any(s.get("date_placed", "").startswith(today_str) for s in db.get("slips", []))
+            has_today_base = any(s.get("date_placed", "").startswith(today_str) for s in db_base.get("slips", []))
+            today_vol_count = sum(1 for s in db_vol.get("slips", []) if s.get("date_placed", "").startswith(today_str))
 
             mem_mb = get_memory_mb()
-            logger.info(f"⏱️ Tick: {pt_now.strftime('%I:%M %p PT')} | RAM: {mem_mb} MB | Pending: {has_pending}")
+            logger.info(
+                f"⏱️ Tick: {pt_now.strftime('%I:%M %p PT')} | RAM: {mem_mb} MB | "
+                f"Baseline Slip: {has_today_base} | Volume Slips: {today_vol_count}/3"
+            )
 
             # -------------------------------------------------------------
             # MODE A: LIVE GAME IN-PLACE UPDATER (4:00 PM - 9:30 PM PT)
             # -------------------------------------------------------------
             if has_pending and 16.0 <= time_decimal < 21.5:
-                logger.info("🏀 [LIVE GAMES ACTIVE] Polling ESPN live box scores...")
+                logger.info("🏀 [LIVE GAMES ACTIVE] Polling ESPN live box scores across both tracks...")
                 try:
                     live_game_updater.update_active_slips_live()
                 except Exception as e:
@@ -315,9 +368,18 @@ def run_continuous_loop():
             # MODE B: NIGHTLY FINAL SETTLEMENT (After 9:30 PM PT)
             # -------------------------------------------------------------
             if has_pending and time_decimal >= 21.5:
-                logger.info("🌙 [NIGHTLY SETTLE] Running final box score settlement...")
+                logger.info("🌙 [NIGHTLY SETTLE] Running final box score settlement across both tracks...")
                 try:
-                    paper_tracker.auto_settle_pending_slips()
+                    if has_pending_base:
+                        paper_tracker.auto_settle_pending_slips(
+                            db_file="paper_bets.json",
+                            webhook_url=discord_notifier.DISCORD_WEBHOOK_URL,
+                        )
+                    if has_pending_vol:
+                        paper_tracker.auto_settle_pending_slips(
+                            db_file="paper_bets_volume.json",
+                            webhook_url=discord_notifier.DISCORD_VOLUME_WEBHOOK_URL,
+                        )
                     git_commit_and_push(f"Auto-settle nightly slips for {today_str}")
                     logger.info("Settled for the night.")
                 except Exception as e:
@@ -335,19 +397,34 @@ def run_continuous_loop():
             # -------------------------------------------------------------
             is_scan_active, dynamic_thresh, phase_name = get_scanning_phase(time_decimal)
 
-            if is_scan_active and not has_today_slip and not has_pending:
-                logger.info(
-                    f"🔍 [{phase_name} - {pt_now.strftime('%I:%M %p PT')}] "
-                    f"Scanning boards every 2 mins (Target Hurdle: {dynamic_thresh}%)..."
-                )
+            placed_any = False
+
+            # 1. Baseline Track (1 slip/day)
+            if is_scan_active and not has_today_base and not has_pending_base:
+                logger.info(f"🔍 [Baseline - {pt_now.strftime('%I:%M %p PT')}] Scanning for top #1 daily slip (Hurdle: {dynamic_thresh}%)...")
                 try:
                     res = auto_bot.run_pipeline(min_threshold=dynamic_thresh, force=False)
                     if res.get("status") == "PLACED":
-                        logger.info(f"🎯 SLIP LOCKED IN & POSTED TO DISCORD ({phase_name})!")
-                        git_commit_and_push(f"Lock in slip #{res.get('slip_id')} for {today_str}")
+                        logger.info(f"🎯 BASELINE SLIP LOCKED IN & POSTED TO DISCORD ({phase_name})!")
+                        placed_any = True
                 except Exception as e:
-                    logger.error(f"Auto bot scan error: {e}")
-                    alert_engine_error("AutoBot Scan Failure", str(e), traceback.format_exc())
+                    logger.error(f"Baseline scan error: {e}")
+
+            # 2. Accelerated Track (3 slips/day)
+            if is_scan_active and today_vol_count < 3 and not has_pending_vol:
+                logger.info(f"⚡ [Accelerated - {pt_now.strftime('%I:%M %p PT')}] Scanning for up to 3 non-overlapping slips ({today_vol_count}/3 placed, Hurdle: {dynamic_thresh}%)...")
+                try:
+                    vol_res = auto_bot.run_volume_pipeline(min_threshold=dynamic_thresh, target_slips=3)
+                    if vol_res.get("placed_count", 0) > 0:
+                        logger.info(f"🎯 ACCELERATED VOLUME SLIPS LOCKED IN ({vol_res.get('placed_count')} slips)!")
+                        placed_any = True
+                except Exception as e:
+                    logger.error(f"Accelerated scan error: {e}")
+
+            if placed_any:
+                git_commit_and_push(f"Lock in slips for {today_str}")
+
+            if is_scan_active and (not has_today_base or today_vol_count < 3):
                 gc.collect()
                 time.sleep(120)
                 continue
@@ -364,8 +441,8 @@ def run_continuous_loop():
             # -------------------------------------------------------------
             # MODE E: DAYTIME / EVENING STANDBY (Between scan windows or post-lock)
             # -------------------------------------------------------------
-            if has_today_slip or has_pending:
-                logger.info(f"✅ [SLIP ACTIVE] Today's slip placed. Waiting for live updates (4:00 PM PT) or final settle...")
+            if (has_today_base or has_pending_base) and (today_vol_count >= 3 or has_pending_vol):
+                logger.info(f"✅ [ALL SLIPS ACTIVE] Both baseline & 3-slip accelerated slates active. Waiting for live tip-off / settlement...")
             else:
                 logger.info(f"☕ [STANDBY - {pt_now.strftime('%I:%M %p PT')}] Waiting for next scanning window...")
             gc.collect()

@@ -16,6 +16,11 @@ DISCORD_WEBHOOK_URL = (
     "Uja5Yqm8hALt6l2hs1H-3VIc_4Q-XDY90iycgPzefKCkOIQQJfo4PaSpuS7FaOWui2fd"
 )
 
+DISCORD_VOLUME_WEBHOOK_URL = (
+    "https://discord.com/api/webhooks/1567320643421077749/"
+    "t99DFkKvSOWvMhPC53A1oj9pYs4jkQZ3fLDUXUQ2pslUy_b6IUK95pR60TitOucgG7f8"
+)
+
 COLOR_WIN = 0x2ECC71      # Emerald Green
 COLOR_LOSS = 0xE74C3C     # Red
 COLOR_PENDING = 0x3498DB  # Blue
@@ -23,11 +28,16 @@ COLOR_SUMMARY = 0x9B59B6  # Purple
 COLOR_PUSH = 0xF1C40F     # Gold
 
 
-def post_to_discord(embeds: List[Dict[str, Any]], content: Optional[str] = None) -> bool:
-    if not DISCORD_WEBHOOK_URL:
+def post_to_discord(
+    embeds: List[Dict[str, Any]],
+    content: Optional[str] = None,
+    webhook_url: Optional[str] = None,
+) -> bool:
+    target_url = webhook_url or DISCORD_WEBHOOK_URL
+    if not target_url:
         return False
     payload = {
-        "username": "PrizePicks +EV Engine",
+        "username": "PrizePicks 3-Slips Engine" if target_url == DISCORD_VOLUME_WEBHOOK_URL else "PrizePicks +EV Engine",
         "avatar_url": "https://i.imgur.com/8Q7Zg7M.png",
         "embeds": embeds,
     }
@@ -36,7 +46,7 @@ def post_to_discord(embeds: List[Dict[str, Any]], content: Optional[str] = None)
 
     try:
         r = requests.post(
-            DISCORD_WEBHOOK_URL,
+            target_url,
             json=payload,
             headers={"Content-Type": "application/json"},
             timeout=10,
@@ -98,7 +108,17 @@ def notify_error_alert(title: str, message: str, error_details: Optional[str] = 
 
 
 
-def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
+def notify_new_slip_placed(
+    slip: Dict[str, Any],
+    avg_win_pct: float,
+    webhook_url: Optional[str] = None,
+    db_file: str = "paper_bets.json",
+):
+    target_wh = webhook_url or DISCORD_WEBHOOK_URL
+    is_volume = (target_wh == DISCORD_VOLUME_WEBHOOK_URL)
+    cal_url = "https://prizepicks-bot.onrender.com/stats-volume" if is_volume else "https://prizepicks-bot.onrender.com/stats"
+    track_title = " [ACCELERATED TRACK]" if is_volume else ""
+
     legs = slip.get("legs", [])
     leg_lines = []
     for idx, l in enumerate(legs, 1):
@@ -111,7 +131,7 @@ def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
         )
 
     embed = {
-        "title": f"🚀 NEW PAPER SLIP PLACED — #{slip.get('id')}",
+        "title": f"🚀 NEW PAPER SLIP PLACED — #{slip.get('id')}{track_title}",
         "description": (
             f"**Slip Type:** `{slip.get('slip_type')}` | **Stake:** `${slip.get('stake', 10.0):.2f}`\n"
             f"**Lineup Avg Win Rate:** `{avg_win_pct:.2f}%` 🔥 *(Hurdle: 55.09%)*\n"
@@ -126,7 +146,7 @@ def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
             },
             {
                 "name": "⚡ Quick Telemetry Link",
-                "value": "📊 [**Tap here to view Model Accuracy & Calibration**](https://prizepicks-bot.onrender.com/stats)",
+                "value": f"📊 [**Tap here to view Model Accuracy & Calibration**]({cal_url})",
                 "inline": False,
             },
         ],
@@ -135,7 +155,7 @@ def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
         },
     }
     # Send Discord text embed
-    post_to_discord([embed])
+    post_to_discord([embed], webhook_url=target_wh)
 
     # Also render and upload visual locked-in slip card
     msg_id = None
@@ -144,22 +164,31 @@ def notify_new_slip_placed(slip: Dict[str, Any], avg_win_pct: float):
         import player_image_registry
         reg = player_image_registry.build_or_update_image_registry()
         p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
-        msg_id = slip_card_generator.send_slip_card_to_discord(slip, p_imgs, DISCORD_WEBHOOK_URL)
+        msg_id = slip_card_generator.send_slip_card_to_discord(slip, p_imgs, target_wh)
         if msg_id and msg_id != "OK":
             slip["discord_message_id"] = msg_id
             import paper_tracker
-            db = paper_tracker.load_database()
+            db = paper_tracker.load_database(db_file)
             for s in db.get("slips", []):
                 if s.get("id") == slip.get("id"):
                     s["discord_message_id"] = msg_id
-            paper_tracker.save_database(db)
+            paper_tracker.save_database(db, filepath=db_file)
     except Exception as e:
         print(f"Failed to send locked-in slip card image: {e}")
 
     return True
 
 
-def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, Any]):
+def notify_settlement_recap(
+    slip: Dict[str, Any],
+    dashboard_summary: Dict[str, Any],
+    webhook_url: Optional[str] = None,
+):
+    target_wh = webhook_url or DISCORD_WEBHOOK_URL
+    is_volume = (target_wh == DISCORD_VOLUME_WEBHOOK_URL)
+    cal_url = "https://prizepicks-bot.onrender.com/stats-volume" if is_volume else "https://prizepicks-bot.onrender.com/stats"
+    track_title = " (ACCELERATED 3-SLIP TRACK)" if is_volume else ""
+
     status = slip.get("status", "PENDING")
     payout = slip.get("return_payout", 0.0)
     net = slip.get("net_profit", 0.0)
@@ -205,7 +234,7 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
         fields.append({"name": f"❌ Missed Legs ({len(misses)})", "value": "\n".join(misses), "inline": False})
 
     slip_embed = {
-        "title": f"📋 SLIP SETTLED — #{slip.get('id')} ({slip.get('slip_type')})",
+        "title": f"📋 SLIP SETTLED — #{slip.get('id')} ({slip.get('slip_type')}){track_title}",
         "description": (
             f"{status_text}\n"
             f"**Stake:** `${stake:.2f}` | **Payout:** `${payout:.2f}` | **Net Profit:** `{net_str}`"
@@ -218,7 +247,7 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
     dash_net = dashboard_summary.get("net_profit", 0.0)
     dash_net_str = f"+${dash_net:.2f}" if dash_net > 0 else (f"-${abs(dash_net):.2f}" if dash_net < 0 else "$0.00")
     dash_embed = {
-        "title": "📊 OVERALL PERFORMANCE DASHBOARD",
+        "title": f"📊 OVERALL PERFORMANCE DASHBOARD{track_title}",
         "color": COLOR_SUMMARY,
         "fields": [
             {
@@ -243,7 +272,7 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
             },
             {
                 "name": "⚡ On-Demand Calibration Telemetry",
-                "value": "🔗 [**Tap here anytime to push Live Model Calibration to Discord**](https://prizepicks-bot.onrender.com/stats)",
+                "value": f"🔗 [**Tap here anytime to push Live Model Calibration to Discord**]({cal_url})",
                 "inline": False,
             },
         ],
@@ -251,7 +280,7 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
     }
 
     # Post text embeds
-    post_to_discord([dash_embed, slip_embed])
+    post_to_discord([dash_embed, slip_embed], webhook_url=target_wh)
 
     # Also render and upload visual PrizePicks app card
     try:
@@ -260,14 +289,22 @@ def notify_settlement_recap(slip: Dict[str, Any], dashboard_summary: Dict[str, A
         reg = player_image_registry.build_or_update_image_registry()
         p_imgs = {l.get("player_name"): reg.get(l.get("player_name")) for l in slip.get("legs", [])}
         message_id = slip.get("discord_message_id")
-        slip_card_generator.send_slip_card_to_discord(slip, p_imgs, DISCORD_WEBHOOK_URL, message_id=message_id)
+        slip_card_generator.send_slip_card_to_discord(slip, p_imgs, target_wh, message_id=message_id)
     except Exception as e:
         print(f"Failed to send visual card image: {e}")
 
     return True
 
 
-def notify_model_calibration(cal: Dict[str, Any], report: Dict[str, Any]) -> bool:
+def notify_model_calibration(
+    cal: Dict[str, Any],
+    report: Dict[str, Any],
+    webhook_url: Optional[str] = None,
+) -> bool:
+    target_wh = webhook_url or DISCORD_WEBHOOK_URL
+    is_volume = (target_wh == DISCORD_VOLUME_WEBHOOK_URL)
+    cal_url = "https://prizepicks-bot.onrender.com/stats-volume" if is_volume else "https://prizepicks-bot.onrender.com/stats"
+    track_title = " [ACCELERATED TRACK]" if is_volume else ""
     """
     Sends a rich, aesthetic Discord embed breaking down model probability calibration,
     actual vs predicted win rates, Brier score, and confidence tiers.
@@ -333,12 +370,12 @@ def notify_model_calibration(cal: Dict[str, Any], report: Dict[str, Any]) -> boo
 
     fields.append({
         "name": "⚡ On-Demand Access",
-        "value": "🔄 [**Tap here to re-run / refresh this report anytime**](https://prizepicks-bot.onrender.com/stats)",
+        "value": f"🔄 [**Tap here to re-run / refresh this report anytime**]({cal_url})",
         "inline": False,
     })
 
     embed = {
-        "title": "🎯 MODEL PROBABILITY CALIBRATION & ACCURACY REPORT",
+        "title": f"🎯 MODEL PROBABILITY CALIBRATION & ACCURACY REPORT{track_title}",
         "description": (
             "Empirical verification comparing the mathematical model's pre-game win probabilities "
             "against actual ground-truth box score outcomes."
@@ -349,26 +386,32 @@ def notify_model_calibration(cal: Dict[str, Any], report: Dict[str, Any]) -> boo
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }
 
-    return post_to_discord([embed], content="🔔 **Live Model Calibration Report Requested**")
+    return post_to_discord([embed], content=f"🔔 **Live Model Calibration Report Requested{track_title}**", webhook_url=target_wh)
 
 
-def send_telemetry_hub_message() -> bool:
+def send_telemetry_hub_message(webhook_url: Optional[str] = None) -> bool:
     """
     Sends a permanent Quick-Access Telemetry Hub embed to Discord with clickable markdown links
     that the user can tap from mobile or desktop anytime.
     """
+    target_wh = webhook_url or DISCORD_WEBHOOK_URL
+    is_volume = (target_wh == DISCORD_VOLUME_WEBHOOK_URL)
+    cal_url = "https://prizepicks-bot.onrender.com/stats-volume" if is_volume else "https://prizepicks-bot.onrender.com/stats"
+    db_name = "paper_bets_volume.json" if is_volume else "paper_bets.json"
+    hub_title = "🎛️ PRIZEPICKS +EV ENGINE — ACCELERATED 3-SLIP TRACK HUB" if is_volume else "🎛️ PRIZEPICKS +EV ENGINE — TELEMETRY & CONTROL HUB"
+
     embed = {
-        "title": "🎛️ PRIZEPICKS +EV ENGINE — TELEMETRY & CONTROL HUB",
+        "title": hub_title,
         "description": (
             "Tap any link below directly inside Discord to access real-time cloud data, "
             "trigger on-demand reports, or view your algorithm's accuracy.\n\n"
             "📌 *Tip: Pin this message to the top of this channel for 1-tap access anytime!*"
         ),
-        "color": 0x3498DB,
+        "color": 0x9B59B6 if is_volume else 0x3498DB,
         "fields": [
             {
                 "name": "🎯 Model Calibration & Accuracy",
-                "value": "📊 [**Tap to push Live Model Calibration to Discord**](https://prizepicks-bot.onrender.com/stats)",
+                "value": f"📊 [**Tap to push Live Model Calibration to Discord**]({cal_url})",
                 "inline": False,
             },
             {
@@ -377,8 +420,8 @@ def send_telemetry_hub_message() -> bool:
                 "inline": False,
             },
             {
-                "name": "📁 Paper Database Export",
-                "value": "💾 [**Tap to download / view raw `paper_bets.json`**](https://prizepicks-bot.onrender.com/db)",
+                "name": f"📁 Paper Database Export (`{db_name}`)",
+                "value": f"💾 [**Tap to download / view raw `{db_name}`**](https://prizepicks-bot.onrender.com/db?file={db_name})",
                 "inline": False,
             },
             {
@@ -387,7 +430,7 @@ def send_telemetry_hub_message() -> bool:
                 "inline": False,
             },
         ],
-        "footer": {"text": "PrizePicks +EV Engine • Quick Links"},
+        "footer": {"text": f"PrizePicks +EV Engine • {'3-Slips Accelerated' if is_volume else 'Standard Baseline'}"},
         "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }
-    return post_to_discord([embed], content="📌 **PrizePicks Engine Control & Telemetry Hub**")
+    return post_to_discord([embed], content=f"📌 **{hub_title}**", webhook_url=target_wh)

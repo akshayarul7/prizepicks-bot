@@ -517,6 +517,114 @@ def run_pipeline(
     }
 
 
+def run_volume_pipeline(
+    min_threshold: float = 56.5,
+    target_slips: int = 3,
+    slip_type: str = "flex_6",
+    stake: float = 10.0,
+    db_file: str = "paper_bets_volume.json",
+    webhook_url: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Runs the Accelerated High-Volume +EV Cycle (up to 3 non-overlapping slips/day).
+    1. Loads paper_bets_volume.json.
+    2. Checks how many slips were already placed today.
+    3. If < target_slips, finds the best non-overlapping 6-man lineups (0 player overlap).
+    4. Automatically places them into paper_bets_volume.json and pushes to the dedicated Discord channel.
+    """
+    target_wh = webhook_url or discord_notifier.DISCORD_VOLUME_WEBHOOK_URL
+    from zoneinfo import ZoneInfo
+    now = datetime.datetime.now(ZoneInfo("America/Los_Angeles"))
+    today_str = now.strftime("%Y-%m-%d")
+    logger.info(f"=== STARTING ACCELERATED 3-SLIP +EV CYCLE [{now.strftime('%Y-%m-%d %H:%M:%S')}] ===")
+
+    db = paper_tracker.load_database(db_file)
+    existing_slips = db.get("slips", [])
+    today_slips = [s for s in existing_slips if s.get("date_placed", "").startswith(today_str)]
+
+    needed_slips = target_slips - len(today_slips)
+    if needed_slips <= 0:
+        logger.info(f"Target volume reached: {len(today_slips)}/{target_slips} slips already placed today.")
+        return {"status": "VOLUME_TARGET_MET", "slips_today": len(today_slips)}
+
+    # Collect already used players from today's volume slips
+    used_today_players = set()
+    for s in today_slips:
+        for l in s.get("legs", []):
+            used_today_players.add(l.get("player_name"))
+
+    pp_raw = fetch_live_prizepicks()
+    if not pp_raw:
+        return {"status": "ERROR", "reason": "NO_PRIZEPICKS_DATA"}
+
+    fd_props = fetch_live_fanduel()
+    if not fd_props:
+        return {"status": "ERROR", "reason": "NO_FANDUEL_DATA"}
+
+    candidates = scan_and_evaluate_props(pp_raw, fd_props, min_win_pct=55.0)
+    logger.info(f"[Volume Pipeline] Discovered {len(candidates)} total candidates. Filtering out {len(used_today_players)} already used today...")
+
+    available_candidates = [c for c in candidates if c["player_name"] not in used_today_players]
+
+    placed_slips = []
+    for slip_idx in range(needed_slips):
+        if len(available_candidates) < 6:
+            logger.warning(f"Insufficient remaining candidates ({len(available_candidates)}) for next slip.")
+            break
+
+        lineup = select_best_lineup(available_candidates, target_size=6, min_games=2)
+        if not lineup:
+            logger.warning("Could not assemble a compliant 6-man multi-game slip from remaining candidates.")
+            break
+
+        avg_win = sum(p["win_pct"] for p in lineup) / 6.0
+        if avg_win < min_threshold:
+            logger.info(f"Remaining lineup average win rate ({avg_win:.2f}%) below hurdle ({min_threshold}%). Holding off on slip #{len(today_slips) + len(placed_slips) + 1}.")
+            break
+
+        clean_legs = []
+        for p in lineup:
+            clean_legs.append({
+                "player_name": p["player_name"],
+                "sport": "NBA",
+                "game": p["game"],
+                "stat_type": p["stat_type"],
+                "line": p["line"],
+                "choice": p["choice"],
+                "edge_percent": p["win_pct"],
+            })
+
+        slip = paper_tracker.create_slip(
+            legs=clean_legs,
+            slip_type=slip_type,
+            stake=stake,
+            strategy="accelerated_volume_3",
+            notes=f"Accelerated Slip #{len(today_slips) + len(placed_slips) + 1} for {today_str}. Avg win rate: {avg_win:.2f}%.",
+        )
+        db["slips"].append(slip)
+        paper_tracker.save_database(db, filepath=db_file)
+
+        logger.info(f"🎯 Placed Accelerated Slip #{slip['id']} ({len(clean_legs)} legs, avg {avg_win:.2f}%) into {db_file}")
+
+        try:
+            discord_notifier.notify_new_slip_placed(slip, avg_win, webhook_url=target_wh, db_file=db_file)
+        except Exception as e:
+            logger.warning(f"Discord notification error: {e}")
+
+        placed_slips.append(slip["id"])
+
+        # Exclude these 6 players from next slip
+        chosen_names = set(p["player_name"] for p in lineup)
+        available_candidates = [c for c in available_candidates if c["player_name"] not in chosen_names]
+
+    return {
+        "status": "SUCCESS" if placed_slips else "NO_NEW_SLIPS",
+        "placed_count": len(placed_slips),
+        "total_today": len(today_slips) + len(placed_slips),
+        "slip_ids": placed_slips,
+    }
+
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="Automated PrizePicks +EV Bot")

@@ -76,7 +76,8 @@ def save_database(data: Dict[str, Any], filepath: str = DB_FILE, export_csv: boo
         json.dump(data, f, indent=2)
 
     if export_csv:
-        export_slips_to_csv(data["slips"], CSV_FILE)
+        csv_path = filepath.replace(".json", ".csv")
+        export_slips_to_csv(data["slips"], csv_path)
 
 
 def export_slips_to_csv(slips: List[Dict[str, Any]], filepath: str = CSV_FILE):
@@ -351,17 +352,21 @@ def normalize_player_name(name: str) -> str:
     return " ".join(tokens)
 
 
-def auto_settle_pending_slips(date_str: Optional[str] = None):
+def auto_settle_pending_slips(
+    date_str: Optional[str] = None,
+    db_file: str = DB_FILE,
+    webhook_url: Optional[str] = None,
+):
     """
     Queries ESPN for box scores and automatically resolves all pending legs and slips.
     """
-    db = load_database()
+    db = load_database(db_file)
     pending_slips = [s for s in db.get("slips", []) if s.get("status") == "PENDING"]
     if not pending_slips:
-        logger.info("No pending slips found to settle.")
+        logger.info(f"No pending slips found to settle in {db_file}.")
         return
 
-    logger.info(f"Checking box scores to settle {len(pending_slips)} pending slips...")
+    logger.info(f"Checking box scores to settle {len(pending_slips)} pending slips in {db_file}...")
     summaries = fetch_espn_boxscore_data(sport="basketball", league="nba", date_str=date_str)
     if not summaries:
         logger.warning("No completed game box scores found on ESPN. Games may not have finished yet.")
@@ -395,29 +400,33 @@ def auto_settle_pending_slips(date_str: Optional[str] = None):
         grade_slip(slip)
 
     if settled_any:
-        save_database(db)
-        logger.info("Successfully updated slip statuses with official box scores.")
+        save_database(db, filepath=db_file)
+        logger.info(f"Successfully updated slip statuses in {db_file} with official box scores.")
         try:
             import discord_notifier
             report = generate_performance_report(db.get("slips", []))
             for s in pending_slips:
                 if s.get("status") in ["WON", "LOST", "PUSH"]:
-                    discord_notifier.notify_settlement_recap(s, {
-                        "total_staked": report.get("total_staked", 0.0),
-                        "total_returned": report.get("total_returned", 0.0),
-                        "net_profit": report.get("net_profit", 0.0),
-                        "roi_percent": report.get("roi_percent", 0.0),
-                        "won_slips": report.get("slips_won", 0),
-                        "lost_slips": report.get("slips_lost", 0),
-                        "hit_legs": report.get("total_legs_hit", 0),
-                        "missed_legs": report.get("total_legs_missed", 0),
-                        "leg_hit_rate": report.get("leg_win_rate", 0.0),
-                    })
-            logger.info("Sent settlement recap to Discord webhook.")
+                    discord_notifier.notify_settlement_recap(
+                        s,
+                        {
+                            "total_staked": report.get("total_staked", 0.0),
+                            "total_returned": report.get("total_returned", 0.0),
+                            "net_profit": report.get("net_profit", 0.0),
+                            "roi_percent": report.get("roi_percent", 0.0),
+                            "won_slips": report.get("slips_won", 0),
+                            "lost_slips": report.get("slips_lost", 0),
+                            "hit_legs": report.get("total_legs_hit", 0),
+                            "missed_legs": report.get("total_legs_missed", 0),
+                            "leg_hit_rate": report.get("leg_win_rate", 0.0),
+                        },
+                        webhook_url=webhook_url,
+                    )
+            logger.info(f"Sent settlement recap to Discord webhook ({db_file}).")
         except Exception as e:
             logger.warning(f"Discord settlement notification failed: {e}")
     else:
-        logger.info("No matching player stats found in final games yet.")
+        logger.info(f"No matching player stats found in final games yet for {db_file}.")
 
 
 # ===========================================================================

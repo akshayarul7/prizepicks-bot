@@ -1,0 +1,266 @@
+{
+  "slips": [
+    {
+      "id": "4531f817",
+      "date_placed": "2026-11-03 05:45:41 PM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-03. Avg win rate: 62.74%.",
+      "legs": [
+        {
+          "leg_id": "305932",
+          "player_name": "P.J. Washington",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 70.7
+        },
+        {
+          "leg_id": "3e8d56",
+          "player_name": "Aaron Gordon",
+          "sport": "NBA",
+          "game": "Toronto Raptors @ Denver Nuggets",
+          "stat_type": "Pts+Rebs+Asts",
+          "line": 20.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 63.32
+        },
+        {
+          "leg_id": "d91442",
+          "player_name": "Fred VanVleet",
+          "sport": "NBA",
+          "game": "Minnesota Timberwolves @ Houston Rockets",
+          "stat_type": "Rebs+Asts",
+          "line": 7.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 62.97
+        },
+        {
+          "leg_id": "b3884b",
+          "player_name": "Caleb Wilson",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ New York Knicks",
+          "stat_type": "Pts+Rebs",
+          "line": 23.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 61.73
+        },
+        {
+          "leg_id": "ef8764",
+          "player_name": "Jamal Murray",
+          "sport": "NBA",
+          "game": "Toronto Raptors @ Denver Nuggets",
+          "stat_type": "Points",
+          "line": 25.5,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.22
+        },
+        {
+          "leg_id": "48ac31",
+          "player_name": "Naji Marshall",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Points",
+          "line": 10.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.51
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1567354121827127316"
+    },
+    {
+      "id": "744854c9",
+      "date_placed": "2026-11-03 05:45:43 PM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #2 for 2026-11-03. Avg win rate: 57.90%.",
+      "legs": [
+        {
+          "leg_id": "730fb3",
+          "player_name": "Devin Vassell",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Points",
+          "line": 11.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.51
+        },
+        {
+          "leg_id": "e4d9e7",
+          "player_name": "Daniel Gafford",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Points",
+          "line": 8.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.11
+        },
+        {
+          "leg_id": "af1a0d",
+          "player_name": "DeMar DeRozan",
+          "sport": "NBA",
+          "game": "Toronto Raptors @ Denver Nuggets",
+          "stat_type": "Points",
+          "line": 10.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.11
+        },
+        {
+          "leg_id": "4d6fab",
+          "player_name": "Kenrich Williams",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ Oklahoma City Thunder",
+          "stat_type": "Points",
+          "line": 8.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.56
+        },
+        {
+          "leg_id": "6a3467",
+          "player_name": "Toumani Camara",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Phoenix Suns",
+          "stat_type": "Points",
+          "line": 13.5,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.56
+        },
+        {
+          "leg_id": "58f5a0",
+          "player_name": "Khaman Maluach",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Phoenix Suns",
+          "stat_type": "Points",
+          "line": 7.5,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.56
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1567354128735150142"
+    },
+    {
+      "id": "1af40f65",
+      "date_placed": "2026-11-03 05:45:44 PM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #3 for 2026-11-03. Avg win rate: 56.77%.",
+      "legs": [
+        {
+          "leg_id": "799b54",
+          "player_name": "Saddiq Bey",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Points",
+          "line": 12.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.28
+        },
+        {
+          "leg_id": "6f45c9",
+          "player_name": "Sam Merrill",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ Oklahoma City Thunder",
+          "stat_type": "Points",
+          "line": 8.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.16
+        },
+        {
+          "leg_id": "e21f09",
+          "player_name": "Stephon Castle",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Rebs+Asts",
+          "line": 10.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.71
+        },
+        {
+          "leg_id": "a46c42",
+          "player_name": "Paul Reed",
+          "sport": "NBA",
+          "game": "Philadelphia 76ers @ Detroit Pistons",
+          "stat_type": "Pts+Asts",
+          "line": 15.5,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.71
+        },
+        {
+          "leg_id": "314bd9",
+          "player_name": "Javonte Green",
+          "sport": "NBA",
+          "game": "Philadelphia 76ers @ Detroit Pistons",
+          "stat_type": "Rebounds",
+          "line": 2.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.7
+        },
+        {
+          "leg_id": "4491a7",
+          "player_name": "Norman Powell",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ New York Knicks",
+          "stat_type": "Pts+Rebs+Asts",
+          "line": 23.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.09
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1567354135588642908"
+    }
+  ],
+  "version": "1.0"
+}

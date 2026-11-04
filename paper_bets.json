@@ -345,6 +345,93 @@
       "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1566884365873455281"
+    },
+    {
+      "id": "2740bf98",
+      "date_placed": "2026-11-03 05:46:08 PM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 17:46:03. Avg win rate: 62.74%. Threshold: 57.0%.",
+      "legs": [
+        {
+          "leg_id": "e46333",
+          "player_name": "P.J. Washington",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 70.7
+        },
+        {
+          "leg_id": "616f3e",
+          "player_name": "Aaron Gordon",
+          "sport": "NBA",
+          "game": "Toronto Raptors @ Denver Nuggets",
+          "stat_type": "Pts+Rebs+Asts",
+          "line": 20.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 63.32
+        },
+        {
+          "leg_id": "3197e4",
+          "player_name": "Fred VanVleet",
+          "sport": "NBA",
+          "game": "Minnesota Timberwolves @ Houston Rockets",
+          "stat_type": "Rebs+Asts",
+          "line": 7.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 62.97
+        },
+        {
+          "leg_id": "04a774",
+          "player_name": "Caleb Wilson",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ New York Knicks",
+          "stat_type": "Pts+Rebs",
+          "line": 23.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 61.73
+        },
+        {
+          "leg_id": "28693c",
+          "player_name": "Jamal Murray",
+          "sport": "NBA",
+          "game": "Toronto Raptors @ Denver Nuggets",
+          "stat_type": "Points",
+          "line": 25.5,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.22
+        },
+        {
+          "leg_id": "6262ec",
+          "player_name": "Naji Marshall",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ San Antonio Spurs",
+          "stat_type": "Points",
+          "line": 10.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.51
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1567354233731162172"
     }
   ],
   "version": "1.0"
