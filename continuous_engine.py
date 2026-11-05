@@ -251,11 +251,22 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
             db_vol = paper_tracker.load_database("paper_bets_volume.json")
             rep_vol = paper_tracker.generate_performance_report(db_vol.get("slips", []))
 
+            now_ts = time.time()
+            pp_cooldown_rem = max(0, int(auto_bot._pp_cooldown_until - now_ts))
+            fd_cooldown_rem = max(0, int(auto_bot._fd_cooldown_until - now_ts))
+
             payload = {
                 "service": "PrizePicks +EV Real-Time Cloud Engine (Dual-Track)",
                 "status": "ONLINE",
                 "time_pt": pt_now.strftime("%Y-%m-%d %I:%M:%S %p PT"),
                 "ram_usage_mb": get_memory_mb(),
+                "api_health": {
+                    "prizepicks": "IN_COOLDOWN" if pp_cooldown_rem > 0 else "HEALTHY_READY",
+                    "prizepicks_cooldown_sec": pp_cooldown_rem,
+                    "prizepicks_cache_age_sec": int(now_ts - auto_bot._pp_cache_ts) if auto_bot._pp_cache_ts else None,
+                    "fanduel": "IN_COOLDOWN" if fd_cooldown_rem > 0 else "HEALTHY_READY",
+                    "fanduel_cooldown_sec": fd_cooldown_rem,
+                },
                 "scanning_schedule": {
                     "current_phase": phase_title,
                     "target_threshold": f"{cur_thresh:.1f}%",
