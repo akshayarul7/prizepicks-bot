@@ -15,7 +15,7 @@ import re
 import sys
 import unicodedata
 import uuid
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple
 from zoneinfo import ZoneInfo
 import pandas as pd
 
@@ -228,10 +228,15 @@ def grade_slip(slip: Dict[str, Any]) -> Dict[str, Any]:
 # AUTOMATED STAT SETTLEMENT (ESPN PUBLIC API)
 # ===========================================================================
 
-def fetch_espn_boxscore_data(sport: str = "basketball", league: str = "nba", date_str: Optional[str] = None) -> List[Dict[str, Any]]:
+def fetch_espn_boxscore_data(
+    sport: str = "basketball",
+    league: str = "nba",
+    date_str: Optional[str] = None,
+    extra_dates: Optional[List[str]] = None,
+) -> List[Dict[str, Any]]:
     """
-    Fetches final box score stats for all games on a given date (YYYYMMDD).
-    Defaults to today or yesterday.
+    Fetches final box score stats for all games on given dates (YYYYMMDD).
+    Defaults to today, yesterday, and any extra dates from pending slips.
     """
     import requests
     # Always compute dates in Pacific Time (PT) so UTC cloud servers don't query the wrong day
@@ -240,9 +245,16 @@ def fetch_espn_boxscore_data(sport: str = "basketball", league: str = "nba", dat
     if date_str:
         dates_to_check.append(date_str)
     else:
-        # Check today and yesterday in Pacific Time to guarantee coverage across midnight
+        # Check today, yesterday, and 2 days ago in Pacific Time
         dates_to_check.append(pt_now.strftime("%Y%m%d"))
         dates_to_check.append((pt_now - datetime.timedelta(days=1)).strftime("%Y%m%d"))
+        dates_to_check.append((pt_now - datetime.timedelta(days=2)).strftime("%Y%m%d"))
+
+    if extra_dates:
+        for ed in extra_dates:
+            clean_ed = ed.replace("-", "").strip()[:8]
+            if clean_ed and clean_ed not in dates_to_check:
+                dates_to_check.append(clean_ed)
 
     all_game_summaries = []
     seen_event_ids = set()
@@ -273,16 +285,32 @@ def fetch_espn_boxscore_data(sport: str = "basketball", league: str = "nba", dat
     return all_game_summaries
 
 
-def parse_player_stats_from_summaries(summaries: List[Dict[str, Any]]) -> Dict[str, Dict[str, float]]:
+def parse_player_stats_from_summaries(summaries: List[Dict[str, Any]]) -> Tuple[Dict[str, Dict[str, float]], List[Set[str]]]:
     """
     Parses player statistics across all completed games into normalized dict:
     { "payton pritchard": { "points": 18, "3-pt made": 3, "assists": 5, ... } }
+    Also returns a list of sets containing completed team names for DNP detection.
     """
     all_players = {}
+    completed_games_teams = []
 
     for summary in summaries:
         boxscore = summary.get("boxscore", {})
         players_data = boxscore.get("players", [])
+
+        game_teams = set()
+        for team in players_data:
+            tname = team.get("team", {}).get("displayName", "").strip().lower()
+            if tname:
+                game_teams.add(tname)
+                norm_t = normalize_player_name(tname)
+                if norm_t:
+                    game_teams.add(norm_t)
+            short = team.get("team", {}).get("name", "").strip().lower()
+            if short:
+                game_teams.add(short)
+        if game_teams:
+            completed_games_teams.append(game_teams)
 
         for team in players_data:
             stats_categories = team.get("statistics", [])
@@ -293,6 +321,7 @@ def parse_player_stats_from_summaries(summaries: List[Dict[str, Any]]) -> Dict[s
                     athlete = athlete_entry.get("athlete", {})
                     name = athlete.get("displayName", "").strip().lower()
                     vals = athlete_entry.get("stats", [])
+                    did_not_play = athlete_entry.get("didNotPlay", False)
 
                     p_stats = {}
                     for k, v in zip(raw_keys, vals):
@@ -315,6 +344,8 @@ def parse_player_stats_from_summaries(summaries: List[Dict[str, Any]]) -> Dict[s
                     stl = p_stats.get("stl", p_stats.get("steals", 0.0))
                     blk = p_stats.get("blk", p_stats.get("blocks", 0.0))
 
+                    is_dnp = did_not_play or (vals and p_stats.get("min") in ["0", 0, "00:00", "0:00", ""]) or (not vals and did_not_play)
+
                     normalized_stats = {
                         "points": pts,
                         "rebounds": reb,
@@ -327,13 +358,14 @@ def parse_player_stats_from_summaries(summaries: List[Dict[str, Any]]) -> Dict[s
                         "pts+asts": pts + ast,
                         "rebs+asts": reb + ast,
                         "blks+stls": blk + stl,
+                        "_dnp": is_dnp,
                     }
 
                     if name not in all_players:
                         all_players[name] = {}
                     all_players[name].update(normalized_stats)
 
-    return all_players
+    return all_players, completed_games_teams
 
 
 def normalize_player_name(name: str) -> str:
@@ -359,6 +391,7 @@ def auto_settle_pending_slips(
 ):
     """
     Queries ESPN for box scores and automatically resolves all pending legs and slips.
+    Also handles PrizePicks official reboot/push rules for Inactive / DNP players.
     """
     db = load_database(db_file)
     pending_slips = [s for s in db.get("slips", []) if s.get("status") == "PENDING"]
@@ -366,13 +399,16 @@ def auto_settle_pending_slips(
         logger.info(f"No pending slips found to settle in {db_file}.")
         return
 
+    # Collect dates from pending slips to ensure ESPN checks those dates
+    extra_dates = [s.get("date_placed", "")[:10] for s in pending_slips if s.get("date_placed")]
+
     logger.info(f"Checking box scores to settle {len(pending_slips)} pending slips in {db_file}...")
-    summaries = fetch_espn_boxscore_data(sport="basketball", league="nba", date_str=date_str)
+    summaries = fetch_espn_boxscore_data(sport="basketball", league="nba", date_str=date_str, extra_dates=extra_dates)
     if not summaries:
         logger.warning("No completed game box scores found on ESPN. Games may not have finished yet.")
         return
 
-    player_stats = parse_player_stats_from_summaries(summaries)
+    player_stats, completed_games_teams = parse_player_stats_from_summaries(summaries)
     settled_any = False
 
     for slip in pending_slips:
@@ -381,6 +417,7 @@ def auto_settle_pending_slips(
                 p_name = leg["player_name"]
                 norm_p = normalize_player_name(p_name)
                 stat_key = leg["stat_type"].lower().strip()
+                leg_game = leg.get("game", "")
 
                 # Find player in box scores
                 matched_name = None
@@ -390,12 +427,35 @@ def auto_settle_pending_slips(
                         matched_name = name
                         break
 
-                if matched_name and stat_key in player_stats[matched_name]:
-                    actual_val = player_stats[matched_name][stat_key]
-                    leg["actual_result"] = actual_val
-                    leg["status"] = grade_leg(leg["choice"], leg["line"], actual_val)
-                    settled_any = True
-                    logger.info(f"Auto-Settled: {leg['player_name']} {leg['stat_type']} -> Actual: {actual_val} vs Line: {leg['line']} ({leg['status']})")
+                if matched_name:
+                    p_data = player_stats[matched_name]
+                    if p_data.get("_dnp", False):
+                        leg["actual_result"] = "DNP"
+                        leg["status"] = "PUSH"
+                        settled_any = True
+                        logger.info(f"Auto-Settled DNP / Inactive (0 Mins): {leg['player_name']} -> PUSH (Reboot)")
+                    elif stat_key in p_data:
+                        actual_val = p_data[stat_key]
+                        leg["actual_result"] = actual_val
+                        leg["status"] = grade_leg(leg["choice"], leg["line"], actual_val)
+                        settled_any = True
+                        logger.info(f"Auto-Settled: {leg['player_name']} {leg['stat_type']} -> Actual: {actual_val} vs Line: {leg['line']} ({leg['status']})")
+                else:
+                    # Player not in box score at all. Check if their scheduled game has concluded
+                    game_is_final = False
+                    if leg_game and "@" in leg_game:
+                        game_parts = [t.strip().lower() for t in leg_game.split("@")]
+                        for comp_set in completed_games_teams:
+                            # If at least one team in the leg's game matches the completed game teams
+                            if any(any(part in c or c in part for c in comp_set) for part in game_parts):
+                                game_is_final = True
+                                break
+
+                    if game_is_final:
+                        leg["actual_result"] = "DNP"
+                        leg["status"] = "PUSH"
+                        settled_any = True
+                        logger.info(f"Auto-Settled DNP / Inactive Reboot: {leg['player_name']} in final game '{leg_game}' -> PUSH")
 
         grade_slip(slip)
 

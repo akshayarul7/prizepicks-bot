@@ -1,19 +1,25 @@
 Slip ID,Date Placed,Strategy,Slip Type,Stake ($),Slip Status,Payout ($),Net Profit ($),Leg #,Player,Stat Type,Line,Choice,Actual Result,Leg Status,Edge %,Game
-4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,P.J. Washington,Rebounds,5.5,OVER,,PENDING,70.7,Dallas Mavericks @ San Antonio Spurs
-4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Aaron Gordon,Pts+Rebs+Asts,20.5,OVER,,PENDING,63.32,Toronto Raptors @ Denver Nuggets
-4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Fred VanVleet,Rebs+Asts,7.5,OVER,,PENDING,62.97,Minnesota Timberwolves @ Houston Rockets
-4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Caleb Wilson,Pts+Rebs,23.5,OVER,,PENDING,61.73,Chicago Bulls @ New York Knicks
-4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Jamal Murray,Points,25.5,UNDER,,PENDING,59.22,Toronto Raptors @ Denver Nuggets
-4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Naji Marshall,Points,10.5,OVER,,PENDING,58.51,Dallas Mavericks @ San Antonio Spurs
-744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Devin Vassell,Points,11.5,OVER,,PENDING,58.51,Dallas Mavericks @ San Antonio Spurs
-744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Daniel Gafford,Points,8.5,OVER,,PENDING,58.11,Dallas Mavericks @ San Antonio Spurs
-744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,DeMar DeRozan,Points,10.5,OVER,,PENDING,58.11,Toronto Raptors @ Denver Nuggets
-744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Kenrich Williams,Points,8.5,OVER,,PENDING,57.56,Cleveland Cavaliers @ Oklahoma City Thunder
-744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Toumani Camara,Points,13.5,UNDER,,PENDING,57.56,Portland Trail Blazers @ Phoenix Suns
-744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Khaman Maluach,Points,7.5,UNDER,,PENDING,57.56,Portland Trail Blazers @ Phoenix Suns
-1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Saddiq Bey,Points,12.5,OVER,,PENDING,57.28,Utah Jazz @ New Orleans Pelicans
-1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Sam Merrill,Points,8.5,OVER,,PENDING,57.16,Cleveland Cavaliers @ Oklahoma City Thunder
-1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Stephon Castle,Rebs+Asts,10.5,OVER,,PENDING,56.71,Dallas Mavericks @ San Antonio Spurs
-1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Paul Reed,Pts+Asts,15.5,UNDER,,PENDING,56.71,Philadelphia 76ers @ Detroit Pistons
-1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Javonte Green,Rebounds,2.5,OVER,,PENDING,56.7,Philadelphia 76ers @ Detroit Pistons
-1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Norman Powell,Pts+Rebs+Asts,23.5,OVER,,PENDING,56.09,Chicago Bulls @ New York Knicks
+4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,1,P.J. Washington,Rebounds,5.5,OVER,5.0,MISS,70.7,Dallas Mavericks @ San Antonio Spurs
+4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,2,Aaron Gordon,Pts+Rebs+Asts,20.5,OVER,13.0,MISS,63.32,Toronto Raptors @ Denver Nuggets
+4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,3,Fred VanVleet,Rebs+Asts,7.5,OVER,11.0,HIT,62.97,Minnesota Timberwolves @ Houston Rockets
+4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,4,Caleb Wilson,Pts+Rebs,23.5,OVER,31.0,HIT,61.73,Chicago Bulls @ New York Knicks
+4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,5,Jamal Murray,Points,25.5,UNDER,35.0,MISS,59.22,Toronto Raptors @ Denver Nuggets
+4531f817,2026-11-03 05:45:41 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,6,Naji Marshall,Points,10.5,OVER,5.0,MISS,58.51,Dallas Mavericks @ San Antonio Spurs
+744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,1,Devin Vassell,Points,11.5,OVER,11.0,MISS,58.51,Dallas Mavericks @ San Antonio Spurs
+744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,2,Daniel Gafford,Points,8.5,OVER,20.0,HIT,58.11,Dallas Mavericks @ San Antonio Spurs
+744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,3,DeMar DeRozan,Points,10.5,OVER,9.0,MISS,58.11,Toronto Raptors @ Denver Nuggets
+744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,4,Kenrich Williams,Points,8.5,OVER,12.0,HIT,57.56,Cleveland Cavaliers @ Oklahoma City Thunder
+744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,5,Toumani Camara,Points,13.5,UNDER,9.0,HIT,57.56,Portland Trail Blazers @ Phoenix Suns
+744854c9,2026-11-03 05:45:43 PM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,6,Khaman Maluach,Points,7.5,UNDER,5.0,HIT,57.56,Portland Trail Blazers @ Phoenix Suns
+1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,1,Saddiq Bey,Points,12.5,OVER,18.0,HIT,57.28,Utah Jazz @ New Orleans Pelicans
+1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,2,Sam Merrill,Points,8.5,OVER,8.0,MISS,57.16,Cleveland Cavaliers @ Oklahoma City Thunder
+1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,3,Stephon Castle,Rebs+Asts,10.5,OVER,9.0,MISS,56.71,Dallas Mavericks @ San Antonio Spurs
+1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,4,Paul Reed,Pts+Asts,15.5,UNDER,15.0,HIT,56.71,Philadelphia 76ers @ Detroit Pistons
+1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,5,Javonte Green,Rebounds,2.5,OVER,2.0,MISS,56.7,Philadelphia 76ers @ Detroit Pistons
+1af40f65,2026-11-03 05:45:44 PM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,6,Norman Powell,Pts+Rebs+Asts,23.5,OVER,21.0,MISS,56.09,Chicago Bulls @ New York Knicks
+c1803252,2026-11-04 09:02:17 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,1,Darryn Peterson,Rebounds,4.0,UNDER,2.0,HIT,60.05,Utah Jazz @ New Orleans Pelicans
+c1803252,2026-11-04 09:02:17 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,2,Bilal Coulibaly,Rebounds,4.0,UNDER,2.0,HIT,60.05,Atlanta Hawks @ Washington Wizards
+c1803252,2026-11-04 09:02:17 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,3,Trey Murphy III,Rebounds,5.0,UNDER,DNP,PUSH,59.56,Utah Jazz @ New Orleans Pelicans
+c1803252,2026-11-04 09:02:17 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,4,Ace Bailey,Rebounds,6.0,UNDER,5.0,HIT,59.08,Utah Jazz @ New Orleans Pelicans
+c1803252,2026-11-04 09:02:17 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,5,Kenrich Williams,Rebounds,5.0,UNDER,4.0,HIT,58.89,Cleveland Cavaliers @ Oklahoma City Thunder
+c1803252,2026-11-04 09:02:17 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,6,Jaime Jaquez Jr.,Rebounds,5.0,OVER,2.0,MISS,58.59,Milwaukee Bucks @ Boston Celtics

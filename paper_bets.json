@@ -362,8 +362,8 @@
           "stat_type": "Rebounds",
           "line": 5.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "MISS",
           "edge_percent": 70.7
         },
         {
@@ -374,8 +374,8 @@
           "stat_type": "Pts+Rebs+Asts",
           "line": 20.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 13.0,
+          "status": "MISS",
           "edge_percent": 63.32
         },
         {
@@ -386,8 +386,8 @@
           "stat_type": "Rebs+Asts",
           "line": 7.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 11.0,
+          "status": "HIT",
           "edge_percent": 62.97
         },
         {
@@ -398,8 +398,8 @@
           "stat_type": "Pts+Rebs",
           "line": 23.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 31.0,
+          "status": "HIT",
           "edge_percent": 61.73
         },
         {
@@ -410,8 +410,8 @@
           "stat_type": "Points",
           "line": 25.5,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 35.0,
+          "status": "MISS",
           "edge_percent": 59.22
         },
         {
@@ -422,16 +422,103 @@
           "stat_type": "Points",
           "line": 10.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "MISS",
           "edge_percent": 58.51
         }
       ],
-      "status": "PENDING",
+      "status": "LOST",
       "return_payout": 0.0,
-      "net_profit": 0.0,
+      "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1567354233731162172"
+    },
+    {
+      "id": "36e89519",
+      "date_placed": "2026-11-04 09:01:30 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 17:00:46. Avg win rate: 59.42%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "1b5fb6",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 2.0,
+          "status": "HIT",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "9ba101",
+          "player_name": "Bilal Coulibaly",
+          "sport": "NBA",
+          "game": "Atlanta Hawks @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 2.0,
+          "status": "HIT",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "e2c154",
+          "player_name": "Trey Murphy III",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": "DNP",
+          "status": "PUSH",
+          "edge_percent": 59.56
+        },
+        {
+          "leg_id": "9d27c0",
+          "player_name": "Ace Bailey",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 5.0,
+          "status": "HIT",
+          "edge_percent": 59.08
+        },
+        {
+          "leg_id": "28d8ef",
+          "player_name": "Brice Sensabaugh",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Points",
+          "line": 8.5,
+          "choice": "UNDER",
+          "actual_result": 6.0,
+          "status": "HIT",
+          "edge_percent": 58.91
+        },
+        {
+          "leg_id": "6abad5",
+          "player_name": "Kenrich Williams",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ Oklahoma City Thunder",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": 4.0,
+          "status": "HIT",
+          "edge_percent": 58.89
+        }
+      ],
+      "status": "WON",
+      "return_payout": 100.0,
+      "net_profit": 90.0,
+      "payout_multiplier": 10.0,
+      "discord_message_id": "1567584609527664650"
     }
   ],
   "version": "1.0"

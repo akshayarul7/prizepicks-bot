@@ -309,16 +309,22 @@ def render_prizepicks_slip(
         is_under = choice in ["UNDER", "LESS"]
         is_final = (leg_status in ["HIT", "MISS", "PUSH"]) or (slip.get("status") in ["WON", "LOST", "PUSH"])
 
-        if leg_status == "PUSH" or (is_final and actual is not None and float(actual) == line):
-            # Push: FULLY FILLED light gray, slate gray badge
+        if leg_status == "PUSH" or str(actual).upper() == "DNP":
+            # Push / Reboot: FULLY FILLED light gray, slate gray badge
             draw.rounded_rectangle((bar_x, bar_y, bar_x + bar_w, bar_y + bar_h), radius=8, fill=COLOR_PUSH_FILL)
             badge_color = COLOR_PUSH_BADGE
-            badge_text = "PUSH"
+            badge_text = "REBOOT" if str(actual).upper() == "DNP" else "PUSH"
             badge_text_color = COLOR_PUSH_TEXT
-            score_text = f"Actual: {actual:g} (Tied at {line:g})"
+            if str(actual).upper() == "DNP":
+                score_text = f"DNP / Inactive (Rebooted at {line:g})"
+            else:
+                score_text = f"Actual: {actual} (Tied at {line:g})"
 
         elif actual is not None:
-            act_val = float(actual)
+            try:
+                act_val = float(actual)
+            except (ValueError, TypeError):
+                act_val = 0.0
             fill_fraction = min(1.0, max(0.06, act_val / line)) if line > 0 else 0.0
             fill_width = int(bar_w * fill_fraction)
 

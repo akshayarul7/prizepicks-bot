@@ -16,8 +16,8 @@
           "stat_type": "Rebounds",
           "line": 5.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "MISS",
           "edge_percent": 70.7
         },
         {
@@ -28,8 +28,8 @@
           "stat_type": "Pts+Rebs+Asts",
           "line": 20.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 13.0,
+          "status": "MISS",
           "edge_percent": 63.32
         },
         {
@@ -40,8 +40,8 @@
           "stat_type": "Rebs+Asts",
           "line": 7.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 11.0,
+          "status": "HIT",
           "edge_percent": 62.97
         },
         {
@@ -52,8 +52,8 @@
           "stat_type": "Pts+Rebs",
           "line": 23.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 31.0,
+          "status": "HIT",
           "edge_percent": 61.73
         },
         {
@@ -64,8 +64,8 @@
           "stat_type": "Points",
           "line": 25.5,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 35.0,
+          "status": "MISS",
           "edge_percent": 59.22
         },
         {
@@ -76,14 +76,14 @@
           "stat_type": "Points",
           "line": 10.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "MISS",
           "edge_percent": 58.51
         }
       ],
-      "status": "PENDING",
+      "status": "LOST",
       "return_payout": 0.0,
-      "net_profit": 0.0,
+      "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1567354121827127316"
     },
@@ -103,8 +103,8 @@
           "stat_type": "Points",
           "line": 11.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 11.0,
+          "status": "MISS",
           "edge_percent": 58.51
         },
         {
@@ -115,8 +115,8 @@
           "stat_type": "Points",
           "line": 8.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 20.0,
+          "status": "HIT",
           "edge_percent": 58.11
         },
         {
@@ -127,8 +127,8 @@
           "stat_type": "Points",
           "line": 10.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 9.0,
+          "status": "MISS",
           "edge_percent": 58.11
         },
         {
@@ -139,8 +139,8 @@
           "stat_type": "Points",
           "line": 8.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 12.0,
+          "status": "HIT",
           "edge_percent": 57.56
         },
         {
@@ -151,8 +151,8 @@
           "stat_type": "Points",
           "line": 13.5,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 9.0,
+          "status": "HIT",
           "edge_percent": 57.56
         },
         {
@@ -163,15 +163,15 @@
           "stat_type": "Points",
           "line": 7.5,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "HIT",
           "edge_percent": 57.56
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "LOST",
+      "return_payout": 4.0,
+      "net_profit": -6.0,
+      "payout_multiplier": 0.4,
       "discord_message_id": "1567354128735150142"
     },
     {
@@ -190,8 +190,8 @@
           "stat_type": "Points",
           "line": 12.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 18.0,
+          "status": "HIT",
           "edge_percent": 57.28
         },
         {
@@ -202,8 +202,8 @@
           "stat_type": "Points",
           "line": 8.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 8.0,
+          "status": "MISS",
           "edge_percent": 57.16
         },
         {
@@ -214,8 +214,8 @@
           "stat_type": "Rebs+Asts",
           "line": 10.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 9.0,
+          "status": "MISS",
           "edge_percent": 56.71
         },
         {
@@ -226,8 +226,8 @@
           "stat_type": "Pts+Asts",
           "line": 15.5,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 15.0,
+          "status": "HIT",
           "edge_percent": 56.71
         },
         {
@@ -238,8 +238,8 @@
           "stat_type": "Rebounds",
           "line": 2.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 2.0,
+          "status": "MISS",
           "edge_percent": 56.7
         },
         {
@@ -250,16 +250,103 @@
           "stat_type": "Pts+Rebs+Asts",
           "line": 23.5,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 21.0,
+          "status": "MISS",
           "edge_percent": 56.09
         }
       ],
-      "status": "PENDING",
+      "status": "LOST",
       "return_payout": 0.0,
-      "net_profit": 0.0,
+      "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1567354135588642908"
+    },
+    {
+      "id": "c1803252",
+      "date_placed": "2026-11-04 09:02:17 AM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-04. Avg win rate: 59.37%.",
+      "legs": [
+        {
+          "leg_id": "da8a46",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 2.0,
+          "status": "HIT",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "25c9e7",
+          "player_name": "Bilal Coulibaly",
+          "sport": "NBA",
+          "game": "Atlanta Hawks @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 2.0,
+          "status": "HIT",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "046bde",
+          "player_name": "Trey Murphy III",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": "DNP",
+          "status": "PUSH",
+          "edge_percent": 59.56
+        },
+        {
+          "leg_id": "3ec0b3",
+          "player_name": "Ace Bailey",
+          "sport": "NBA",
+          "game": "Utah Jazz @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 5.0,
+          "status": "HIT",
+          "edge_percent": 59.08
+        },
+        {
+          "leg_id": "e55cef",
+          "player_name": "Kenrich Williams",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ Oklahoma City Thunder",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": 4.0,
+          "status": "HIT",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "a2f959",
+          "player_name": "Jaime Jaquez Jr.",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Boston Celtics",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": 2.0,
+          "status": "MISS",
+          "edge_percent": 58.59
+        }
+      ],
+      "status": "WON",
+      "return_payout": 20.0,
+      "net_profit": 10.0,
+      "payout_multiplier": 2.0,
+      "discord_message_id": "1567584796413132864"
     }
   ],
   "version": "1.0"
