@@ -12,6 +12,7 @@ import logging
 import math
 import os
 import sys
+import time
 from typing import Any, Dict, List, Optional, Tuple
 import requests
 
@@ -48,11 +49,31 @@ DEFAULT_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/124.0.0.0 Safari/537.36"
+        "Chrome/128.0.0.0 Safari/537.36"
     ),
     "Accept": "application/json",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://app.prizepicks.com/",
+    "Origin": "https://app.prizepicks.com",
+    "sec-ch-ua": '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": '"macOS"',
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-site",
 }
 FANDUEL_API_KEY = "FhMFpcPWXMeyZxOx"
+
+# In-memory board cache & backoff timers
+_pp_cache_data: Optional[Dict[str, Any]] = None
+_pp_cache_ts: float = 0.0
+_pp_cooldown_until: float = 0.0
+PP_CACHE_TTL = 300.0  # 5 minutes TTL cache
+
+_fd_cache_data: Optional[List[Dict[str, Any]]] = None
+_fd_cache_ts: float = 0.0
+_fd_cooldown_until: float = 0.0
+FD_CACHE_TTL = 300.0  # 5 minutes TTL cache
 
 
 def american_to_implied(odds: float) -> float:
@@ -101,8 +122,28 @@ def get_sigma(stat_type: str, line: float) -> float:
 def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
     """
     Fetches live PrizePicks projections filtered strictly by league (NBA league_id=7).
-    Reduces JSON memory payload from 40.6MB down to 6.7MB, preventing Render 512MB OOM crashes!
+    Includes in-memory TTL caching (5m) and automatic 15-minute backoff on 429/403.
     """
+    global _pp_cache_data, _pp_cache_ts, _pp_cooldown_until
+    now = time.time()
+
+    # 1. Active Rate Limit Cooldown (Backoff)
+    if now < _pp_cooldown_until:
+        rem = int(_pp_cooldown_until - now)
+        logger.info(f"PrizePicks in rate-limit cooldown ({rem}s remaining). Using local cache.")
+        if _pp_cache_data:
+            return _pp_cache_data
+        if os.path.exists("prizepicks_fresh.json"):
+            with open("prizepicks_fresh.json") as f:
+                return json.load(f)
+        return None
+
+    # 2. In-Memory TTL Cache (prevents duplicate calls within 5 mins)
+    if _pp_cache_data and (now - _pp_cache_ts) < PP_CACHE_TTL:
+        logger.info(f"Reusing PrizePicks board from in-memory cache ({int(now - _pp_cache_ts)}s old).")
+        return _pp_cache_data
+
+    # 3. Live API Fetch
     logger.info("Fetching live PrizePicks NBA projections (league_id=7)...")
     url = "https://partner-api.prizepicks.com/projections?league_id=7"
     try:
@@ -110,9 +151,12 @@ def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
         if r.status_code == 200:
             content_type = r.headers.get("Content-Type", "")
             if "application/json" not in content_type and "cf-mitigated" in r.text.lower():
+                _pp_cooldown_until = now + 900  # 15 min cooldown
                 alert_cf_rate_limit("PrizePicks", 403, "Cloudflare Turnstile/Challenge intercepted HTML")
             else:
                 data = r.json()
+                _pp_cache_data = data
+                _pp_cache_ts = now
                 with open("prizepicks_fresh.json", "w") as f:
                     json.dump(data, f)
                 try:
@@ -123,10 +167,13 @@ def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
                 logger.info(f"PrizePicks: Ingested {len(data.get('data', []))} live NBA lines.")
                 return data
         elif r.status_code in [403, 429]:
+            _pp_cooldown_until = now + 900  # 15 min cooldown to clear Cloudflare 1015
             alert_cf_rate_limit("PrizePicks", r.status_code, r.text[:300])
     except Exception as e:
         logger.warning(f"Live PrizePicks fetch error: {e}")
 
+    if _pp_cache_data:
+        return _pp_cache_data
     if os.path.exists("prizepicks_fresh.json"):
         logger.info("Loading PrizePicks from fresh local cache.")
         with open("prizepicks_fresh.json") as f:
@@ -135,6 +182,28 @@ def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
 
 
 def fetch_live_fanduel() -> List[Dict[str, Any]]:
+    """
+    Fetches live FanDuel NBA odds with in-memory TTL caching (5m) and rate-limit backoff.
+    """
+    global _fd_cache_data, _fd_cache_ts, _fd_cooldown_until
+    now = time.time()
+
+    # 1. Active Rate Limit Cooldown (Backoff)
+    if now < _fd_cooldown_until:
+        rem = int(_fd_cooldown_until - now)
+        logger.info(f"FanDuel in rate-limit cooldown ({rem}s remaining). Using local cache.")
+        if _fd_cache_data:
+            return _fd_cache_data
+        if os.path.exists("fanduel_fresh.json"):
+            with open("fanduel_fresh.json") as f:
+                return json.load(f)
+        return []
+
+    # 2. In-Memory TTL Cache (prevents duplicate calls within 5 mins)
+    if _fd_cache_data and (now - _fd_cache_ts) < FD_CACHE_TTL:
+        logger.info(f"Reusing FanDuel board from in-memory cache ({int(now - _fd_cache_ts)}s old).")
+        return _fd_cache_data
+
     logger.info("Fetching live FanDuel NBA odds...")
     nba_url = f"https://sbapi.nj.sportsbook.fanduel.com/api/content-managed-page?page=CUSTOM&customPageId=nba&_ak={FANDUEL_API_KEY}"
     live_fd_props = []
@@ -182,15 +251,20 @@ def fetch_live_fanduel() -> List[Dict[str, Any]]:
                         except Exception:
                             pass
             if live_fd_props:
+                _fd_cache_data = live_fd_props
+                _fd_cache_ts = now
                 with open("fanduel_fresh.json", "w") as f:
                     json.dump(live_fd_props, f, indent=2)
                 logger.info(f"FanDuel: Scraped {len(live_fd_props)} live props.")
                 return live_fd_props
         elif r.status_code in [403, 429]:
+            _fd_cooldown_until = now + 900
             alert_cf_rate_limit("FanDuel Root API", r.status_code, r.text[:300])
     except Exception as e:
         logger.warning(f"Live FanDuel fetch error: {e}")
 
+    if _fd_cache_data:
+        return _fd_cache_data
     if os.path.exists("fanduel_fresh.json"):
         logger.info("Loading FanDuel from fresh local cache.")
         with open("fanduel_fresh.json") as f:

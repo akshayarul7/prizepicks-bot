@@ -426,7 +426,13 @@ def run_continuous_loop():
 
             if is_scan_active and (not has_today_base or today_vol_count < 3):
                 gc.collect()
-                time.sleep(120)
+                # If rate-limited, sleep longer to clear Cloudflare 1015 cooldown
+                if auto_bot._pp_cooldown_until > time.time():
+                    wait_sec = min(900, max(360, int(auto_bot._pp_cooldown_until - time.time()) + 10))
+                    logger.info(f"⏳ Cooling down for {wait_sec}s to clear WAF rate-limit...")
+                    time.sleep(wait_sec)
+                else:
+                    time.sleep(360)
                 continue
 
             # -------------------------------------------------------------
