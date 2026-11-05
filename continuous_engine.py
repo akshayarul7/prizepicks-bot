@@ -411,7 +411,7 @@ def run_continuous_loop():
                     logger.error(f"Baseline scan error: {e}")
 
             # 2. Accelerated Track (3 slips/day)
-            if is_scan_active and today_vol_count < 3 and not has_pending_vol:
+            if is_scan_active and today_vol_count < 3:
                 logger.info(f"⚡ [Accelerated - {pt_now.strftime('%I:%M %p PT')}] Scanning for up to 3 non-overlapping slips ({today_vol_count}/3 placed, Hurdle: {dynamic_thresh}%)...")
                 try:
                     vol_res = auto_bot.run_volume_pipeline(min_threshold=dynamic_thresh, target_slips=3)
