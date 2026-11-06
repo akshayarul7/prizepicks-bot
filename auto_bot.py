@@ -45,7 +45,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger("AutoBot")
 
-DEFAULT_HEADERS = {
+PRIZEPICKS_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -62,6 +62,20 @@ DEFAULT_HEADERS = {
     "sec-fetch-mode": "cors",
     "sec-fetch-site": "same-site",
 }
+
+FANDUEL_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/128.0.0.0 Safari/537.36"
+    ),
+    "Accept": "application/json",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Referer": "https://sportsbook.fanduel.com/",
+    "Origin": "https://sportsbook.fanduel.com",
+}
+
+DEFAULT_HEADERS = PRIZEPICKS_HEADERS
 FANDUEL_API_KEY = "FhMFpcPWXMeyZxOx"
 
 # In-memory board cache & backoff timers
@@ -147,7 +161,7 @@ def fetch_live_prizepicks() -> Optional[Dict[str, Any]]:
     logger.info("Fetching live PrizePicks NBA projections (league_id=7)...")
     url = "https://partner-api.prizepicks.com/projections?league_id=7"
     try:
-        r = requests.get(url, headers=DEFAULT_HEADERS, timeout=15)
+        r = requests.get(url, headers=PRIZEPICKS_HEADERS, timeout=15)
         if r.status_code == 200:
             content_type = r.headers.get("Content-Type", "")
             if "application/json" not in content_type and "cf-mitigated" in r.text.lower():
@@ -214,7 +228,7 @@ def fetch_live_fanduel() -> List[Dict[str, Any]]:
     tabs = ["player-points", "player-rebounds", "player-assists", "player-threes", "player-combos"]
 
     try:
-        r = requests.get(nba_url, headers=DEFAULT_HEADERS, timeout=15)
+        r = requests.get(nba_url, headers=FANDUEL_HEADERS, timeout=15)
         if r.status_code == 200:
             events = r.json().get("attachments", {}).get("events", {})
             for eid, ev in events.items():
@@ -223,7 +237,7 @@ def fetch_live_fanduel() -> List[Dict[str, Any]]:
                     for tab in tabs:
                         try:
                             url = f"https://sbapi.nj.sportsbook.fanduel.com/api/event-page?eventId={eid}&tab={tab}&_ak={FANDUEL_API_KEY}"
-                            tr = requests.get(url, headers=DEFAULT_HEADERS, timeout=6)
+                            tr = requests.get(url, headers=FANDUEL_HEADERS, timeout=6)
                             if tr.status_code == 200:
                                 markets = tr.json().get("attachments", {}).get("markets", {})
                                 for mid, m in markets.items():
