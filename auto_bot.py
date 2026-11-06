@@ -314,6 +314,12 @@ def scan_and_evaluate_props(
         if league_name != "NBA":
             continue
 
+        # Strictly Standard 1.0x lines (Filter out Goblins, Demons, and altered multiplier props)
+        if attrs.get("adjusted_odds") is True:
+            continue
+        if attrs.get("odds_type") not in [None, "standard"]:
+            continue
+
         pid = str(rels.get("new_player", {}).get("data", {}).get("id", ""))
         if pid in included:
             w_val = attrs.get("allowed_wager_types")
