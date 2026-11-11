@@ -519,6 +519,93 @@
       "net_profit": 90.0,
       "payout_multiplier": 10.0,
       "discord_message_id": "1567584609527664650"
+    },
+    {
+      "id": "77ad2e27",
+      "date_placed": "2026-11-10 11:24:25 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 19:24:14. Avg win rate: 59.10%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "123745",
+          "player_name": "OG Anunoby",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ New York Knicks",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": 3.0,
+          "status": "MISS",
+          "edge_percent": 62.37
+        },
+        {
+          "leg_id": "b87984",
+          "player_name": "Jaime Jaquez Jr.",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ New York Knicks",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": 5.0,
+          "status": "PUSH",
+          "edge_percent": 59.56
+        },
+        {
+          "leg_id": "9429d8",
+          "player_name": "Ajay Mitchell",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Portland Trail Blazers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 3.0,
+          "status": "HIT",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "747882",
+          "player_name": "Isaiah Hartenstein",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Portland Trail Blazers",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": 5.0,
+          "status": "MISS",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "79aac9",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "Miami Heat @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": 4.0,
+          "status": "MISS",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "30faad",
+          "player_name": "Jaxson Hayes",
+          "sport": "NBA",
+          "game": "Miami Heat @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 7.0,
+          "choice": "UNDER",
+          "actual_result": 2.0,
+          "status": "HIT",
+          "edge_percent": 56.99
+        }
+      ],
+      "status": "LOST",
+      "return_payout": 0.0,
+      "net_profit": -10.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1569794897362428077"
     }
   ],
   "version": "1.0"
