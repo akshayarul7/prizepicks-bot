@@ -413,49 +413,49 @@ def auto_settle_pending_slips(
 
     for slip in pending_slips:
         for leg in slip.get("legs", []):
-            if leg.get("status") == "PENDING":
-                p_name = leg["player_name"]
-                norm_p = normalize_player_name(p_name)
-                stat_key = leg["stat_type"].lower().strip()
-                leg_game = leg.get("game", "")
+            # Allow final box score to overwrite any mid-game in-progress snapshots
+            p_name = leg["player_name"]
+            norm_p = normalize_player_name(p_name)
+            stat_key = leg["stat_type"].lower().strip()
+            leg_game = leg.get("game", "")
 
-                # Find player in box scores
-                matched_name = None
-                for name in player_stats:
-                    norm_espn = normalize_player_name(name)
-                    if norm_p == norm_espn or norm_p in norm_espn or norm_espn in norm_p:
-                        matched_name = name
-                        break
+            # Find player in box scores
+            matched_name = None
+            for name in player_stats:
+                norm_espn = normalize_player_name(name)
+                if norm_p == norm_espn or norm_p in norm_espn or norm_espn in norm_p:
+                    matched_name = name
+                    break
 
-                if matched_name:
-                    p_data = player_stats[matched_name]
-                    if p_data.get("_dnp", False):
-                        leg["actual_result"] = "DNP"
-                        leg["status"] = "PUSH"
-                        settled_any = True
-                        logger.info(f"Auto-Settled DNP / Inactive (0 Mins): {leg['player_name']} -> PUSH (Reboot)")
-                    elif stat_key in p_data:
-                        actual_val = p_data[stat_key]
-                        leg["actual_result"] = actual_val
-                        leg["status"] = grade_leg(leg["choice"], leg["line"], actual_val)
-                        settled_any = True
-                        logger.info(f"Auto-Settled: {leg['player_name']} {leg['stat_type']} -> Actual: {actual_val} vs Line: {leg['line']} ({leg['status']})")
-                else:
-                    # Player not in box score at all. Check if their scheduled game has concluded
-                    game_is_final = False
-                    if leg_game and "@" in leg_game:
-                        game_parts = [t.strip().lower() for t in leg_game.split("@")]
-                        for comp_set in completed_games_teams:
-                            # If at least one team in the leg's game matches the completed game teams
-                            if any(any(part in c or c in part for c in comp_set) for part in game_parts):
-                                game_is_final = True
-                                break
+            if matched_name:
+                p_data = player_stats[matched_name]
+                if p_data.get("_dnp", False):
+                    leg["actual_result"] = "DNP"
+                    leg["status"] = "PUSH"
+                    settled_any = True
+                    logger.info(f"Auto-Settled DNP / Inactive (0 Mins): {leg['player_name']} -> PUSH (Reboot)")
+                elif stat_key in p_data:
+                    actual_val = p_data[stat_key]
+                    leg["actual_result"] = actual_val
+                    leg["status"] = grade_leg(leg["choice"], leg["line"], actual_val)
+                    settled_any = True
+                    logger.info(f"Auto-Settled: {leg['player_name']} {leg['stat_type']} -> Actual: {actual_val} vs Line: {leg['line']} ({leg['status']})")
+            else:
+                # Player not in box score at all. Check if their scheduled game has concluded
+                game_is_final = False
+                if leg_game and "@" in leg_game:
+                    game_parts = [t.strip().lower() for t in leg_game.split("@")]
+                    for comp_set in completed_games_teams:
+                        # If at least one team in the leg's game matches the completed game teams
+                        if any(any(part in c or c in part for c in comp_set) for part in game_parts):
+                            game_is_final = True
+                            break
 
-                    if game_is_final:
-                        leg["actual_result"] = "DNP"
-                        leg["status"] = "PUSH"
-                        settled_any = True
-                        logger.info(f"Auto-Settled DNP / Inactive Reboot: {leg['player_name']} in final game '{leg_game}' -> PUSH")
+                if game_is_final:
+                    leg["actual_result"] = "DNP"
+                    leg["status"] = "PUSH"
+                    settled_any = True
+                    logger.info(f"Auto-Settled DNP / Inactive Reboot: {leg['player_name']} in final game '{leg_game}' -> PUSH")
 
         grade_slip(slip)
 
