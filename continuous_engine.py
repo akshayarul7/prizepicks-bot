@@ -118,6 +118,9 @@ def git_commit_and_push(commit_msg: str):
         subprocess.run(["git", "config", "user.name", "prizepicks-cloud-bot"], check=True)
         subprocess.run(["git", "config", "user.email", "cloud-bot@users.noreply.github.com"], check=True)
 
+        # Check out or create local branch 'main' to avoid detached HEAD issues
+        subprocess.run(["git", "checkout", "-B", "main"], check=False)
+
         # Pull any remote commits first to prevent non-fast-forward push rejection
         subprocess.run(["git", "fetch", "origin", "main"], check=False)
         subprocess.run(["git", "pull", "--rebase", "-s", "recursive", "-X", "ours", "origin", "main"], check=False)
@@ -130,8 +133,8 @@ def git_commit_and_push(commit_msg: str):
         if diff.returncode != 0:
             subprocess.run(["git", "commit", "-m", commit_msg], check=True)
         
-        # Push commit(s)
-        subprocess.run(["git", "push", "origin", "main"], check=True)
+        # Push commit(s) directly to main
+        subprocess.run(["git", "push", "origin", "HEAD:main"], check=True)
         logger.info("Successfully pushed updated database to GitHub.")
         return True
     except Exception as e:
@@ -205,6 +208,10 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                     diag["git_ls_remote_stdout"] = res.stdout.strip()[:100]
                     diag["git_ls_remote_stderr"] = res.stderr.strip()[:200]
                     diag["auth_status"] = "SUCCESS" if res.returncode == 0 else "AUTH_FAILED"
+
+                    if "push=true" in self.path:
+                        push_ok = git_commit_and_push("Cloud engine live git push verification")
+                        diag["live_push_test"] = "SUCCESS" if push_ok else "FAILED"
             except Exception as e:
                 diag["error"] = str(e)
                 diag["auth_status"] = "ERROR"
