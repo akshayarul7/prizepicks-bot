@@ -347,6 +347,180 @@
       "net_profit": 10.0,
       "payout_multiplier": 2.0,
       "discord_message_id": "1567584796413132864"
+    },
+    {
+      "id": "819a8ae6",
+      "date_placed": "2026-11-11 10:56:54 AM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-11. Avg win rate: 58.56%.",
+      "legs": [
+        {
+          "leg_id": "5d1010",
+          "player_name": "Caleb Wilson",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Chicago Bulls",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 5.0,
+          "status": "HIT",
+          "edge_percent": 62.37
+        },
+        {
+          "leg_id": "268728",
+          "player_name": "Donovan Mitchell",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ New York Knicks",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": 2.0,
+          "status": "MISS",
+          "edge_percent": 58.41
+        },
+        {
+          "leg_id": "962b1f",
+          "player_name": "Nic Claxton",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Chicago Bulls",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": 6.0,
+          "status": "HIT",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "cce3b0",
+          "player_name": "Matas Buzelis",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Chicago Bulls",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": 3.0,
+          "status": "MISS",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "432074",
+          "player_name": "RJ Barrett",
+          "sport": "NBA",
+          "game": "Boston Celtics @ Toronto Raptors",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 3.0,
+          "status": "HIT",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "d14177",
+          "player_name": "Stephon Castle",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Chicago Bulls",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": 7.0,
+          "status": "MISS",
+          "edge_percent": 57.29
+        }
+      ],
+      "status": "LOST",
+      "return_payout": 0.0,
+      "net_profit": -10.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1570150352395964599"
+    },
+    {
+      "id": "32880238",
+      "date_placed": "2026-11-11 03:58:48 PM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #2 for 2026-11-11. Avg win rate: 58.00%.",
+      "legs": [
+        {
+          "leg_id": "a66539",
+          "player_name": "De'Aaron Fox",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Chicago Bulls",
+          "stat_type": "Assists",
+          "line": 5.5,
+          "choice": "OVER",
+          "actual_result": 6.0,
+          "status": "HIT",
+          "edge_percent": 60.23
+        },
+        {
+          "leg_id": "439f22",
+          "player_name": "Collin Murray-Boyles",
+          "sport": "NBA",
+          "game": "Boston Celtics @ Toronto Raptors",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": 4.0,
+          "status": "HIT",
+          "edge_percent": 60.18
+        },
+        {
+          "leg_id": "3deb69",
+          "player_name": "Neemias Queta",
+          "sport": "NBA",
+          "game": "Boston Celtics @ Toronto Raptors",
+          "stat_type": "Points",
+          "line": 9.5,
+          "choice": "OVER",
+          "actual_result": 4.0,
+          "status": "MISS",
+          "edge_percent": 58.44
+        },
+        {
+          "leg_id": "b3ac65",
+          "player_name": "Desmond Bane",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": 6.0,
+          "status": "HIT",
+          "edge_percent": 56.89
+        },
+        {
+          "leg_id": "f13d66",
+          "player_name": "Brayden Burries",
+          "sport": "NBA",
+          "game": "Los Angeles Lakers @ Milwaukee Bucks",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": 3.0,
+          "status": "MISS",
+          "edge_percent": 56.4
+        },
+        {
+          "leg_id": "ecef5e",
+          "player_name": "Andrew Nembhard",
+          "sport": "NBA",
+          "game": "Washington Wizards @ Indiana Pacers",
+          "stat_type": "Assists",
+          "line": 7.5,
+          "choice": "OVER",
+          "actual_result": 12.0,
+          "status": "HIT",
+          "edge_percent": 55.84
+        }
+      ],
+      "status": "LOST",
+      "return_payout": 4.0,
+      "net_profit": -6.0,
+      "payout_multiplier": 0.4,
+      "discord_message_id": "1570226339397763102"
     }
   ],
   "version": "1.0"
