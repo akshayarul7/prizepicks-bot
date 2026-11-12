@@ -161,6 +161,36 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(resp, indent=2).encode("utf-8"))
             return
 
+        # 1.5. Test Git Authentication and Connectivity endpoint
+        if self.path == "/test-git":
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            token = os.environ.get("GITHUB_TOKEN")
+            repo = os.environ.get("GITHUB_REPOSITORY", "akshayarul7/prizepicks-bot")
+            diag = {
+                "token_configured": bool(token),
+                "token_prefix": (token[:6] + "...") if token else None,
+                "token_length": len(token) if token else 0,
+                "repo": repo,
+            }
+            if token:
+                try:
+                    remote_url = f"https://x-access-token:{token}@github.com/{repo}.git"
+                    subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
+                    res = subprocess.run(["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10)
+                    diag["git_ls_remote_returncode"] = res.returncode
+                    diag["git_ls_remote_stdout"] = res.stdout.strip()[:100]
+                    diag["git_ls_remote_stderr"] = res.stderr.strip()[:200]
+                    diag["auth_status"] = "SUCCESS" if res.returncode == 0 else "AUTH_FAILED"
+                except Exception as e:
+                    diag["error"] = str(e)
+                    diag["auth_status"] = "ERROR"
+            else:
+                diag["auth_status"] = "MISSING_TOKEN"
+            self.wfile.write(json.dumps(diag, indent=2).encode("utf-8"))
+            return
+
         # 2. Manual +EV Scan Test endpoint
         if self.path == "/test-scan":
             self.send_response(200)
