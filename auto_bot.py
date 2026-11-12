@@ -479,27 +479,36 @@ def select_best_lineup(
     Selects top unique player picks adhering to PrizePicks multi-game rules.
     Prioritizes highest win % while ensuring at least min_games are represented.
     """
-    selected = []
-    used_players = set()
+    sorted_plays = sorted(plays, key=lambda x: x.get("win_pct", 0.0), reverse=True)
 
-    for play in plays:
-        pname = play["player_name"]
-        if pname in used_players:
-            continue
-        selected.append(play)
-        used_players.add(pname)
-        if len(selected) == target_size:
-            break
+    unique_player_plays = []
+    seen_players = set()
+    for p in sorted_plays:
+        pname = p["player_name"]
+        if pname not in seen_players:
+            seen_players.add(pname)
+            unique_player_plays.append(p)
 
-    if len(selected) < target_size:
+    if len(unique_player_plays) < target_size:
         return None
 
-    # Check game diversity
-    distinct_games = len(set(p["game"] for p in selected))
-    if distinct_games < min_games:
+    all_games = set(p.get("game", "") for p in unique_player_plays)
+    if len(all_games) < min_games:
         return None
 
-    return selected
+    selected = unique_player_plays[:target_size]
+    distinct_games = set(p.get("game", "") for p in selected)
+
+    if len(distinct_games) >= min_games:
+        return selected
+
+    for candidate in unique_player_plays[target_size:]:
+        if candidate.get("game", "") not in distinct_games:
+            selected.pop()
+            selected.append(candidate)
+            return selected
+
+    return None
 
 
 def run_pipeline(

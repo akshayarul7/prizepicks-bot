@@ -444,8 +444,10 @@ def render_prizepicks_slip(
     rw = bbox_roi[2] - bbox_roi[0]
     draw.text(((card_width - rw) // 2, footer_y + 12), roi_text, fill=COLOR_HIT, font=font_roi)
 
-    img.save(output_path, "PNG")
-    return output_path
+    if output_path:
+        img.save(output_path, "PNG")
+        return output_path
+    return img
 
 
 def send_slip_card_to_discord(

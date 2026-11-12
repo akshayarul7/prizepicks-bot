@@ -421,11 +421,27 @@ def auto_settle_pending_slips(
 
             # Find player in box scores
             matched_name = None
+            # 1. Exact match
             for name in player_stats:
-                norm_espn = normalize_player_name(name)
-                if norm_p == norm_espn or norm_p in norm_espn or norm_espn in norm_p:
+                if norm_p == normalize_player_name(name):
                     matched_name = name
                     break
+            # 2. Token match
+            if not matched_name:
+                p_toks = set(norm_p.split())
+                for name in player_stats:
+                    es_toks = set(normalize_player_name(name).split())
+                    if p_toks and es_toks and p_toks == es_toks:
+                        matched_name = name
+                        break
+            # 3. Substring match (safety minimum length)
+            if not matched_name:
+                for name in player_stats:
+                    norm_espn = normalize_player_name(name)
+                    if len(norm_p) >= 6 and len(norm_espn) >= 6:
+                        if norm_p in norm_espn or norm_espn in norm_p:
+                            matched_name = name
+                            break
 
             if matched_name:
                 p_data = player_stats[matched_name]
@@ -446,8 +462,14 @@ def auto_settle_pending_slips(
                 if leg_game and "@" in leg_game:
                     game_parts = [t.strip().lower() for t in leg_game.split("@")]
                     for comp_set in completed_games_teams:
-                        # If at least one team in the leg's game matches the completed game teams
-                        if any(any(part in c or c in part for c in comp_set) for part in game_parts):
+                        # Match both teams if possible, or at least one team
+                        if len(game_parts) == 2:
+                            t1_match = any(game_parts[0] in c or c in game_parts[0] for c in comp_set)
+                            t2_match = any(game_parts[1] in c or c in game_parts[1] for c in comp_set)
+                            if t1_match and t2_match:
+                                game_is_final = True
+                                break
+                        elif any(any(part in c or c in part for c in comp_set) for part in game_parts):
                             game_is_final = True
                             break
 
