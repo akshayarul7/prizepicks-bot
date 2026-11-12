@@ -107,8 +107,14 @@ def git_commit_and_push(commit_msg: str):
         return False
 
     try:
+        subprocess.run(["git", "config", "--global", "--add", "safe.directory", "*"], check=False)
         remote_url = f"https://x-access-token:{token}@github.com/{repo}.git"
-        subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
+        rem_check = subprocess.run(["git", "remote"], capture_output=True, text=True)
+        if "origin" in rem_check.stdout:
+            subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
+        else:
+            subprocess.run(["git", "remote", "add", "origin", remote_url], check=True)
+
         subprocess.run(["git", "config", "user.name", "prizepicks-cloud-bot"], check=True)
         subprocess.run(["git", "config", "user.email", "cloud-bot@users.noreply.github.com"], check=True)
 
@@ -174,20 +180,34 @@ class CloudHealthHandler(http.server.BaseHTTPRequestHandler):
                 "token_length": len(token) if token else 0,
                 "repo": repo,
             }
-            if token:
-                try:
+            try:
+                # 1. Check git safe directory
+                subprocess.run(["git", "config", "--global", "--add", "safe.directory", "*"], check=False)
+                # 2. Check git remotes
+                rem_res = subprocess.run(["git", "remote", "-v"], capture_output=True, text=True)
+                diag["git_remotes"] = rem_res.stdout.strip()
+                diag["git_remote_err"] = rem_res.stderr.strip()
+                # 3. Check git status
+                st_res = subprocess.run(["git", "status"], capture_output=True, text=True)
+                diag["git_status"] = st_res.stdout.strip()[:200]
+                diag["git_status_err"] = st_res.stderr.strip()[:200]
+
+                if token:
                     remote_url = f"https://x-access-token:{token}@github.com/{repo}.git"
-                    subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
+                    # Add or set origin
+                    if "origin" in rem_res.stdout:
+                        subprocess.run(["git", "remote", "set-url", "origin", remote_url], check=True)
+                    else:
+                        subprocess.run(["git", "remote", "add", "origin", remote_url], check=True)
+                    
                     res = subprocess.run(["git", "ls-remote", "origin", "main"], capture_output=True, text=True, timeout=10)
                     diag["git_ls_remote_returncode"] = res.returncode
                     diag["git_ls_remote_stdout"] = res.stdout.strip()[:100]
                     diag["git_ls_remote_stderr"] = res.stderr.strip()[:200]
                     diag["auth_status"] = "SUCCESS" if res.returncode == 0 else "AUTH_FAILED"
-                except Exception as e:
-                    diag["error"] = str(e)
-                    diag["auth_status"] = "ERROR"
-            else:
-                diag["auth_status"] = "MISSING_TOKEN"
+            except Exception as e:
+                diag["error"] = str(e)
+                diag["auth_status"] = "ERROR"
             self.wfile.write(json.dumps(diag, indent=2).encode("utf-8"))
             return
 
