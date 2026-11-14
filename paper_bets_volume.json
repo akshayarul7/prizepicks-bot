@@ -521,6 +521,93 @@
       "net_profit": -6.0,
       "payout_multiplier": 0.4,
       "discord_message_id": "1570226339397763102"
+    },
+    {
+      "id": "ee3c2190",
+      "date_placed": "2026-11-14 09:51:12 AM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-14. Avg win rate: 59.00%.",
+      "legs": [
+        {
+          "leg_id": "9befa8",
+          "player_name": "Matas Buzelis",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 62.37
+        },
+        {
+          "leg_id": "066550",
+          "player_name": "Saddiq Bey",
+          "sport": "NBA",
+          "game": "Denver Nuggets @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 61.11
+        },
+        {
+          "leg_id": "9352a7",
+          "player_name": "Day'Ron Sharpe",
+          "sport": "NBA",
+          "game": "Brooklyn Nets @ Memphis Grizzlies",
+          "stat_type": "Points",
+          "line": 9.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.42
+        },
+        {
+          "leg_id": "1115c5",
+          "player_name": "Daniel Gafford",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ Cleveland Cavaliers",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "1225cb",
+          "player_name": "Julius Randle",
+          "sport": "NBA",
+          "game": "Brooklyn Nets @ Memphis Grizzlies",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.84
+        },
+        {
+          "leg_id": "a24ecf",
+          "player_name": "Ty Jerome",
+          "sport": "NBA",
+          "game": "Brooklyn Nets @ Memphis Grizzlies",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.34
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1571220981958312077"
     }
   ],
   "version": "1.0"
