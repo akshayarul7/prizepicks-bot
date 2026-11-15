@@ -1041,6 +1041,93 @@
       "net_profit": -6.0,
       "payout_multiplier": 0.4,
       "discord_message_id": "1571220972294639747"
+    },
+    {
+      "id": "acc6e5e2",
+      "date_placed": "2026-11-15 09:01:55 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 17:01:39. Avg win rate: 58.66%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "e482c4",
+          "player_name": "Kenrich Williams",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Sacramento Kings",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.56
+        },
+        {
+          "leg_id": "b04a44",
+          "player_name": "Miles Bridges",
+          "sport": "NBA",
+          "game": "Los Angeles Lakers @ Phoenix Suns",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.08
+        },
+        {
+          "leg_id": "67ca14",
+          "player_name": "Scottie Barnes",
+          "sport": "NBA",
+          "game": "New York Knicks @ Toronto Raptors",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "715bd2",
+          "player_name": "Stephon Castle",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.59
+        },
+        {
+          "leg_id": "e98007",
+          "player_name": "RJ Barrett",
+          "sport": "NBA",
+          "game": "New York Knicks @ Toronto Raptors",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "50a7b9",
+          "player_name": "Kevin Durant",
+          "sport": "NBA",
+          "game": "Houston Rockets @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.92
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1571570988733304906"
     }
   ],
   "version": "1.0"
