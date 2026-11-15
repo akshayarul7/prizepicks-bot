@@ -695,6 +695,93 @@
       "net_profit": 0.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1571571002071195769"
+    },
+    {
+      "id": "59cd91bc",
+      "date_placed": "2026-11-15 11:59:31 AM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #2 for 2026-11-15. Avg win rate: 58.82%.",
+      "legs": [
+        {
+          "leg_id": "6c2348",
+          "player_name": "Julian Champagnie",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 65.02
+        },
+        {
+          "leg_id": "7f118b",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "San Antonio Spurs @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.3
+        },
+        {
+          "leg_id": "6d906b",
+          "player_name": "De'Andre Hunter",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Sacramento Kings",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.93
+        },
+        {
+          "leg_id": "efbd63",
+          "player_name": "Shai Gilgeous-Alexander",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Sacramento Kings",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "c86a3c",
+          "player_name": "Devin Booker",
+          "sport": "NBA",
+          "game": "Los Angeles Lakers @ Phoenix Suns",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.34
+        },
+        {
+          "leg_id": "b3bc81",
+          "player_name": "Rui Hachimura",
+          "sport": "NBA",
+          "game": "Charlotte Hornets @ Los Angeles Clippers",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.89
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1571615678002241566"
     }
   ],
   "version": "1.0"
