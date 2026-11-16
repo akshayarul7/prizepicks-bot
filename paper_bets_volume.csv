@@ -41,12 +41,12 @@ ee3c2190,2026-11-14 09:51:12 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.
 ee3c2190,2026-11-14 09:51:12 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,4,Daniel Gafford,Rebounds,6.0,UNDER,3.0,HIT,57.92,Dallas Mavericks @ Cleveland Cavaliers
 ee3c2190,2026-11-14 09:51:12 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,5,Julius Randle,Assists,5.0,UNDER,5.0,PUSH,56.84,Brooklyn Nets @ Memphis Grizzlies
 ee3c2190,2026-11-14 09:51:12 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,6,Ty Jerome,Assists,5.0,OVER,9.0,HIT,56.34,Brooklyn Nets @ Memphis Grizzlies
-491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Kenrich Williams,Rebounds,5.0,UNDER,,PENDING,59.56,Oklahoma City Thunder @ Sacramento Kings
-491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Miles Bridges,Rebounds,6.0,UNDER,,PENDING,59.08,Los Angeles Lakers @ Phoenix Suns
-491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Scottie Barnes,Assists,5.0,UNDER,,PENDING,58.89,New York Knicks @ Toronto Raptors
-491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Stephon Castle,Assists,5.0,OVER,,PENDING,58.59,San Antonio Spurs @ Utah Jazz
-491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,RJ Barrett,Rebounds,6.0,UNDER,,PENDING,57.92,New York Knicks @ Toronto Raptors
-491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Kevin Durant,Rebounds,5.0,OVER,,PENDING,57.92,Houston Rockets @ Washington Wizards
+491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,1,Kenrich Williams,Rebounds,5.0,UNDER,1.0,HIT,59.56,Oklahoma City Thunder @ Sacramento Kings
+491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,2,Miles Bridges,Rebounds,6.0,UNDER,3.0,HIT,59.08,Los Angeles Lakers @ Phoenix Suns
+491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,3,Scottie Barnes,Assists,5.0,UNDER,4.0,HIT,58.89,New York Knicks @ Toronto Raptors
+491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,4,Stephon Castle,Assists,5.0,OVER,9.0,HIT,58.59,San Antonio Spurs @ Utah Jazz
+491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,5,RJ Barrett,Rebounds,6.0,UNDER,5.0,HIT,57.92,New York Knicks @ Toronto Raptors
+491cef85,2026-11-15 09:02:02 AM PT,accelerated_volume_3,flex_6,10.0,WON,20.0,10.0,6,Kevin Durant,Rebounds,5.0,OVER,4.0,MISS,57.92,Houston Rockets @ Washington Wizards
 59cd91bc,2026-11-15 11:59:31 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Julian Champagnie,Rebounds,4.0,OVER,,PENDING,65.02,San Antonio Spurs @ Utah Jazz
 59cd91bc,2026-11-15 11:59:31 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Darryn Peterson,Assists,4.0,UNDER,,PENDING,58.3,San Antonio Spurs @ Utah Jazz
 59cd91bc,2026-11-15 11:59:31 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,De'Andre Hunter,Rebounds,4.0,OVER,,PENDING,57.93,Oklahoma City Thunder @ Sacramento Kings
