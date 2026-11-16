@@ -53,9 +53,9 @@ ee3c2190,2026-11-14 09:51:12 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.
 59cd91bc,2026-11-15 11:59:31 AM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,4,Shai Gilgeous-Alexander,Assists,5.0,OVER,2.0,MISS,57.45,Oklahoma City Thunder @ Sacramento Kings
 59cd91bc,2026-11-15 11:59:31 AM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,5,Devin Booker,Assists,5.0,OVER,7.0,HIT,57.34,Los Angeles Lakers @ Phoenix Suns
 59cd91bc,2026-11-15 11:59:31 AM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,6,Rui Hachimura,Rebounds,5.0,UNDER,2.0,HIT,56.89,Charlotte Hornets @ Los Angeles Clippers
-814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Neemias Queta,Rebounds,7.0,UNDER,,PENDING,60.23,Orlando Magic @ Boston Celtics
-814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,AJ Dybantsa,Rebounds,5.0,OVER,,PENDING,60.14,Memphis Grizzlies @ Washington Wizards
-814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Collin Gillespie,Assists,4.0,UNDER,,PENDING,59.56,Phoenix Suns @ Denver Nuggets
+814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Neemias Queta,Rebounds,7.0,UNDER,6.0,HIT,60.23,Orlando Magic @ Boston Celtics
+814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,AJ Dybantsa,Rebounds,5.0,OVER,7.0,HIT,60.14,Memphis Grizzlies @ Washington Wizards
+814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Collin Gillespie,Assists,4.0,UNDER,4.0,PUSH,59.56,Phoenix Suns @ Denver Nuggets
 814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Draymond Green,Assists,6.0,UNDER,,PENDING,57.92,Golden State Warriors @ New Orleans Pelicans
-814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Saddiq Bey,Rebounds,5.0,OVER,,PENDING,57.45,Golden State Warriors @ New Orleans Pelicans
-814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Trevon Brazile,Rebounds,4.0,UNDER,,PENDING,56.84,Phoenix Suns @ Denver Nuggets
+814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Saddiq Bey,Rebounds,5.0,OVER,6.0,HIT,57.45,Golden State Warriors @ New Orleans Pelicans
+814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Trevon Brazile,Rebounds,4.0,UNDER,3.0,HIT,56.84,Phoenix Suns @ Denver Nuggets

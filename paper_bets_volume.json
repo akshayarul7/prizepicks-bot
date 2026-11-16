@@ -799,8 +799,8 @@
           "stat_type": "Rebounds",
           "line": 7.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 6.0,
+          "status": "HIT",
           "edge_percent": 60.23
         },
         {
@@ -811,8 +811,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 7.0,
+          "status": "HIT",
           "edge_percent": 60.14
         },
         {
@@ -823,8 +823,8 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 4.0,
+          "status": "PUSH",
           "edge_percent": 59.56
         },
         {
@@ -847,8 +847,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 6.0,
+          "status": "HIT",
           "edge_percent": 57.45
         },
         {
@@ -859,8 +859,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 3.0,
+          "status": "HIT",
           "edge_percent": 56.84
         }
       ],
