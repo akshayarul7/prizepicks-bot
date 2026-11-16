@@ -712,8 +712,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "HIT",
           "edge_percent": 65.02
         },
         {
@@ -724,8 +724,8 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 4.0,
+          "status": "PUSH",
           "edge_percent": 58.3
         },
         {
@@ -736,8 +736,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": "DNP",
+          "status": "PUSH",
           "edge_percent": 57.93
         },
         {
@@ -748,8 +748,8 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 2.0,
+          "status": "MISS",
           "edge_percent": 57.45
         },
         {
@@ -760,8 +760,8 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 7.0,
+          "status": "HIT",
           "edge_percent": 57.34
         },
         {
@@ -772,15 +772,15 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 2.0,
+          "status": "HIT",
           "edge_percent": 56.89
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "WON",
+      "return_payout": 12.5,
+      "net_profit": 2.5,
+      "payout_multiplier": 1.25,
       "discord_message_id": "1571615678002241566"
     }
   ],
