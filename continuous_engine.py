@@ -121,10 +121,7 @@ def git_commit_and_push(commit_msg: str):
         # Check out or create local branch 'main' to avoid detached HEAD issues
         subprocess.run(["git", "checkout", "-B", "main"], check=False)
 
-        # Pull any remote commits first to prevent non-fast-forward push rejection
-        subprocess.run(["git", "fetch", "origin", "main"], check=False)
-        subprocess.run(["git", "pull", "--rebase", "-s", "recursive", "-X", "ours", "origin", "main"], check=False)
-
+        # 1. Stage and commit local changes first so working tree is clean for rebase
         subprocess.run(
             ["git", "add", "paper_bets.json", "paper_bets.csv", "paper_bets_volume.json", "paper_bets_volume.csv"],
             check=True,
@@ -132,8 +129,12 @@ def git_commit_and_push(commit_msg: str):
         diff = subprocess.run(["git", "diff", "--staged", "--quiet"])
         if diff.returncode != 0:
             subprocess.run(["git", "commit", "-m", commit_msg], check=True)
-        
-        # Push commit(s) directly to main
+
+        # 2. Fetch and rebase cleanly on top of any remote commits
+        subprocess.run(["git", "fetch", "origin", "main"], check=False)
+        subprocess.run(["git", "pull", "--rebase", "-s", "recursive", "-X", "ours", "origin", "main"], check=False)
+
+        # 3. Push commit(s) directly to main
         subprocess.run(["git", "push", "origin", "HEAD:main"], check=True)
         logger.info("Successfully pushed updated database to GitHub.")
         return True
