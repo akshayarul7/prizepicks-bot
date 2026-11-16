@@ -1128,6 +1128,93 @@
       "net_profit": 10.0,
       "payout_multiplier": 2.0,
       "discord_message_id": "1571570988733304906"
+    },
+    {
+      "id": "60fe84f2",
+      "date_placed": "2026-11-16 10:07:21 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 18:07:06. Avg win rate: 58.69%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "08352c",
+          "player_name": "Neemias Queta",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Boston Celtics",
+          "stat_type": "Rebounds",
+          "line": 7.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.23
+        },
+        {
+          "leg_id": "0a619e",
+          "player_name": "AJ Dybantsa",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.14
+        },
+        {
+          "leg_id": "7b2ed7",
+          "player_name": "Collin Gillespie",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Denver Nuggets",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.56
+        },
+        {
+          "leg_id": "682a94",
+          "player_name": "Draymond Green",
+          "sport": "NBA",
+          "game": "Golden State Warriors @ New Orleans Pelicans",
+          "stat_type": "Assists",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "8e6905",
+          "player_name": "Saddiq Bey",
+          "sport": "NBA",
+          "game": "Golden State Warriors @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "834647",
+          "player_name": "Trevon Brazile",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Denver Nuggets",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.84
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1571949839326126220"
     }
   ],
   "version": "1.0"
