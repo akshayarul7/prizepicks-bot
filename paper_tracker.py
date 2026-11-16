@@ -245,16 +245,16 @@ def fetch_espn_boxscore_data(
     if date_str:
         dates_to_check.append(date_str)
     else:
-        # Check today, yesterday, and 2 days ago in Pacific Time
-        dates_to_check.append(pt_now.strftime("%Y%m%d"))
-        dates_to_check.append((pt_now - datetime.timedelta(days=1)).strftime("%Y%m%d"))
+        # Check in chronological order: 2 days ago, yesterday, today (so newest stats overwrite older ones)
         dates_to_check.append((pt_now - datetime.timedelta(days=2)).strftime("%Y%m%d"))
+        dates_to_check.append((pt_now - datetime.timedelta(days=1)).strftime("%Y%m%d"))
+        dates_to_check.append(pt_now.strftime("%Y%m%d"))
 
     if extra_dates:
         for ed in extra_dates:
             clean_ed = ed.replace("-", "").strip()[:8]
             if clean_ed and clean_ed not in dates_to_check:
-                dates_to_check.append(clean_ed)
+                dates_to_check.insert(0, clean_ed)
 
     all_game_summaries = []
     seen_event_ids = set()
@@ -399,19 +399,19 @@ def auto_settle_pending_slips(
         logger.info(f"No pending slips found to settle in {db_file}.")
         return
 
-    # Collect dates from pending slips to ensure ESPN checks those dates
-    extra_dates = [s.get("date_placed", "")[:10] for s in pending_slips if s.get("date_placed")]
-
-    logger.info(f"Checking box scores to settle {len(pending_slips)} pending slips in {db_file}...")
-    summaries = fetch_espn_boxscore_data(sport="basketball", league="nba", date_str=date_str, extra_dates=extra_dates)
-    if not summaries:
-        logger.warning("No completed game box scores found on ESPN. Games may not have finished yet.")
-        return
-
-    player_stats, completed_games_teams = parse_player_stats_from_summaries(summaries)
     settled_any = False
 
     for slip in pending_slips:
+        slip_target_date = date_str or slip.get("date_placed", "")[:10].replace("-", "").strip()[:8]
+        summaries = fetch_espn_boxscore_data(sport="basketball", league="nba", date_str=slip_target_date)
+        if not summaries:
+            # Fall back to general search
+            summaries = fetch_espn_boxscore_data(sport="basketball", league="nba")
+        if not summaries:
+            continue
+
+        player_stats, completed_games_teams = parse_player_stats_from_summaries(summaries)
+
         for leg in slip.get("legs", []):
             # Allow final box score to overwrite any mid-game in-progress snapshots
             p_name = leg["player_name"]
@@ -507,8 +507,10 @@ def auto_settle_pending_slips(
             logger.info(f"Sent settlement recap to Discord webhook ({db_file}).")
         except Exception as e:
             logger.warning(f"Discord settlement notification failed: {e}")
+        return True
     else:
         logger.info(f"No matching player stats found in final games yet for {db_file}.")
+        return False
 
 
 # ===========================================================================

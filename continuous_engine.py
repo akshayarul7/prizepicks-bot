@@ -432,12 +432,30 @@ def run_continuous_loop():
             )
 
             # -------------------------------------------------------------
-            # MODE A: LIVE GAME IN-PLACE UPDATER (4:00 PM - 9:30 PM PT)
+            # MODE A: LIVE GAME IN-PLACE UPDATER & DYNAMIC FINAL SETTLEMENT
+            # (Polls ESPN every 2 mins; settles and commits as soon as last game ends)
             # -------------------------------------------------------------
-            if has_pending and 16.0 <= time_decimal < 21.5:
-                logger.info("🏀 [LIVE GAMES ACTIVE] Polling ESPN live box scores across both tracks...")
+            if has_pending:
+                logger.info("🏀 [LIVE GAMES ACTIVE] Polling ESPN box scores across both tracks...")
                 try:
                     live_game_updater.update_active_slips_live()
+
+                    # Immediately settle and commit if all games in pending slips have finished
+                    base_settled = False
+                    vol_settled = False
+                    if has_pending_base:
+                        base_settled = paper_tracker.auto_settle_pending_slips(
+                            db_file="paper_bets.json",
+                            webhook_url=discord_notifier.DISCORD_WEBHOOK_URL,
+                        )
+                    if has_pending_vol:
+                        vol_settled = paper_tracker.auto_settle_pending_slips(
+                            db_file="paper_bets_volume.json",
+                            webhook_url=discord_notifier.DISCORD_VOLUME_WEBHOOK_URL,
+                        )
+                    if base_settled or vol_settled:
+                        git_commit_and_push(f"Auto-settle completed slips for {today_str}")
+                        logger.info("🎯 All games finished! Slips settled and committed to GitHub immediately.")
                 except Exception as e:
                     logger.error(f"Live updater error: {e}")
                     alert_engine_error("Live Game Updater Error", str(e), traceback.format_exc())
