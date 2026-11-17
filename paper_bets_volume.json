@@ -799,8 +799,8 @@
           "stat_type": "Rebounds",
           "line": 7.0,
           "choice": "UNDER",
-          "actual_result": 6.0,
-          "status": "HIT",
+          "actual_result": "DNP",
+          "status": "PUSH",
           "edge_percent": 60.23
         },
         {
@@ -859,7 +859,7 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": 1.0,
+          "actual_result": 2.0,
           "status": "HIT",
           "edge_percent": 56.84
         }
