@@ -869,6 +869,93 @@
       "net_profit": 20.0,
       "payout_multiplier": 3.0,
       "discord_message_id": "1571949850897940514"
+    },
+    {
+      "id": "e3620aac",
+      "date_placed": "2026-11-17 01:31:18 PM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-17. Avg win rate: 58.53%.",
+      "legs": [
+        {
+          "leg_id": "c5bd9c",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "Utah Jazz @ Los Angeles Clippers",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "4b2c7b",
+          "player_name": "Toumani Camara",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.97
+        },
+        {
+          "leg_id": "0f11f5",
+          "player_name": "Ayo Dosunmu",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.97
+        },
+        {
+          "leg_id": "1ac312",
+          "player_name": "Jake LaRavia",
+          "sport": "NBA",
+          "game": "Charlotte Hornets @ Los Angeles Lakers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "937d1c",
+          "player_name": "Darius Garland",
+          "sport": "NBA",
+          "game": "Utah Jazz @ Los Angeles Clippers",
+          "stat_type": "Assists",
+          "line": 7.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.03
+        },
+        {
+          "leg_id": "c0c86d",
+          "player_name": "Ausar Thompson",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ San Antonio Spurs",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.26
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1572363536389382154"
     }
   ],
   "version": "1.0"
