@@ -1169,7 +1169,7 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": 0.0,
+          "actual_result": 1.0,
           "status": "PUSH",
           "edge_percent": 59.56
         },
