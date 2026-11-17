@@ -1157,8 +1157,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": 7.0,
-          "status": "HIT",
+          "actual_result": 5.0,
+          "status": "PUSH",
           "edge_percent": 60.14
         },
         {
@@ -1169,7 +1169,7 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": 4.0,
+          "actual_result": 0.0,
           "status": "PUSH",
           "edge_percent": 59.56
         },
@@ -1193,7 +1193,7 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": 6.0,
+          "actual_result": 5.0,
           "status": "HIT",
           "edge_percent": 57.45
         },
@@ -1205,7 +1205,7 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": 3.0,
+          "actual_result": 1.0,
           "status": "HIT",
           "edge_percent": 56.84
         }
