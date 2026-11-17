@@ -836,7 +836,7 @@
           "line": 6.0,
           "choice": "UNDER",
           "actual_result": 5.0,
-          "status": "PENDING",
+          "status": "HIT",
           "edge_percent": 57.92
         },
         {
@@ -864,10 +864,10 @@
           "edge_percent": 56.84
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "WON",
+      "return_payout": 30.0,
+      "net_profit": 20.0,
+      "payout_multiplier": 3.0,
       "discord_message_id": "1571949850897940514"
     }
   ],
