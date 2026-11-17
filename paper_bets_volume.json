@@ -847,7 +847,7 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": 5.0,
+          "actual_result": 6.0,
           "status": "HIT",
           "edge_percent": 57.45
         },
