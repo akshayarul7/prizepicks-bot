@@ -952,9 +952,9 @@
         }
       ],
       "status": "WON",
-      "return_payout": 12.5,
-      "net_profit": 2.5,
-      "payout_multiplier": 1.25,
+      "return_payout": 15.0,
+      "net_profit": 5.0,
+      "payout_multiplier": 1.5,
       "discord_message_id": "1572363536389382154"
     },
     {
