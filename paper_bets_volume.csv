@@ -59,9 +59,9 @@ ee3c2190,2026-11-14 09:51:12 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.
 814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,WON,30.0,20.0,4,Draymond Green,Assists,6.0,UNDER,5.0,HIT,57.92,Golden State Warriors @ New Orleans Pelicans
 814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,WON,30.0,20.0,5,Saddiq Bey,Rebounds,5.0,OVER,6.0,HIT,57.45,Golden State Warriors @ New Orleans Pelicans
 814530a0,2026-11-16 10:07:27 AM PT,accelerated_volume_3,flex_6,10.0,WON,30.0,20.0,6,Trevon Brazile,Rebounds,4.0,UNDER,2.0,HIT,56.84,Phoenix Suns @ Denver Nuggets
-e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Darryn Peterson,Assists,4.0,OVER,0.0,PENDING,60.05,Utah Jazz @ Los Angeles Clippers
-e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Toumani Camara,Rebounds,4.0,OVER,8.0,HIT,58.97,Portland Trail Blazers @ Minnesota Timberwolves
-e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Ayo Dosunmu,Rebounds,4.0,OVER,4.0,PUSH,58.97,Portland Trail Blazers @ Minnesota Timberwolves
-e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Jake LaRavia,Rebounds,4.0,OVER,2.0,PENDING,58.89,Charlotte Hornets @ Los Angeles Lakers
-e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Darius Garland,Assists,7.0,UNDER,4.0,PENDING,58.03,Utah Jazz @ Los Angeles Clippers
-e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Ausar Thompson,Assists,4.0,OVER,12.0,HIT,56.26,Detroit Pistons @ San Antonio Spurs
+e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,1,Darryn Peterson,Assists,4.0,OVER,2.0,MISS,60.05,Utah Jazz @ Los Angeles Clippers
+e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,2,Toumani Camara,Rebounds,4.0,OVER,8.0,HIT,58.97,Portland Trail Blazers @ Minnesota Timberwolves
+e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,3,Ayo Dosunmu,Rebounds,4.0,OVER,4.0,PUSH,58.97,Portland Trail Blazers @ Minnesota Timberwolves
+e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,4,Jake LaRavia,Rebounds,4.0,OVER,5.0,HIT,58.89,Charlotte Hornets @ Los Angeles Lakers
+e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,5,Darius Garland,Assists,7.0,UNDER,7.0,PUSH,58.03,Utah Jazz @ Los Angeles Clippers
+e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,12.5,2.5,6,Ausar Thompson,Assists,4.0,OVER,12.0,HIT,56.26,Detroit Pistons @ San Antonio Spurs
