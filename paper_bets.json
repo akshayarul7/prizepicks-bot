@@ -602,9 +602,9 @@
         }
       ],
       "status": "LOST",
-      "return_payout": 4.0,
-      "net_profit": -6.0,
-      "payout_multiplier": 0.4,
+      "return_payout": 0.0,
+      "net_profit": -10.0,
+      "payout_multiplier": 0.0,
       "discord_message_id": "1568284562424074250"
     },
     {
