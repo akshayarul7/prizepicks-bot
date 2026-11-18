@@ -37,7 +37,7 @@ CSV_FILE = "paper_bets.csv"
 # Multipliers are gross return on stake (e.g., 5.0x returns $50 on $10 stake = +$40 net profit).
 PAYOUT_TABLES = {
     "power_2": {2: 3.0},
-    "power_3": {3: 5.0},
+    "power_3": {3: 6.0},
     "power_4": {4: 10.0},
     "flex_3": {3: 3.0},
     "flex_4": {4: 6.0, 3: 1.5},
@@ -53,6 +53,7 @@ DOWNGRADE_MAP = {
     "flex_6": "flex_5",
     "flex_5": "flex_4",
     "flex_4": "flex_3",
+    "flex_3": "power_2",
 }
 
 
