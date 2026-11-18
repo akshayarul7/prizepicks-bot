@@ -1302,6 +1302,93 @@
       "net_profit": 2.5,
       "payout_multiplier": 1.25,
       "discord_message_id": "1572363526285303848"
+    },
+    {
+      "id": "dadfb7ed",
+      "date_placed": "2026-11-18 09:04:07 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 17:03:44. Avg win rate: 59.02%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "908614",
+          "player_name": "Tre Jones",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ Brooklyn Nets",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 61.11
+        },
+        {
+          "leg_id": "0d7d26",
+          "player_name": "Brandin Podziemski",
+          "sport": "NBA",
+          "game": "Golden State Warriors @ Dallas Mavericks",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.08
+        },
+        {
+          "leg_id": "ea4e2f",
+          "player_name": "Aaron Wiggins",
+          "sport": "NBA",
+          "game": "Atlanta Hawks @ Oklahoma City Thunder",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "e3b572",
+          "player_name": "Tyler Herro",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Miami Heat",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "387da8",
+          "player_name": "VJ Edgecombe",
+          "sport": "NBA",
+          "game": "Philadelphia 76ers @ Orlando Magic",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.59
+        },
+        {
+          "leg_id": "fb433c",
+          "player_name": "Jalen Smith",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ Brooklyn Nets",
+          "stat_type": "Rebounds",
+          "line": 9.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.58
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1572658700035031050"
     }
   ],
   "version": "1.0"
