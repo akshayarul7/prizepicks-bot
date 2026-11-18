@@ -399,14 +399,12 @@ def auto_settle_pending_slips(
         logger.info(f"No pending slips found to settle in {db_file}.")
         return
 
-    settled_any = False
+    legs_updated = False
+    slips_settled = False
 
     for slip in pending_slips:
         slip_target_date = date_str or slip.get("date_placed", "")[:10].replace("-", "").strip()[:8]
         summaries = fetch_espn_boxscore_data(sport="basketball", league="nba", date_str=slip_target_date)
-        if not summaries:
-            # Fall back to general search
-            summaries = fetch_espn_boxscore_data(sport="basketball", league="nba")
         if not summaries:
             continue
 
@@ -418,6 +416,28 @@ def auto_settle_pending_slips(
             norm_p = normalize_player_name(p_name)
             stat_key = leg["stat_type"].lower().strip()
             leg_game = leg.get("game", "")
+
+            # Check if this leg's scheduled game has concluded
+            game_is_final = False
+            if leg_game and "@" in leg_game:
+                game_parts = [t.strip().lower() for t in leg_game.split("@")]
+                for comp_set in completed_games_teams:
+                    if len(game_parts) == 2:
+                        t1_match = any(game_parts[0] in c or c in game_parts[0] for c in comp_set)
+                        t2_match = any(game_parts[1] in c or c in game_parts[1] for c in comp_set)
+                        if t1_match and t2_match:
+                            game_is_final = True
+                            break
+                    elif any(any(part in c or c in part for c in comp_set) for part in game_parts):
+                        game_is_final = True
+                        break
+
+            # If the game is NOT final yet, keep leg explicitly PENDING!
+            if not game_is_final:
+                if leg.get("status") != "PENDING":
+                    leg["status"] = "PENDING"
+                    legs_updated = True
+                continue
 
             # Find player in box scores
             matched_name = None
@@ -448,42 +468,33 @@ def auto_settle_pending_slips(
                 if p_data.get("_dnp", False):
                     leg["actual_result"] = "DNP"
                     leg["status"] = "PUSH"
-                    settled_any = True
+                    legs_updated = True
                     logger.info(f"Auto-Settled DNP / Inactive (0 Mins): {leg['player_name']} -> PUSH (Reboot)")
                 elif stat_key in p_data:
                     actual_val = p_data[stat_key]
                     leg["actual_result"] = actual_val
-                    leg["status"] = grade_leg(leg["choice"], leg["line"], actual_val)
-                    settled_any = True
-                    logger.info(f"Auto-Settled: {leg['player_name']} {leg['stat_type']} -> Actual: {actual_val} vs Line: {leg['line']} ({leg['status']})")
+                    new_status = grade_leg(leg["choice"], leg["line"], actual_val)
+                    if leg.get("status") != new_status or leg.get("actual_result") != actual_val:
+                        leg["status"] = new_status
+                        legs_updated = True
+                        logger.info(f"Auto-Settled: {leg['player_name']} {leg['stat_type']} -> Actual: {actual_val} vs Line: {leg['line']} ({leg['status']})")
             else:
-                # Player not in box score at all. Check if their scheduled game has concluded
-                game_is_final = False
-                if leg_game and "@" in leg_game:
-                    game_parts = [t.strip().lower() for t in leg_game.split("@")]
-                    for comp_set in completed_games_teams:
-                        # Match both teams if possible, or at least one team
-                        if len(game_parts) == 2:
-                            t1_match = any(game_parts[0] in c or c in game_parts[0] for c in comp_set)
-                            t2_match = any(game_parts[1] in c or c in game_parts[1] for c in comp_set)
-                            if t1_match and t2_match:
-                                game_is_final = True
-                                break
-                        elif any(any(part in c or c in part for c in comp_set) for part in game_parts):
-                            game_is_final = True
-                            break
+                # Player not in box score at all, but their game concluded -> DNP Reboot
+                leg["actual_result"] = "DNP"
+                leg["status"] = "PUSH"
+                legs_updated = True
+                logger.info(f"Auto-Settled DNP / Inactive Reboot: {leg['player_name']} in final game '{leg_game}' -> PUSH")
 
-                if game_is_final:
-                    leg["actual_result"] = "DNP"
-                    leg["status"] = "PUSH"
-                    settled_any = True
-                    logger.info(f"Auto-Settled DNP / Inactive Reboot: {leg['player_name']} in final game '{leg_game}' -> PUSH")
-
+        # Grade slip only when all legs have concluded
         grade_slip(slip)
+        if slip.get("status") in ["WON", "LOST", "PUSH"]:
+            slips_settled = True
 
-    if settled_any:
+    if legs_updated or slips_settled:
         save_database(db, filepath=db_file)
         logger.info(f"Successfully updated slip statuses in {db_file} with official box scores.")
+
+    if slips_settled:
         try:
             import discord_notifier
             report = generate_performance_report(db.get("slips", []))
@@ -509,7 +520,6 @@ def auto_settle_pending_slips(
             logger.warning(f"Discord settlement notification failed: {e}")
         return True
     else:
-        logger.info(f"No matching player stats found in final games yet for {db_file}.")
         return False
 
 

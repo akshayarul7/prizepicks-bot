@@ -206,8 +206,9 @@ class TestDatabaseIntegrity(unittest.TestCase):
             self.assertIn("status", s)
             self.assertIn(s["status"], ["WON", "LOST", "PUSH", "PENDING"])
             self.assertEqual(len(s.get("legs", [])), 6, f"Slip {s['id']} does not have 6 legs")
-            total_staked += float(s.get("stake", 0.0))
-            total_returned += float(s.get("return_payout", 0.0))
+            if s.get("status") in ["WON", "LOST", "PUSH"]:
+                total_staked += float(s.get("stake", 0.0))
+                total_returned += float(s.get("return_payout", 0.0))
 
         rep = paper_tracker.generate_performance_report(slips)
         self.assertEqual(rep["total_slips"], len(slips))
