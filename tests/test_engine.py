@@ -103,6 +103,15 @@ class TestSlipGradingAndPayouts(unittest.TestCase):
         self.assertEqual(graded["return_payout"], 15.0)
         self.assertEqual(graded["net_profit"], 5.0)
 
+    def test_flex_6_with_3_pushes_and_1_miss(self):
+        # 6-flex with 3 PUSHES, 2 HITS, 1 MISS -> downgrades to 3-flex with 2 hits (1.0x payout / money back)
+        slip = self._create_dummy_slip(["HIT"] * 2 + ["PUSH", "PUSH", "PUSH", "MISS"])
+        graded = paper_tracker.grade_slip(slip)
+        self.assertEqual(graded["status"], "PUSH")
+        self.assertEqual(graded["payout_multiplier"], 1.0)
+        self.assertEqual(graded["return_payout"], 10.0)
+        self.assertEqual(graded["net_profit"], 0.0)
+
     def test_all_pushes_refund(self):
         slip = self._create_dummy_slip(["PUSH"] * 6)
         graded = paper_tracker.grade_slip(slip)

@@ -35,12 +35,12 @@ c42a9520,2026-10-30 12:25:57 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,6,
 36e89519,2026-11-04 09:01:30 AM PT,automated_ev_bot,flex_6,10.0,WON,100.0,90.0,4,Ace Bailey,Rebounds,6.0,UNDER,5.0,HIT,59.08,Utah Jazz @ New Orleans Pelicans
 36e89519,2026-11-04 09:01:30 AM PT,automated_ev_bot,flex_6,10.0,WON,100.0,90.0,5,Brice Sensabaugh,Points,8.5,UNDER,6.0,HIT,58.91,Utah Jazz @ New Orleans Pelicans
 36e89519,2026-11-04 09:01:30 AM PT,automated_ev_bot,flex_6,10.0,WON,100.0,90.0,6,Kenrich Williams,Rebounds,5.0,UNDER,4.0,HIT,58.89,Cleveland Cavaliers @ Oklahoma City Thunder
-806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,1,Santi Aldama,3-PT Made,0.5,OVER,1.0,HIT,70.15,Utah Jazz @ Dallas Mavericks
-806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,2,Saddiq Bey,Rebounds,4.0,UNDER,6.0,MISS,61.65,Minnesota Timberwolves @ New Orleans Pelicans
-806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,3,Zion Williamson,Rebounds,5.0,OVER,5.0,PUSH,60.68,Minnesota Timberwolves @ New Orleans Pelicans
-806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,4,Derik Queen,Rebounds,7.0,UNDER,4.0,HIT,60.23,Minnesota Timberwolves @ New Orleans Pelicans
-806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,5,Shai Gilgeous-Alexander,Assists,6.0,UNDER,5.0,HIT,60.18,Oklahoma City Thunder @ Memphis Grizzlies
-806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6,Kyrie Irving,Rebounds,4.0,UNDER,6.0,MISS,59.46,Utah Jazz @ Dallas Mavericks
+806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,1,Santi Aldama,3-PT Made,0.5,OVER,1.0,HIT,70.15,Utah Jazz @ Dallas Mavericks
+806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,2,Saddiq Bey,Rebounds,4.0,UNDER,6.0,MISS,61.65,Minnesota Timberwolves @ New Orleans Pelicans
+806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,3,Zion Williamson,Rebounds,5.0,OVER,5.0,PUSH,60.68,Minnesota Timberwolves @ New Orleans Pelicans
+806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,4,Derik Queen,Rebounds,7.0,UNDER,4.0,HIT,60.23,Minnesota Timberwolves @ New Orleans Pelicans
+806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,5,Shai Gilgeous-Alexander,Assists,6.0,UNDER,5.0,HIT,60.18,Oklahoma City Thunder @ Memphis Grizzlies
+806c1fe0,2026-11-06 03:31:26 PM PT,automated_ev_bot,flex_6,10.0,LOST,4.0,-6.0,6,Kyrie Irving,Rebounds,4.0,UNDER,6.0,MISS,59.46,Utah Jazz @ Dallas Mavericks
 8eeec555,2026-11-07 03:38:08 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,1,Toumani Camara,Rebounds,4.0,UNDER,6.0,MISS,60.25,Portland Trail Blazers @ Los Angeles Lakers
 8eeec555,2026-11-07 03:38:08 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,2,Jrue Holiday,Assists,4.0,OVER,7.0,HIT,59.41,Boston Celtics @ Charlotte Hornets
 8eeec555,2026-11-07 03:38:08 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,3,Julius Randle,Rebounds,7.0,UNDER,7.0,PUSH,58.92,Minnesota Timberwolves @ New Orleans Pelicans
