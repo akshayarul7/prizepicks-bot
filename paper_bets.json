@@ -1389,6 +1389,93 @@
       "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1572658700035031050"
+    },
+    {
+      "id": "6e7ec7b8",
+      "date_placed": "2026-11-19 11:56:32 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 19:56:32. Avg win rate: 57.35%. Threshold: 55.0%.",
+      "legs": [
+        {
+          "leg_id": "ee9a6d",
+          "player_name": "Brandin Podziemski",
+          "sport": "NBA",
+          "game": "Golden State Warriors @ Memphis Grizzlies",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "f7df67",
+          "player_name": "Brook Lopez",
+          "sport": "NBA",
+          "game": "Los Angeles Clippers @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.41
+        },
+        {
+          "leg_id": "0128d3",
+          "player_name": "Devin Vassell",
+          "sport": "NBA",
+          "game": "Los Angeles Clippers @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.84
+        },
+        {
+          "leg_id": "19f967",
+          "player_name": "Deni Avdija",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Milwaukee Bucks",
+          "stat_type": "Rebounds",
+          "line": 7.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.51
+        },
+        {
+          "leg_id": "55fd80",
+          "player_name": "OG Anunoby",
+          "sport": "NBA",
+          "game": "New York Knicks @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.39
+        },
+        {
+          "leg_id": "4a2913",
+          "player_name": "Keldon Johnson",
+          "sport": "NBA",
+          "game": "Los Angeles Clippers @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.89
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "discord_message_id": "1573064476414972144"
     }
   ],
   "version": "1.0"
