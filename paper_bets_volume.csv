@@ -71,9 +71,9 @@ e3620aac,2026-11-17 01:31:18 PM PT,accelerated_volume_3,flex_6,10.0,WON,15.0,5.0
 2a9e79ce,2026-11-18 09:04:13 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,4,Tyler Herro,Rebounds,4.0,OVER,2.0,MISS,58.89,Milwaukee Bucks @ Miami Heat
 2a9e79ce,2026-11-18 09:04:13 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,5,VJ Edgecombe,Rebounds,6.0,UNDER,8.0,MISS,58.59,Philadelphia 76ers @ Orlando Magic
 2a9e79ce,2026-11-18 09:04:13 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,6,Jalen Smith,Rebounds,9.0,UNDER,6.0,HIT,57.58,Chicago Bulls @ Brooklyn Nets
-b384eb69,2026-11-19 12:01:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Brandin Podziemski,Assists,4.0,OVER,,PENDING,60.05,Golden State Warriors @ Memphis Grizzlies
-b384eb69,2026-11-19 12:01:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Brook Lopez,Rebounds,5.0,UNDER,,PENDING,58.41,Los Angeles Clippers @ San Antonio Spurs
-b384eb69,2026-11-19 12:01:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Devin Vassell,Rebounds,4.0,UNDER,,PENDING,56.84,Los Angeles Clippers @ San Antonio Spurs
-b384eb69,2026-11-19 12:01:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Deni Avdija,Rebounds,7.0,UNDER,,PENDING,56.51,Portland Trail Blazers @ Milwaukee Bucks
-b384eb69,2026-11-19 12:01:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,OG Anunoby,Rebounds,5.0,UNDER,,PENDING,56.39,New York Knicks @ Minnesota Timberwolves
-b384eb69,2026-11-19 12:01:43 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Keldon Johnson,Rebounds,5.0,OVER,,PENDING,55.89,Los Angeles Clippers @ San Antonio Spurs
+ae2cebad,2026-11-19 12:00:31 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Brandin Podziemski,Assists,4.0,OVER,,PENDING,60.05,Golden State Warriors @ Memphis Grizzlies
+ae2cebad,2026-11-19 12:00:31 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Brook Lopez,Rebounds,5.0,UNDER,,PENDING,58.41,Los Angeles Clippers @ San Antonio Spurs
+ae2cebad,2026-11-19 12:00:31 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Devin Vassell,Rebounds,4.0,UNDER,,PENDING,56.84,Los Angeles Clippers @ San Antonio Spurs
+ae2cebad,2026-11-19 12:00:31 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Deni Avdija,Rebounds,7.0,UNDER,,PENDING,56.51,Portland Trail Blazers @ Milwaukee Bucks
+ae2cebad,2026-11-19 12:00:31 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,OG Anunoby,Rebounds,5.0,UNDER,,PENDING,56.39,New York Knicks @ Minnesota Timberwolves
+ae2cebad,2026-11-19 12:00:31 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Keldon Johnson,Rebounds,5.0,OVER,,PENDING,55.89,Los Angeles Clippers @ San Antonio Spurs
