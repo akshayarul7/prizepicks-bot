@@ -432,6 +432,10 @@ def run_continuous_loop():
                 f"Baseline Slip: {has_today_base} | Volume Slips: {today_vol_count}/3"
             )
 
+            # Determine scanning phase and whether we still need more slips placed today
+            is_scan_active, dynamic_thresh, phase_name = get_scanning_phase(time_decimal)
+            need_more_slips = is_scan_active and (not has_today_base or today_vol_count < 3)
+
             # -------------------------------------------------------------
             # MODE A: LIVE GAME IN-PLACE UPDATER & DYNAMIC FINAL SETTLEMENT
             # (Polls ESPN every 2 mins; settles and commits as soon as last game ends)
@@ -461,8 +465,12 @@ def run_continuous_loop():
                     logger.error(f"Live updater error: {e}")
                     alert_engine_error("Live Game Updater Error", str(e), traceback.format_exc())
                 gc.collect()
-                time.sleep(120)
-                continue
+
+                # If we still need to place slips today (e.g. volume < 3), do NOT sleep/continue here!
+                # Fall through to MODE C to scan and lock in remaining volume slips.
+                if not need_more_slips:
+                    time.sleep(120)
+                    continue
 
             # -------------------------------------------------------------
             # MODE B: NIGHTLY FINAL SETTLEMENT (After 9:30 PM PT)
@@ -495,8 +503,6 @@ def run_continuous_loop():
             # Phase 2: 1:30 PM - 3:30 PM PT (57.8% threshold - afternoon lineup news)
             # Phase 3: 3:30 PM - 4:15 PM PT (57.0% threshold - pre-lock peak EV consensus)
             # -------------------------------------------------------------
-            is_scan_active, dynamic_thresh, phase_name = get_scanning_phase(time_decimal)
-
             placed_any = False
 
             # 1. Baseline Track (1 slip/day)
@@ -512,9 +518,10 @@ def run_continuous_loop():
 
             # 2. Accelerated Track (3 slips/day)
             if is_scan_active and today_vol_count < 3:
-                logger.info(f"⚡ [Accelerated - {pt_now.strftime('%I:%M %p PT')}] Scanning for up to 3 non-overlapping slips ({today_vol_count}/3 placed, Hurdle: {dynamic_thresh}%)...")
+                vol_thresh = min(dynamic_thresh, 57.0)
+                logger.info(f"⚡ [Accelerated - {pt_now.strftime('%I:%M %p PT')}] Scanning for up to 3 non-overlapping slips ({today_vol_count}/3 placed, Hurdle: {vol_thresh}%)...")
                 try:
-                    vol_res = auto_bot.run_volume_pipeline(min_threshold=dynamic_thresh, target_slips=3)
+                    vol_res = auto_bot.run_volume_pipeline(min_threshold=vol_thresh, target_slips=3)
                     if vol_res.get("placed_count", 0) > 0:
                         logger.info(f"🎯 ACCELERATED VOLUME SLIPS LOCKED IN ({vol_res.get('placed_count')} slips)!")
                         placed_any = True
@@ -547,7 +554,7 @@ def run_continuous_loop():
             # -------------------------------------------------------------
             # MODE E: DAYTIME / EVENING STANDBY (Between scan windows or post-lock)
             # -------------------------------------------------------------
-            if (has_today_base or has_pending_base) and (today_vol_count >= 3 or has_pending_vol):
+            if (has_today_base or has_pending_base) and (today_vol_count >= 3):
                 logger.info(f"✅ [ALL SLIPS ACTIVE] Both baseline & 3-slip accelerated slates active. Waiting for live tip-off / settlement...")
             else:
                 logger.info(f"☕ [STANDBY - {pt_now.strftime('%I:%M %p PT')}] Waiting for next scanning window...")
