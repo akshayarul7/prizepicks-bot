@@ -521,6 +521,94 @@
       "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "discord_message_id": "1573065465817858061"
+    },
+    {
+      "id": "e2e0306d",
+      "date_placed": "2026-11-20 09:04:10 AM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-20. Avg win rate: 57.23%.",
+      "legs": [
+        {
+          "leg_id": "6ae23e",
+          "player_name": "Jalen Green",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.05
+        },
+        {
+          "leg_id": "5a502c",
+          "player_name": "Kelly Oubre Jr.",
+          "sport": "NBA",
+          "game": "Indiana Pacers @ Cleveland Cavaliers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.41
+        },
+        {
+          "leg_id": "d2b3f3",
+          "player_name": "Ace Bailey",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "68e8a3",
+          "player_name": "Devin Booker",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.34
+        },
+        {
+          "leg_id": "53f206",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.77
+        },
+        {
+          "leg_id": "79f28a",
+          "player_name": "Pascal Siakam",
+          "sport": "NBA",
+          "game": "Indiana Pacers @ Cleveland Cavaliers",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.38
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 7,
+      "discord_message_id": "1573383488244293652"
     }
   ],
   "version": "1.0"
