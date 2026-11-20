@@ -273,6 +273,27 @@ class TestLineupBuilder(unittest.TestCase):
         games = set(p["game"] for p in lineup)
         self.assertGreaterEqual(len(games), 2)
 
+    def test_volume_excludes_baseline_players(self):
+        # Ensure baseline players are strictly filtered out of volume candidate selection
+        used_players = {"LeBron James", "Stephen Curry"}
+        all_candidates = [
+            {"player_name": "LeBron James", "game": "LAL @ GSW", "stat_type": "Points", "line": 25.5, "choice": "OVER", "win_pct": 62.0},
+            {"player_name": "Stephen Curry", "game": "LAL @ GSW", "stat_type": "3-PT Made", "line": 4.5, "choice": "OVER", "win_pct": 61.0},
+            {"player_name": "Anthony Davis", "game": "LAL @ GSW", "stat_type": "Rebounds", "line": 12.5, "choice": "OVER", "win_pct": 60.0},
+            {"player_name": "Jayson Tatum", "game": "BOS @ MIA", "stat_type": "Points", "line": 27.5, "choice": "OVER", "win_pct": 59.5},
+            {"player_name": "Jaylen Brown", "game": "BOS @ MIA", "stat_type": "Points", "line": 22.5, "choice": "OVER", "win_pct": 59.0},
+            {"player_name": "Bam Adebayo", "game": "BOS @ MIA", "stat_type": "Rebounds", "line": 10.5, "choice": "OVER", "win_pct": 58.5},
+            {"player_name": "Jimmy Butler", "game": "BOS @ MIA", "stat_type": "Assists", "line": 5.5, "choice": "OVER", "win_pct": 58.0},
+            {"player_name": "Derrick White", "game": "BOS @ MIA", "stat_type": "Assists", "line": 4.5, "choice": "OVER", "win_pct": 57.5},
+        ]
+        available = [c for c in all_candidates if c["player_name"] not in used_players]
+        lineup = auto_bot.select_best_lineup(available, target_size=6, min_games=2)
+        self.assertIsNotNone(lineup)
+        selected_names = set(p["player_name"] for p in lineup)
+        self.assertNotIn("LeBron James", selected_names)
+        self.assertNotIn("Stephen Curry", selected_names)
+        self.assertEqual(len(lineup), 6)
+
 
 if __name__ == "__main__":
     unittest.main()

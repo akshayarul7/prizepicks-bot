@@ -626,14 +626,16 @@ def run_volume_pipeline(
     slip_type: str = "flex_6",
     stake: float = 10.0,
     db_file: str = "paper_bets_volume.json",
+    baseline_db_file: str = "paper_bets.json",
     webhook_url: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Runs the Accelerated High-Volume +EV Cycle (up to 3 non-overlapping slips/day).
     1. Loads paper_bets_volume.json.
     2. Checks how many slips were already placed today.
-    3. If < target_slips, finds the best non-overlapping 6-man lineups (0 player overlap).
-    4. Automatically places them into paper_bets_volume.json and pushes to the dedicated Discord channel.
+    3. Strictly excludes ALL players already used in today's Baseline slip AND existing Volume slips
+       to ensure 100% unique data collection across both tracks!
+    4. Automatically places new non-overlapping slips into paper_bets_volume.json and pushes to Discord.
     """
     target_wh = webhook_url or discord_notifier.DISCORD_VOLUME_WEBHOOK_URL
     from zoneinfo import ZoneInfo
@@ -650,11 +652,28 @@ def run_volume_pipeline(
         logger.info(f"Target volume reached: {len(today_slips)}/{target_slips} slips already placed today.")
         return {"status": "VOLUME_TARGET_MET", "slips_today": len(today_slips)}
 
-    # Collect already used players from today's volume slips
+    # Collect already used players from today's volume slips AND today's baseline slips
     used_today_players = set()
+
+    # 1. Strictly exclude all players already selected in today's baseline track
+    # This guarantees that the volume track gathers 100% unique, non-redundant legs to test the strategy faster!
+    if os.path.exists(baseline_db_file):
+        base_db = paper_tracker.load_database(baseline_db_file)
+        for s in base_db.get("slips", []):
+            if s.get("date_placed", "").startswith(today_str) or s.get("status") == "PENDING":
+                for l in s.get("legs", []):
+                    pname = l.get("player_name")
+                    if pname:
+                        used_today_players.add(pname)
+
+    # 2. Exclude all players already selected in today's volume slips
     for s in today_slips:
         for l in s.get("legs", []):
-            used_today_players.add(l.get("player_name"))
+            pname = l.get("player_name")
+            if pname:
+                used_today_players.add(pname)
+
+    logger.info(f"[Volume Pipeline] Enforcing strict cross-track uniqueness. Excluded {len(used_today_players)} players already active today.")
 
     pp_raw = fetch_live_prizepicks()
     if not pp_raw:
