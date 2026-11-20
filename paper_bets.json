@@ -1476,6 +1476,94 @@
       "net_profit": 0.0,
       "payout_multiplier": 1.0,
       "discord_message_id": "1573064476414972144"
+    },
+    {
+      "id": "66683288",
+      "date_placed": "2026-11-20 02:02:23 PM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 22:02:04. Avg win rate: 57.93%. Threshold: 57.8%.",
+      "legs": [
+        {
+          "leg_id": "d28dcc",
+          "player_name": "Devin Booker",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.72
+        },
+        {
+          "leg_id": "b551d4",
+          "player_name": "Kelly Oubre Jr.",
+          "sport": "NBA",
+          "game": "Indiana Pacers @ Cleveland Cavaliers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.97
+        },
+        {
+          "leg_id": "f99b18",
+          "player_name": "Matas Buzelis",
+          "sport": "NBA",
+          "game": "Washington Wizards @ Chicago Bulls",
+          "stat_type": "Points",
+          "line": 17.5,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.65
+        },
+        {
+          "leg_id": "d01029",
+          "player_name": "Jaxson Hayes",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "e11c8c",
+          "player_name": "Ace Bailey",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Utah Jazz",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.98
+        },
+        {
+          "leg_id": "a95c1b",
+          "player_name": "Jalen Suggs",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Brooklyn Nets",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.82
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 18,
+      "discord_message_id": "1573458541551943790"
     }
   ],
   "version": "1.0"
