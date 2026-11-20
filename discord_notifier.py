@@ -130,8 +130,17 @@ def notify_new_slip_placed(
             f"   ↳ *{l.get('game')}*"
         )
 
+    slip_num = slip.get("slip_number")
+    if not slip_num:
+        try:
+            import slip_card_generator
+            slip_num = slip_card_generator.get_slip_number(slip, db_file=db_file)
+        except Exception:
+            pass
+    num_title = f"SLIP #{slip_num} • " if slip_num else ""
+
     embed = {
-        "title": f"🚀 NEW PAPER SLIP PLACED — #{slip.get('id')}{track_title}",
+        "title": f"🚀 {num_title}NEW PAPER SLIP PLACED — #{slip.get('id')}{track_title}",
         "description": (
             f"**Slip Type:** `{slip.get('slip_type')}` | **Stake:** `${slip.get('stake', 10.0):.2f}`\n"
             f"**Lineup Avg Win Rate:** `{avg_win_pct:.2f}%` 🔥 *(Hurdle: 55.09%)*\n"
@@ -233,8 +242,17 @@ def notify_settlement_recap(
     if misses:
         fields.append({"name": f"❌ Missed Legs ({len(misses)})", "value": "\n".join(misses), "inline": False})
 
+    slip_num = slip.get("slip_number")
+    if not slip_num:
+        try:
+            import slip_card_generator
+            slip_num = slip_card_generator.get_slip_number(slip, db_file="paper_bets_volume.json" if is_volume else "paper_bets.json")
+        except Exception:
+            pass
+    num_title = f"SLIP #{slip_num} • " if slip_num else ""
+
     slip_embed = {
-        "title": f"📋 SLIP SETTLED — #{slip.get('id')} ({slip.get('slip_type')}){track_title}",
+        "title": f"📋 {num_title}SLIP SETTLED — #{slip.get('id')} ({slip.get('slip_type')}){track_title}",
         "description": (
             f"{status_text}\n"
             f"**Stake:** `${stake:.2f}` | **Payout:** `${payout:.2f}` | **Net Profit:** `{net_str}`"

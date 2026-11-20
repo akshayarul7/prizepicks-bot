@@ -254,6 +254,15 @@ class TestSlipCardGenerator(unittest.TestCase):
         self.assertIsNotNone(card_img)
         self.assertEqual(card_img.size, (860, 1007))
 
+    def test_get_slip_number_resolution(self):
+        with open("paper_bets.json") as f:
+            db = json.load(f)
+        slips = db["slips"]
+        # First slip should resolve to 1
+        self.assertEqual(slip_card_generator.get_slip_number(slips[0]), 1)
+        # Last slip should resolve to 17
+        self.assertEqual(slip_card_generator.get_slip_number(slips[-1]), len(slips))
+
 
 class TestLineupBuilder(unittest.TestCase):
     def test_multi_game_constraint(self):

@@ -599,6 +599,7 @@ def run_pipeline(
         notes=f"Auto-placed at {now.strftime('%H:%M:%S')}. Avg win rate: {avg_win_pct:.2f}%. Threshold: {min_threshold}%.",
     )
 
+    slip["slip_number"] = len(db["slips"]) + 1
     db["slips"].append(slip)
     paper_tracker.save_database(db)
 
@@ -723,6 +724,7 @@ def run_volume_pipeline(
             strategy="accelerated_volume_3",
             notes=f"Accelerated Slip #{len(today_slips) + len(placed_slips) + 1} for {today_str}. Avg win rate: {avg_win:.2f}%.",
         )
+        slip["slip_number"] = len(db["slips"]) + 1
         db["slips"].append(slip)
         paper_tracker.save_database(db, filepath=db_file)
 

@@ -166,10 +166,40 @@ def get_live_cumulative_roi() -> str:
         return "Strategy Cumulative ROI: +50.0% (66.7% Leg Win Rate)"
 
 
+def get_slip_number(slip: Dict[str, Any], db_file: Optional[str] = None) -> Optional[int]:
+    """
+    Dynamically finds the 1-based sequential slip number from the database.
+    """
+    if slip.get("slip_number") is not None:
+        try:
+            return int(slip["slip_number"])
+        except (ValueError, TypeError):
+            pass
+
+    slip_id = slip.get("id")
+    if not slip_id:
+        return None
+
+    # Check candidate DB files
+    candidates = [db_file] if db_file else ["paper_bets.json", "paper_bets_volume.json"]
+    for path in candidates:
+        if path and os.path.exists(path):
+            try:
+                with open(path, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                for idx, s in enumerate(data.get("slips", []), start=1):
+                    if s.get("id") == slip_id:
+                        return idx
+            except Exception:
+                continue
+    return None
+
+
 def render_prizepicks_slip(
     slip: Dict[str, Any],
     player_images: Optional[Dict[str, str]] = None,
     output_path: str = "slip_card.png",
+    slip_number: Optional[int] = None,
 ) -> str:
     legs = slip.get("legs", [])
     num_legs = len(legs)
@@ -190,8 +220,10 @@ def render_prizepicks_slip(
 
     # Left: Slip Title & ID
     font_title = get_font(24, bold=True)
+    slip_num = slip_number or slip.get("slip_number") or get_slip_number(slip)
+    num_prefix = f"SLIP #{slip_num} • " if slip_num else ""
     slip_type = slip.get("slip_type", "flex_6").replace("_", " ").upper()
-    draw.text((44, 40), f"{slip_type} PLAY • #{slip.get('id', 'N/A')}", fill=COLOR_TEXT_WHITE, font=font_title)
+    draw.text((44, 40), f"{num_prefix}{slip_type} PLAY • #{slip.get('id', 'N/A')}", fill=COLOR_TEXT_WHITE, font=font_title)
 
     font_sub = get_font(13)
     raw_date = slip.get("date_placed", "")
@@ -455,20 +487,23 @@ def send_slip_card_to_discord(
     player_images: Optional[Dict[str, str]] = None,
     webhook_url: Optional[str] = None,
     message_id: Optional[str] = None,
+    slip_number: Optional[int] = None,
 ) -> Optional[str]:
     base_url = webhook_url or (
         "https://discord.com/api/webhooks/1565586149504712724/"
         "Uja5Yqm8hALt6l2hs1H-3VIc_4Q-XDY90iycgPzefKCkOIQQJfo4PaSpuS7FaOWui2fd"
     )
-    img_path = render_prizepicks_slip(slip, player_images, output_path="slip_card.png")
+    slip_num = slip_number or slip.get("slip_number") or get_slip_number(slip)
+    img_path = render_prizepicks_slip(slip, player_images, output_path="slip_card.png", slip_number=slip_num)
 
     with open(img_path, "rb") as f:
         file_bytes = f.read()
 
+    num_prefix = f"Slip #{slip_num} — " if slip_num else ""
     files = {"files[0]": ("prizepicks_slip.png", file_bytes, "image/png")}
     payload = {
         "username": "PrizePicks +EV Engine",
-        "content": f"**PrizePicks Slip Update — #{slip.get('id')} ({slip.get('status')})**",
+        "content": f"**{num_prefix}PrizePicks Slip Update — #{slip.get('id')} ({slip.get('status')})**",
         "attachments": [{"id": 0, "filename": "prizepicks_slip.png"}],
     }
     data = {"payload_json": json.dumps(payload)}
