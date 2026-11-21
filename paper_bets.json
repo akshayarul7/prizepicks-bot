@@ -1564,6 +1564,94 @@
       "payout_multiplier": 0.0,
       "slip_number": 18,
       "discord_message_id": "1573458541551943790"
+    },
+    {
+      "id": "8729c995",
+      "date_placed": "2026-11-21 09:39:54 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 17:39:43. Avg win rate: 59.69%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "08e528",
+          "player_name": "Nate Ament",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Philadelphia 76ers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 66.62
+        },
+        {
+          "leg_id": "40548b",
+          "player_name": "Jaime Jaquez Jr.",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Philadelphia 76ers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 61.16
+        },
+        {
+          "leg_id": "6c649f",
+          "player_name": "Jonathan Kuminga",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.59
+        },
+        {
+          "leg_id": "8dbfff",
+          "player_name": "Keldon Johnson",
+          "sport": "NBA",
+          "game": "New Orleans Pelicans @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "4f9219",
+          "player_name": "Cam Spencer",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Minnesota Timberwolves",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "6a2faa",
+          "player_name": "Isaiah Stewart",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.39
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 19,
+      "discord_message_id": "1573754869435867310"
     }
   ],
   "version": "1.0"
