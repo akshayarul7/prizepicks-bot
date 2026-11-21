@@ -101,9 +101,9 @@ dadfb7ed,2026-11-18 09:04:07 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6
 6e7ec7b8,2026-11-19 11:56:32 AM PT,automated_ev_bot,flex_6,10.0,PUSH,10.0,0.0,4,Deni Avdija,Rebounds,7.0,UNDER,DNP,PUSH,56.51,Portland Trail Blazers @ Milwaukee Bucks
 6e7ec7b8,2026-11-19 11:56:32 AM PT,automated_ev_bot,flex_6,10.0,PUSH,10.0,0.0,5,OG Anunoby,Rebounds,5.0,UNDER,7.0,MISS,56.39,New York Knicks @ Minnesota Timberwolves
 6e7ec7b8,2026-11-19 11:56:32 AM PT,automated_ev_bot,flex_6,10.0,PUSH,10.0,0.0,6,Keldon Johnson,Rebounds,5.0,OVER,5.0,PUSH,55.89,Los Angeles Clippers @ San Antonio Spurs
-66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,1,Devin Booker,Assists,5.0,OVER,,PENDING,60.72,Phoenix Suns @ Utah Jazz
-66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,2,Kelly Oubre Jr.,Rebounds,4.0,UNDER,,PENDING,58.97,Indiana Pacers @ Cleveland Cavaliers
-66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,3,Matas Buzelis,Points,17.5,OVER,,PENDING,57.65,Washington Wizards @ Chicago Bulls
-66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,4,Jaxson Hayes,Rebounds,6.0,UNDER,,PENDING,57.45,Phoenix Suns @ Utah Jazz
-66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,5,Ace Bailey,Rebounds,5.0,OVER,,PENDING,56.98,Phoenix Suns @ Utah Jazz
-66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,6,Jalen Suggs,Rebounds,4.0,OVER,,PENDING,55.82,Orlando Magic @ Brooklyn Nets
+66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,1,Devin Booker,Assists,5.0,OVER,3.0,MISS,60.72,Phoenix Suns @ Utah Jazz
+66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,2,Kelly Oubre Jr.,Rebounds,4.0,UNDER,6.0,MISS,58.97,Indiana Pacers @ Cleveland Cavaliers
+66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,3,Matas Buzelis,Points,17.5,OVER,9.0,MISS,57.65,Washington Wizards @ Chicago Bulls
+66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,4,Jaxson Hayes,Rebounds,6.0,UNDER,14.0,MISS,57.45,Phoenix Suns @ Utah Jazz
+66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,5,Ace Bailey,Rebounds,5.0,OVER,7.0,HIT,56.98,Phoenix Suns @ Utah Jazz
+66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6,Jalen Suggs,Rebounds,4.0,OVER,6.0,HIT,55.82,Orlando Magic @ Brooklyn Nets

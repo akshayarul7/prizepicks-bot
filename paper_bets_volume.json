@@ -538,8 +538,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 4.0,
+          "status": "PUSH",
           "edge_percent": 60.05
         },
         {
@@ -550,8 +550,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 6.0,
+          "status": "MISS",
           "edge_percent": 58.41
         },
         {
@@ -562,8 +562,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 7.0,
+          "status": "HIT",
           "edge_percent": 57.45
         },
         {
@@ -574,8 +574,8 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 3.0,
+          "status": "MISS",
           "edge_percent": 56.34
         },
         {
@@ -586,8 +586,8 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 8.0,
+          "status": "HIT",
           "edge_percent": 55.77
         },
         {
@@ -598,15 +598,15 @@
           "stat_type": "Rebounds",
           "line": 6.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 7.0,
+          "status": "HIT",
           "edge_percent": 55.38
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "LOST",
+      "return_payout": 4.0,
+      "net_profit": -6.0,
+      "payout_multiplier": 0.4,
       "slip_number": 7,
       "discord_message_id": "1573383488244293652"
     }
