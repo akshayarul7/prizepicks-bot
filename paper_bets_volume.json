@@ -609,6 +609,94 @@
       "payout_multiplier": 0.4,
       "slip_number": 7,
       "discord_message_id": "1573383488244293652"
+    },
+    {
+      "id": "16f98276",
+      "date_placed": "2026-11-21 09:00:50 AM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #1 for 2026-11-21. Avg win rate: 57.09%.",
+      "legs": [
+        {
+          "leg_id": "495019",
+          "player_name": "Nate Ament",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Philadelphia 76ers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.97
+        },
+        {
+          "leg_id": "ba4e35",
+          "player_name": "Jonathan Kuminga",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.59
+        },
+        {
+          "leg_id": "27dddf",
+          "player_name": "Cam Spencer",
+          "sport": "NBA",
+          "game": "Memphis Grizzlies @ Minnesota Timberwolves",
+          "stat_type": "Assists",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.45
+        },
+        {
+          "leg_id": "6e90f5",
+          "player_name": "Jaime Jaquez Jr.",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Philadelphia 76ers",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.26
+        },
+        {
+          "leg_id": "ddb33b",
+          "player_name": "Tyler Herro",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Philadelphia 76ers",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.82
+        },
+        {
+          "leg_id": "91e3aa",
+          "player_name": "Keldon Johnson",
+          "sport": "NBA",
+          "game": "New Orleans Pelicans @ San Antonio Spurs",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.44
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 8,
+      "discord_message_id": "1573745039442575494"
     }
   ],
   "version": "1.0"
