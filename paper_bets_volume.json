@@ -785,6 +785,94 @@
       "payout_multiplier": 0.0,
       "slip_number": 9,
       "discord_message_id": "1574107880431427749"
+    },
+    {
+      "id": "20081897",
+      "date_placed": "2026-11-22 12:13:32 PM PT",
+      "strategy": "accelerated_volume_3",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Accelerated Slip #2 for 2026-11-22. Avg win rate: 57.15%.",
+      "legs": [
+        {
+          "leg_id": "abaa96",
+          "player_name": "Tristan da Silva",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.46
+        },
+        {
+          "leg_id": "3185a9",
+          "player_name": "Cooper Flagg",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.99
+        },
+        {
+          "leg_id": "c7a4fc",
+          "player_name": "Shai Gilgeous-Alexander",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Miami Heat",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.26
+        },
+        {
+          "leg_id": "7b044f",
+          "player_name": "Isaiah Hartenstein",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Miami Heat",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.26
+        },
+        {
+          "leg_id": "1b28d6",
+          "player_name": "Neemias Queta",
+          "sport": "NBA",
+          "game": "Boston Celtics @ Golden State Warriors",
+          "stat_type": "Rebounds",
+          "line": 8.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.98
+        },
+        {
+          "leg_id": "b891f0",
+          "player_name": "Alex Sarr",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.93
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 10,
+      "discord_message_id": "1574155914578235563"
     }
   ],
   "version": "1.0"
