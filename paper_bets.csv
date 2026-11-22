@@ -107,9 +107,9 @@ dadfb7ed,2026-11-18 09:04:07 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6
 66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,4,Jaxson Hayes,Rebounds,6.0,UNDER,14.0,MISS,57.45,Phoenix Suns @ Utah Jazz
 66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,5,Ace Bailey,Rebounds,5.0,OVER,7.0,HIT,56.98,Phoenix Suns @ Utah Jazz
 66683288,2026-11-20 02:02:23 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6,Jalen Suggs,Rebounds,4.0,OVER,6.0,HIT,55.82,Orlando Magic @ Brooklyn Nets
-8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,1,Nate Ament,Rebounds,4.0,UNDER,,PENDING,66.62,Milwaukee Bucks @ Philadelphia 76ers
-8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,2,Jaime Jaquez Jr.,Rebounds,4.0,OVER,,PENDING,61.16,Milwaukee Bucks @ Philadelphia 76ers
-8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,3,Jonathan Kuminga,Rebounds,5.0,OVER,,PENDING,58.59,Memphis Grizzlies @ Minnesota Timberwolves
-8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,4,Keldon Johnson,Rebounds,5.0,OVER,,PENDING,57.92,New Orleans Pelicans @ San Antonio Spurs
-8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,5,Cam Spencer,Assists,5.0,OVER,,PENDING,57.45,Memphis Grizzlies @ Minnesota Timberwolves
-8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,6,Isaiah Stewart,Rebounds,4.0,UNDER,,PENDING,56.39,Memphis Grizzlies @ Minnesota Timberwolves
+8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,1,Nate Ament,Rebounds,4.0,UNDER,1.0,HIT,66.62,Milwaukee Bucks @ Philadelphia 76ers
+8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,2,Jaime Jaquez Jr.,Rebounds,4.0,OVER,0.0,MISS,61.16,Milwaukee Bucks @ Philadelphia 76ers
+8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,3,Jonathan Kuminga,Rebounds,5.0,OVER,4.0,MISS,58.59,Memphis Grizzlies @ Minnesota Timberwolves
+8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,4,Keldon Johnson,Rebounds,5.0,OVER,4.0,MISS,57.92,New Orleans Pelicans @ San Antonio Spurs
+8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,5,Cam Spencer,Assists,5.0,OVER,5.0,PUSH,57.45,Memphis Grizzlies @ Minnesota Timberwolves
+8729c995,2026-11-21 09:39:54 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6,Isaiah Stewart,Rebounds,4.0,UNDER,2.0,HIT,56.39,Memphis Grizzlies @ Minnesota Timberwolves

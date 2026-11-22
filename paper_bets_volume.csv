@@ -41,9 +41,9 @@ e2e0306d,2026-11-20 09:04:10 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.
 e2e0306d,2026-11-20 09:04:10 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,4,Devin Booker,Assists,5.0,OVER,3.0,MISS,56.34,Phoenix Suns @ Utah Jazz
 e2e0306d,2026-11-20 09:04:10 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,5,Darryn Peterson,Assists,4.0,OVER,8.0,HIT,55.77,Phoenix Suns @ Utah Jazz
 e2e0306d,2026-11-20 09:04:10 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.0,6,Pascal Siakam,Rebounds,6.0,OVER,7.0,HIT,55.38,Indiana Pacers @ Cleveland Cavaliers
-16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Nate Ament,Rebounds,4.0,UNDER,,PENDING,58.97,Milwaukee Bucks @ Philadelphia 76ers
-16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Jonathan Kuminga,Rebounds,5.0,OVER,,PENDING,58.59,Memphis Grizzlies @ Minnesota Timberwolves
-16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Cam Spencer,Assists,5.0,OVER,,PENDING,57.45,Memphis Grizzlies @ Minnesota Timberwolves
-16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Jaime Jaquez Jr.,Rebounds,4.0,OVER,,PENDING,56.26,Milwaukee Bucks @ Philadelphia 76ers
-16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Tyler Herro,Assists,4.0,OVER,,PENDING,55.82,Milwaukee Bucks @ Philadelphia 76ers
-16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Keldon Johnson,Rebounds,5.0,OVER,,PENDING,55.44,New Orleans Pelicans @ San Antonio Spurs
+16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,1,Nate Ament,Rebounds,4.0,UNDER,1.0,HIT,58.97,Milwaukee Bucks @ Philadelphia 76ers
+16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,2,Jonathan Kuminga,Rebounds,5.0,OVER,4.0,MISS,58.59,Memphis Grizzlies @ Minnesota Timberwolves
+16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,3,Cam Spencer,Assists,5.0,OVER,5.0,PUSH,57.45,Memphis Grizzlies @ Minnesota Timberwolves
+16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,4,Jaime Jaquez Jr.,Rebounds,4.0,OVER,0.0,MISS,56.26,Milwaukee Bucks @ Philadelphia 76ers
+16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,5,Tyler Herro,Assists,4.0,OVER,7.0,HIT,55.82,Milwaukee Bucks @ Philadelphia 76ers
+16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,6,Keldon Johnson,Rebounds,5.0,OVER,4.0,MISS,55.44,New Orleans Pelicans @ San Antonio Spurs
