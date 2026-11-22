@@ -1652,6 +1652,94 @@
       "payout_multiplier": 0.0,
       "slip_number": 19,
       "discord_message_id": "1573754869435867310"
+    },
+    {
+      "id": "09aac647",
+      "date_placed": "2026-11-22 11:03:21 AM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 19:03:07. Avg win rate: 58.63%. Threshold: 58.5%.",
+      "legs": [
+        {
+          "leg_id": "c87af4",
+          "player_name": "Darryn Peterson",
+          "sport": "NBA",
+          "game": "Dallas Mavericks @ Utah Jazz",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 60.53
+        },
+        {
+          "leg_id": "bfd02a",
+          "player_name": "Ausar Thompson",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ Atlanta Hawks",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.97
+        },
+        {
+          "leg_id": "9ac742",
+          "player_name": "Kyshawn George",
+          "sport": "NBA",
+          "game": "Orlando Magic @ Washington Wizards",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.89
+        },
+        {
+          "leg_id": "9eb637",
+          "player_name": "Ajay Mitchell",
+          "sport": "NBA",
+          "game": "Oklahoma City Thunder @ Miami Heat",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.41
+        },
+        {
+          "leg_id": "0dc48f",
+          "player_name": "Pascal Siakam",
+          "sport": "NBA",
+          "game": "Indiana Pacers @ New York Knicks",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.92
+        },
+        {
+          "leg_id": "c2bb78",
+          "player_name": "Cade Cunningham",
+          "sport": "NBA",
+          "game": "Detroit Pistons @ Atlanta Hawks",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.05
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 20,
+      "discord_message_id": "1574138262791004191"
     }
   ],
   "version": "1.0"
