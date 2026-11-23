@@ -775,13 +775,13 @@
           "line": 4.0,
           "choice": "UNDER",
           "actual_result": 5.0,
-          "status": "PENDING",
+          "status": "MISS",
           "edge_percent": 56.84
         }
       ],
-      "status": "PENDING",
+      "status": "LOST",
       "return_payout": 0.0,
-      "net_profit": 0.0,
+      "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "slip_number": 9,
       "discord_message_id": "1574107880431427749"
@@ -850,8 +850,8 @@
           "stat_type": "Rebounds",
           "line": 8.0,
           "choice": "UNDER",
-          "actual_result": 7.0,
-          "status": "PENDING",
+          "actual_result": 10.0,
+          "status": "MISS",
           "edge_percent": 55.98
         },
         {
@@ -867,10 +867,10 @@
           "edge_percent": 55.93
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "WON",
+      "return_payout": 15.0,
+      "net_profit": 5.0,
+      "payout_multiplier": 1.5,
       "slip_number": 10,
       "discord_message_id": "1574155914578235563"
     },
@@ -903,7 +903,7 @@
           "line": 5.0,
           "choice": "UNDER",
           "actual_result": 9.0,
-          "status": "PENDING",
+          "status": "MISS",
           "edge_percent": 57.94
         },
         {
@@ -915,7 +915,7 @@
           "line": 4.0,
           "choice": "UNDER",
           "actual_result": 3.0,
-          "status": "PENDING",
+          "status": "HIT",
           "edge_percent": 56.89
         },
         {
@@ -927,7 +927,7 @@
           "line": 4.0,
           "choice": "OVER",
           "actual_result": 4.0,
-          "status": "PENDING",
+          "status": "PUSH",
           "edge_percent": 56.89
         },
         {
@@ -955,10 +955,10 @@
           "edge_percent": 55.93
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "WON",
+      "return_payout": 20.0,
+      "net_profit": 10.0,
+      "payout_multiplier": 2.0,
       "slip_number": 11,
       "discord_message_id": "1574215184367751433"
     }
