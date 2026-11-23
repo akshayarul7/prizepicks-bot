@@ -47,15 +47,21 @@ e2e0306d,2026-11-20 09:04:10 AM PT,accelerated_volume_3,flex_6,10.0,LOST,4.0,-6.
 16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,4,Jaime Jaquez Jr.,Rebounds,4.0,OVER,0.0,MISS,56.26,Milwaukee Bucks @ Philadelphia 76ers
 16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,5,Tyler Herro,Assists,4.0,OVER,7.0,HIT,55.82,Milwaukee Bucks @ Philadelphia 76ers
 16f98276,2026-11-21 09:00:50 AM PT,accelerated_volume_3,flex_6,10.0,LOST,0.0,-10.0,6,Keldon Johnson,Rebounds,5.0,OVER,4.0,MISS,55.44,New Orleans Pelicans @ San Antonio Spurs
-d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Kevin Huerter,Rebounds,4.0,UNDER,,PENDING,61.65,Detroit Pistons @ Atlanta Hawks
-d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Ajay Mitchell,Assists,4.0,OVER,,PENDING,58.89,Oklahoma City Thunder @ Miami Heat
+d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Kevin Huerter,Rebounds,4.0,UNDER,3.0,HIT,61.65,Detroit Pistons @ Atlanta Hawks
+d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Ajay Mitchell,Assists,4.0,OVER,2.0,PENDING,58.89,Oklahoma City Thunder @ Miami Heat
 d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Kyshawn George,Rebounds,4.0,OVER,,PENDING,57.93,Orlando Magic @ Washington Wizards
 d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Pascal Siakam,Rebounds,6.0,UNDER,,PENDING,57.92,Indiana Pacers @ New York Knicks
-d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Cade Cunningham,Rebounds,5.0,OVER,,PENDING,56.87,Detroit Pistons @ Atlanta Hawks
+d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Cade Cunningham,Rebounds,5.0,OVER,4.0,MISS,56.87,Detroit Pistons @ Atlanta Hawks
 d48df730,2026-11-22 09:02:38 AM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Gui Santos,Rebounds,4.0,UNDER,,PENDING,56.84,Boston Celtics @ Golden State Warriors
 20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Tristan da Silva,Rebounds,4.0,UNDER,,PENDING,59.46,Orlando Magic @ Washington Wizards
 20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Cooper Flagg,Assists,6.0,UNDER,,PENDING,58.99,Dallas Mavericks @ Utah Jazz
 20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Shai Gilgeous-Alexander,Rebounds,4.0,UNDER,,PENDING,56.26,Oklahoma City Thunder @ Miami Heat
-20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Isaiah Hartenstein,Assists,4.0,OVER,,PENDING,56.26,Oklahoma City Thunder @ Miami Heat
+20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Isaiah Hartenstein,Assists,4.0,OVER,2.0,PENDING,56.26,Oklahoma City Thunder @ Miami Heat
 20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Neemias Queta,Rebounds,8.0,UNDER,,PENDING,55.98,Boston Celtics @ Golden State Warriors
 20081897,2026-11-22 12:13:32 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Alex Sarr,Rebounds,6.0,OVER,,PENDING,55.93,Orlando Magic @ Washington Wizards
+9813f6aa,2026-11-22 04:09:03 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,1,Jalen Brunson,Assists,6.0,OVER,,PENDING,58.08,Indiana Pacers @ New York Knicks
+9813f6aa,2026-11-22 04:09:03 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,2,Draymond Green,Points,5.0,UNDER,,PENDING,57.94,Boston Celtics @ Golden State Warriors
+9813f6aa,2026-11-22 04:09:03 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,3,Yaxel Lendeborg,Assists,4.0,UNDER,,PENDING,56.89,Boston Celtics @ Golden State Warriors
+9813f6aa,2026-11-22 04:09:03 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,4,Payton Pritchard,Assists,4.0,OVER,,PENDING,56.89,Boston Celtics @ Golden State Warriors
+9813f6aa,2026-11-22 04:09:03 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,5,Kelly Oubre Jr.,Rebounds,4.0,OVER,,PENDING,56.89,Indiana Pacers @ New York Knicks
+9813f6aa,2026-11-22 04:09:03 PM PT,accelerated_volume_3,flex_6,10.0,PENDING,0.0,0.0,6,Josh Giddey,Rebounds,6.0,OVER,,PENDING,55.93,Denver Nuggets @ Chicago Bulls
