@@ -1740,6 +1740,94 @@
       "payout_multiplier": 0.0,
       "slip_number": 20,
       "discord_message_id": "1574138262791004191"
+    },
+    {
+      "id": "31b38ff8",
+      "date_placed": "2026-11-23 01:48:19 PM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 21:47:59. Avg win rate: 57.81%. Threshold: 57.8%.",
+      "legs": [
+        {
+          "leg_id": "a5b6a2",
+          "player_name": "Ryan Rollins",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Toronto Raptors",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.46
+        },
+        {
+          "leg_id": "0248b0",
+          "player_name": "Danny Wolf",
+          "sport": "NBA",
+          "game": "Brooklyn Nets @ Minnesota Timberwolves",
+          "stat_type": "Rebounds",
+          "line": 5.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.01
+        },
+        {
+          "leg_id": "ebbdd6",
+          "player_name": "Tyler Herro",
+          "sport": "NBA",
+          "game": "Milwaukee Bucks @ Toronto Raptors",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.83
+        },
+        {
+          "leg_id": "1e09d6",
+          "player_name": "Jalen Green",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 57.83
+        },
+        {
+          "leg_id": "2b7c98",
+          "player_name": "Deni Avdija",
+          "sport": "NBA",
+          "game": "Portland Trail Blazers @ Philadelphia 76ers",
+          "stat_type": "Assists",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.87
+        },
+        {
+          "leg_id": "56a392",
+          "player_name": "Derik Queen",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ New Orleans Pelicans",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.87
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 21,
+      "discord_message_id": "1574542160387252297"
     }
   ],
   "version": "1.0"
