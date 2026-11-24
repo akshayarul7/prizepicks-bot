@@ -119,9 +119,9 @@ dadfb7ed,2026-11-18 09:04:07 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6
 09aac647,2026-11-22 11:03:21 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,4,Ajay Mitchell,Assists,4.0,OVER,3.0,MISS,58.41,Oklahoma City Thunder @ Miami Heat
 09aac647,2026-11-22 11:03:21 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,5,Pascal Siakam,Rebounds,6.0,UNDER,6.0,PUSH,57.92,Indiana Pacers @ New York Knicks
 09aac647,2026-11-22 11:03:21 AM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6,Cade Cunningham,Rebounds,5.0,OVER,4.0,MISS,57.05,Detroit Pistons @ Atlanta Hawks
-31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,1,Ryan Rollins,Assists,4.0,UNDER,,PENDING,59.46,Milwaukee Bucks @ Toronto Raptors
-31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,2,Danny Wolf,Rebounds,5.0,OVER,,PENDING,58.01,Brooklyn Nets @ Minnesota Timberwolves
-31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,3,Tyler Herro,Rebounds,4.0,UNDER,,PENDING,57.83,Milwaukee Bucks @ Toronto Raptors
-31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,4,Jalen Green,Rebounds,4.0,UNDER,,PENDING,57.83,Phoenix Suns @ New Orleans Pelicans
-31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,5,Deni Avdija,Assists,6.0,UNDER,,PENDING,56.87,Portland Trail Blazers @ Philadelphia 76ers
-31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,PENDING,0.0,0.0,6,Derik Queen,Rebounds,6.0,UNDER,,PENDING,56.87,Phoenix Suns @ New Orleans Pelicans
+31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,1,Ryan Rollins,Assists,4.0,UNDER,3.0,HIT,59.46,Milwaukee Bucks @ Toronto Raptors
+31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,2,Danny Wolf,Rebounds,5.0,OVER,5.0,PUSH,58.01,Brooklyn Nets @ Minnesota Timberwolves
+31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,3,Tyler Herro,Rebounds,4.0,UNDER,6.0,MISS,57.83,Milwaukee Bucks @ Toronto Raptors
+31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,4,Jalen Green,Rebounds,4.0,UNDER,3.0,HIT,57.83,Phoenix Suns @ New Orleans Pelicans
+31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,5,Deni Avdija,Assists,6.0,UNDER,7.0,MISS,56.87,Portland Trail Blazers @ Philadelphia 76ers
+31b38ff8,2026-11-23 01:48:19 PM PT,automated_ev_bot,flex_6,10.0,LOST,0.0,-10.0,6,Derik Queen,Rebounds,6.0,UNDER,9.0,MISS,56.87,Phoenix Suns @ New Orleans Pelicans
