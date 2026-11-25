@@ -1828,6 +1828,94 @@
       "payout_multiplier": 0.0,
       "slip_number": 21,
       "discord_message_id": "1574542160387252297"
+    },
+    {
+      "id": "8e466d1a",
+      "date_placed": "2026-11-25 01:57:09 PM PT",
+      "strategy": "automated_ev_bot",
+      "slip_type": "flex_6",
+      "stake": 10.0,
+      "notes": "Auto-placed at 21:56:52. Avg win rate: 57.97%. Threshold: 57.8%.",
+      "legs": [
+        {
+          "leg_id": "50273c",
+          "player_name": "Coby White",
+          "sport": "NBA",
+          "game": "Chicago Bulls @ Charlotte Hornets",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 59.46
+        },
+        {
+          "leg_id": "9361bf",
+          "player_name": "Ajay Mitchell",
+          "sport": "NBA",
+          "game": "Minnesota Timberwolves @ Oklahoma City Thunder",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.97
+        },
+        {
+          "leg_id": "aaea66",
+          "player_name": "Peyton Watson",
+          "sport": "NBA",
+          "game": "Cleveland Cavaliers @ New York Knicks",
+          "stat_type": "Rebounds",
+          "line": 4.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.68
+        },
+        {
+          "leg_id": "d206bd",
+          "player_name": "Miles Bridges",
+          "sport": "NBA",
+          "game": "Phoenix Suns @ Houston Rockets",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 58.01
+        },
+        {
+          "leg_id": "3517f7",
+          "player_name": "Jaylen Brown",
+          "sport": "NBA",
+          "game": "Miami Heat @ Philadelphia 76ers",
+          "stat_type": "Rebounds",
+          "line": 6.0,
+          "choice": "OVER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 56.9
+        },
+        {
+          "leg_id": "d2a5bb",
+          "player_name": "Isaiah Hartenstein",
+          "sport": "NBA",
+          "game": "Minnesota Timberwolves @ Oklahoma City Thunder",
+          "stat_type": "Assists",
+          "line": 4.0,
+          "choice": "UNDER",
+          "actual_result": null,
+          "status": "PENDING",
+          "edge_percent": 55.82
+        }
+      ],
+      "status": "PENDING",
+      "return_payout": 0.0,
+      "net_profit": 0.0,
+      "payout_multiplier": 0.0,
+      "slip_number": 22,
+      "discord_message_id": "1575269153902694470"
     }
   ],
   "version": "1.0"
