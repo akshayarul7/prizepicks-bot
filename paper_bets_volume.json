@@ -1167,7 +1167,7 @@
           "line": 4.0,
           "choice": "UNDER",
           "actual_result": 5.0,
-          "status": "PENDING",
+          "status": "MISS",
           "edge_percent": 57.93
         },
         {
@@ -1191,7 +1191,7 @@
           "line": 7.0,
           "choice": "UNDER",
           "actual_result": 7.0,
-          "status": "PENDING",
+          "status": "PUSH",
           "edge_percent": 56.51
         },
         {
@@ -1214,14 +1214,14 @@
           "stat_type": "Pts+Rebs",
           "line": 10.0,
           "choice": "UNDER",
-          "actual_result": 11.0,
-          "status": "PENDING",
+          "actual_result": 13.0,
+          "status": "MISS",
           "edge_percent": 55.48
         }
       ],
-      "status": "PENDING",
+      "status": "LOST",
       "return_payout": 0.0,
-      "net_profit": 0.0,
+      "net_profit": -10.0,
       "payout_multiplier": 0.0,
       "slip_number": 14,
       "discord_message_id": "1575975192918761725"
