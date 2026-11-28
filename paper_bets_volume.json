@@ -1154,8 +1154,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 6.0,
+          "status": "MISS",
           "edge_percent": 59.56
         },
         {
@@ -1166,7 +1166,7 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
+          "actual_result": 5.0,
           "status": "PENDING",
           "edge_percent": 57.93
         },
@@ -1178,8 +1178,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 3.0,
+          "status": "HIT",
           "edge_percent": 56.89
         },
         {
@@ -1190,7 +1190,7 @@
           "stat_type": "Rebounds",
           "line": 7.0,
           "choice": "UNDER",
-          "actual_result": null,
+          "actual_result": 7.0,
           "status": "PENDING",
           "edge_percent": 56.51
         },
@@ -1202,8 +1202,8 @@
           "stat_type": "Assists",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 7.0,
+          "status": "MISS",
           "edge_percent": 55.82
         },
         {
@@ -1214,7 +1214,7 @@
           "stat_type": "Pts+Rebs",
           "line": 10.0,
           "choice": "UNDER",
-          "actual_result": null,
+          "actual_result": 11.0,
           "status": "PENDING",
           "edge_percent": 55.48
         }

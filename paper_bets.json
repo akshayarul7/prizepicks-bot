@@ -1933,8 +1933,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 6.0,
+          "status": "HIT",
           "edge_percent": 60.72
         },
         {
@@ -1945,8 +1945,8 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": "DNP",
+          "status": "PUSH",
           "edge_percent": 60.05
         },
         {
@@ -1957,8 +1957,8 @@
           "stat_type": "Rebounds",
           "line": 5.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "PUSH",
           "edge_percent": 58.41
         },
         {
@@ -1969,8 +1969,8 @@
           "stat_type": "Rebounds",
           "line": 4.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 3.0,
+          "status": "HIT",
           "edge_percent": 58.41
         },
         {
@@ -1981,8 +1981,8 @@
           "stat_type": "Rebounds",
           "line": 6.0,
           "choice": "UNDER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 5.0,
+          "status": "HIT",
           "edge_percent": 57.92
         },
         {
@@ -1993,15 +1993,15 @@
           "stat_type": "Assists",
           "line": 5.0,
           "choice": "OVER",
-          "actual_result": null,
-          "status": "PENDING",
+          "actual_result": 3.0,
+          "status": "MISS",
           "edge_percent": 57.45
         }
       ],
-      "status": "PENDING",
-      "return_payout": 0.0,
-      "net_profit": 0.0,
-      "payout_multiplier": 0.0,
+      "status": "WON",
+      "return_payout": 15.0,
+      "net_profit": 5.0,
+      "payout_multiplier": 1.5,
       "slip_number": 23,
       "discord_message_id": "1575919630445322404"
     }
